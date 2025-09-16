@@ -1,7 +1,7 @@
 
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
+import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 
 //text
@@ -35,8 +35,8 @@ createBtn.addEventListener("click", function (event) {
             messageHandler.textContent = "account created"
         })
         .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            const errorCode = error.code
+            const errorMessage = error.message
             console.log(errorMessage)
             messageHandler.textContent = errorMessage
             messageHandler.style.color = "red"
@@ -44,13 +44,14 @@ createBtn.addEventListener("click", function (event) {
         });
 })
 
+//right now this button works to sign out the current user
 const loginBtn = document.getElementById("loginBtn")
 loginBtn.addEventListener("click", function (event) {
     event.preventDefault()
 
     signOut(auth).then(() => {
-        console.log("Signed out successfully");
+        console.log("Signed out successfully")
     }).catch((error) => {
-        console.error("Error signing out:", error);
-    });
+        console.error("Error signing out:", error)
+    })
 })
