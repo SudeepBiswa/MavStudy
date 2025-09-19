@@ -3,30 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MavStudy</title>
+    <title>MavSTUDY</title>
     <script type ="module" src="form.js" defer></script>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="main.css">
 </head>
 <header>
-    <h1>
-        <img src="images/favicon.png" id="logo">
-        <a href="index.html">MavSTUDY</a>
-    </h1>
+    <img src="images/favicon.png" id="logo">
+    <a href="index.html">MavSTUDY</a>
 </header>
 <body>
     <div class="container">
         <form for="">
-            <h1>Login Form</h1>
-            <div class="form-group">
-                <label for ="">Email</label>
-                <input type = "string" placeholder="email@domain.com" id = "email" class="form-control"required>
-            </div>
-            <div class="form-group">
-                <label for ="">Password</label>
-                <input type = "password" placeholder = "**********" id = "password" class="form-control" required>
-            </div>    
-            <input type ="submit" id="createBtn" class="btn" value="sign up">
-            <input type ="submit" id="loginBtn" class="btn" value="login">
+            <h1>Login</h1>
+            <label>Email</label>
+            <input type="email" placeholder="Email@unomaha.edu" id="email" required>
+            <label>Password</label>
+            <input type="password" placeholder="* * * * * * * *" id="password" required> 
+            <br>
+            <input type="submit" id="createBtn" value="sign up">
+            <input type="submit" id="loginBtn" value="login">
         </form>
         <p id="messageHandler">This is the message handler. All is good!</p>
     </div>
