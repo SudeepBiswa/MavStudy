@@ -37,8 +37,13 @@ createBtn.addEventListener("click", function (event) {
             messageHandler.style.color = "green"
             messageHandler.textContent = "account created"
         }).then(() => {
-            const userData = {email: email, password: password};
-            addUser(userData);
+            if (email.endsWith("@unomaha.edu")) {
+                const userData = {email: email, password: password};
+                addUser(userData);
+            } else {
+                messageHandler.style.color = "red"
+                messageHandler.textContent = "Please use a valid UNO email."
+            }           
         })
         .catch((error) => {
             const errorCode = error.code
