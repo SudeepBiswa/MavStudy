@@ -2,6 +2,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
 import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"; // <-- added Firestore
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,6 +18,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
+const db = getFirestore(app);
 
 //text
 const messageHandler = document.getElementById("messageHandler")
@@ -24,8 +27,8 @@ const messageHandler = document.getElementById("messageHandler")
 const createBtn = document.getElementById("createBtn")
 createBtn.addEventListener("click", function (event) {
     event.preventDefault()
-    const email = document.getElementById("email").value
-    const password = document.getElementById("password").value
+    const email = document.getElementById("email").value.trim()
+    const password = document.getElementById("password").value.trim()
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -33,6 +36,9 @@ createBtn.addEventListener("click", function (event) {
             const user = userCredential.user;
             messageHandler.style.color = "green"
             messageHandler.textContent = "account created"
+        }).then(() => {
+            const userData = {email: email, password: password};
+            addUser(userData);
         })
         .catch((error) => {
             const errorCode = error.code
@@ -55,3 +61,7 @@ loginBtn.addEventListener("click", function (event) {
         console.error("Error signing out:", error)
     })
 })
+
+async function addUser(data) {
+    const docRef = await addDoc(collection(db, "users"), data);
+}
