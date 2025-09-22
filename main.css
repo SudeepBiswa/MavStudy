@@ -37,7 +37,7 @@ html, body{
     max-height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--darkGrey);
+    background-color: black;
 }
 body{
     flex: 1;
@@ -97,6 +97,7 @@ header .headerText img{
     background: black;
     border: none;
     border-radius: 6px;
+    outline: 3px solid var(--red);
 }
 .container form h1{
     text-align: center;
@@ -108,7 +109,8 @@ header .headerText img{
 .container form input[type="email"], .container form input[type="password"]{
     width: 100%;
     color: white;
-    background: var(--red);
+    background: transparent;
+    outline: 3px solid var(--red);
     border: none;
     border-radius: 6px;
     margin: 0;
@@ -119,13 +121,13 @@ header .headerText img{
     
 }
 .container form input[type="email"]::placeholder, .container form input[type="password"]::placeholder{
-    color: black;
+    color: var(--red);
 }
 .container form [type="email"]:not(:placeholder-shown), .container form [type="password"]:not(:placeholder-shown), .container form [type="email"]:focus, .container form [type="password"]:focus{
-    
+    background-color: var(--red);
 }
 .container form [type="email"]:focus::placeholder, .container form [type="password"]:focus::placeholder{
-    
+    color: white;
 }
 .container form input[type="submit"]{
     width: 100%;
