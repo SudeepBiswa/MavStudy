@@ -21,7 +21,7 @@
     margin: 0;
     padding: 0;
     text-decoration: none;
-    font-family: 'URWGrotesk Regular', sans-serif;
+    font-family: 'URWGrotesk ExtraLight', sans-serif;
     font-size: 100%;
     font-weight: bold;
     outline: none;
@@ -30,12 +30,14 @@
     word-wrap: break-word;
     color: inherit;
     user-select: none;
+    letter-spacing: 2px;
 }
 html, body{
     height: 100%;
     max-height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: var(--darkGrey);
 }
 body{
     flex: 1;
@@ -47,7 +49,7 @@ body{
 }
 header{
     display: flex;
-    justify-content: start;
+    justify-content: center;
     font-size: 1.5em;
     width: 100%;
     margin: 0;
@@ -57,9 +59,12 @@ header{
     border-bottom: 3px solid #d71920;
     font-family: 'URWGrotesk ExtraLight', sans-serif;
     gap: 15px;
+    box-shadow: 0 0 15px var(--red);
 }
-header h1, header a{
-    display: flex;
+header .headerText{
+    position: relative;
+}
+header .headerText a{
     align-items: center;
     justify-content: center;
     margin: 0;
@@ -67,11 +72,15 @@ header h1, header a{
     font-family: 'URWGrotesk ExtraLight', sans-serif;
     font-weight: 600;
 }
-header img{
+header .headerText img{
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
     height: 35px;
     width: auto;
     border-radius: 0px;
-    margin: 0;
+    margin: 0 5px;
     padding: 0;
 }
 .container{
@@ -85,43 +94,45 @@ header img{
     width: 100%;
     height: fit-content;
     padding: 30px;
-    background: white;
+    background: black;
     border: none;
     border-radius: 6px;
-    box-shadow: 0 0 30px 0px var(--lightGrey);
 }
 .container form h1{
     text-align: center;
-    margin-bottom: 24px;
-    color: #222;
+    color: white
+}
+.container form label{
+    color: white
 }
 .container form input[type="email"], .container form input[type="password"]{
     width: 100%;
-    background: white;
-    border-radius: 0;
-    border: 0;
-    border: 2px solid var(--red);
+    color: white;
+    background: var(--red);
+    border: none;
     border-radius: 6px;
     margin: 0;
     padding: 10px;
     transition: 0.2s;
 }
 .container form input[type="email"]:hover, .container form input[type="password"]:hover{
-    box-shadow: 0 0 10px 0 var(--red);
+    
+}
+.container form input[type="email"]::placeholder, .container form input[type="password"]::placeholder{
+    color: black;
 }
 .container form [type="email"]:not(:placeholder-shown), .container form [type="password"]:not(:placeholder-shown), .container form [type="email"]:focus, .container form [type="password"]:focus{
-    border-color: var(--red);
-    background-color: var(--red);
-    color: white;
+    
 }
 .container form [type="email"]:focus::placeholder, .container form [type="password"]:focus::placeholder{
-    color: white;
+    
 }
 .container form input[type="submit"]{
     width: 100%;
     margin: 0;
     padding: 10px;
-    border: 2px solid var(--red);
+    background-color: transparent;
+    border: none;
     outline: none;
     cursor: pointer;
     font-size: 16px;
@@ -129,10 +140,11 @@ header img{
     color: var(--red);
     border-radius: 6px;
     transition: .3s;
+    outline: 3px solid var(--red);
 }
 .container form input[type="submit"]:hover{
-    color: white;
     background-color: var(--red);
+    color: white;
 }
 #messageHandler{
     width: 100%;
