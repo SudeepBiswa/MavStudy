@@ -119,7 +119,7 @@ header .headerText img{
 .container form input::placeholder{
     color: var(--red);
 }
-.container form input:not(:placeholder-shown), .container form input:focus{
+.container form input[type="email"]:not(:placeholder-shown), .container form input[type="password"]:not(:placeholder-shown), .container form input[type="number"]:not(:placeholder-shown), .container form input:focus{
     background-color: var(--red);
 }
 .container form input:focus::placeholder{
@@ -171,4 +171,12 @@ header .headerText img{
     padding: 15px;
     text-align: center;
     color: var(--lightGrey);
+}
+/* Remove Arrows from Number Input */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number]{
+    -moz-appearance: textfield;
 }

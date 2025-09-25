@@ -66,11 +66,26 @@
                 <option value="senior">Senior</option>
                 <option value="Graduate">Graduate</option>
             </select>
-            <label>Date of Birth</label>
-            <input type="date" id="dateOfBirth" required>
-            <input type="submit" id="saveUserDetailsBtn" value="save user details">
+            <label>Age</label>
+            <input type="number" id="ageInput" placeholder="Enter your age" min="18" max="99" required>
+            <label>Enrollment Status</label>
+            <select id="enrollmentStatusDropdown" required>
+                <option value="" disabled selected>Select your enrollment status</option>
+                <option value="fullTime">Full-Time (12+ credits)</option>
+                <option value="partTime">Part-Time (&lt;12 credits)</option>
+            </select>
+            <label>Group Size</label>
+            <select id="groupSizeDropdown" required>
+                <option value="" disabled selected>Select your desired group size</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <input type="submit" id="saveUserDetailsButton" value="save user details">
         </form>
         <p id="messageHandler">This is the message handler. All is good!</p>
     </div>
+    <script src="script.js" defer></script>
 </body>
 </html>
