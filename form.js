@@ -2,7 +2,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
 import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"; // <-- added Firestore
+import { getFirestore, collection, addDoc, serverTimestamp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js"; // <-- added Firestore
 
 
 // Your web app's Firebase configuration
@@ -25,34 +25,32 @@ const messageHandler = document.getElementById("messageHandler")
 
 //buttons
 const createBtn = document.getElementById("createBtn")
+
 createBtn.addEventListener("click", function (event) {
     event.preventDefault()
-    const email = document.getElementById("email").value.trim()
-    const password = document.getElementById("password").value.trim()
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed up 
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    createUserWithEmailAndPassword(auth ,email, password)
+        .then(async (userCredential) => {
             const user = userCredential.user;
-            messageHandler.style.color = "green"
-            messageHandler.textContent = "account created"
-        }).then(() => {
-            if (email.endsWith("@unomaha.edu")) {
-                const userData = {email: email, password: password};
-                addUser(userData);
-            } else {
-                messageHandler.style.color = "red"
-                messageHandler.textContent = "Please use a valid UNO email."
-            }           
+
+            if (!(user.email.endsWith("@unomaha.edu") || user.email.endsWith("@nebraska.edu"))) {
+                messageHandler.style.color = "red";
+                messageHandler.textContent = "Please use a valid UNO or Nebraska email.";
+                return;
+            }
+
+            messageHandler.style.color = "green";
+            messageHandler.textContent = "Account created";
+            //login registry
+            await addEvent(user, "signUp");
         })
         .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
-            console.log(errorMessage)
-            messageHandler.textContent = errorMessage
-            messageHandler.style.color = "red"
-            // ..
-        });
+            messageHandler.textContent = error.message;
+            messageHandler.style.color = "red";
+    });
 })
 
 //right now this button works to sign out the current user
@@ -69,4 +67,12 @@ loginBtn.addEventListener("click", function (event) {
 
 async function addUser(data) {
     const docRef = await addDoc(collection(db, "users"), data);
+}
+
+//Creates collection for user events with timestamp
+async function addEvent(user, eventType) {
+  await addDoc(collection(db, "users", user.uid, "Events"), {
+    event: eventType,
+    time: serverTimestamp()
+  });
 }
