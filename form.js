@@ -23,15 +23,10 @@ const db = getFirestore(app);
 //text
 const messageHandler = document.getElementById("messageHandler")
 
-//buttons
-<<<<<<< HEAD
-const createBtn = document.getElementById("createBtn")
+const createButton = document.getElementById("createButton");
 
-createBtn.addEventListener("click", function (event) {
-=======
-const createButton = document.getElementById("createButton")
+//buttons
 createButton.addEventListener("click", function (event) {
->>>>>>> 615b72dfd24e4d46f649c2786d673a3aa754df85
     event.preventDefault()
 
     const email = document.getElementById("email").value.trim();
@@ -55,7 +50,7 @@ createButton.addEventListener("click", function (event) {
         .catch((error) => {
             messageHandler.textContent = error.message;
             messageHandler.style.color = "red";
-    });
+        });
 })
 
 //right now this button works to sign out the current user
