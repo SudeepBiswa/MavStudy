@@ -3,7 +3,7 @@
     --red: #d41b1e;
     --green: #95CD6E;
     --darkGrey: #0f0f0f;
-    --lightGrey: #484848;
+    --lightGrey: #212121;
 }
 @font-face{
     font-family: 'URWGrotesk ExtraLight';
@@ -37,7 +37,7 @@ html, body{
     max-height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--darkGrey);
+    background-color: white;
 }
 body{
     flex: 1;
@@ -54,7 +54,7 @@ header{
     width: 100%;
     margin: 0;
     padding: 15px;
-    color: white;
+    color: black;
     font-family: 'URWGrotesk ExtraLight', sans-serif;
     gap: 15px;
 }
@@ -94,15 +94,16 @@ header .headerText img{
     padding: 45px;
     background: black;
     border: none;
+    box-shadow: 0 0 30px black;
 }
 .container form h1{
     text-align: center;
-    color: white
+    color: white;
 }
 .container form label{
-    color: white
+    color: white;
 }
-.container form input[type="email"], .container form input[type="password"]{
+.container form input{
     width: 100%;
     color: white;
     background: transparent;
@@ -112,17 +113,38 @@ header .headerText img{
     padding: 15px;
     transition: 0.2s;
 }
-.container form input[type="email"]:hover, .container form input[type="password"]:hover{
+.container form input:hover{
     
 }
-.container form input[type="email"]::placeholder, .container form input[type="password"]::placeholder{
+.container form input::placeholder{
     color: var(--red);
 }
-.container form [type="email"]:not(:placeholder-shown), .container form [type="password"]:not(:placeholder-shown), .container form [type="email"]:focus, .container form [type="password"]:focus{
+.container form input:not(:placeholder-shown), .container form input:focus{
     background-color: var(--red);
 }
-.container form [type="email"]:focus::placeholder, .container form [type="password"]:focus::placeholder{
+.container form input:focus::placeholder{
     color: black;
+}
+.container form select{
+    width: 100%;
+    color: var(--red);
+    background: transparent;
+    outline: 2px solid var(--red);
+    border: none;
+    margin: 0;
+    padding: 15px;
+    transition: 0.2s;
+    cursor: pointer;
+    border-right: 15px solid transparent;
+}
+.container form select:focus, .container form select:valid{
+    background-color: var(--red);
+    color: white;
+}
+.container form select option{
+    background-color: black;
+    color: white;
+    padding: 10px;
 }
 .container form input[type="submit"]{
     width: 100%;
@@ -132,7 +154,7 @@ header .headerText img{
     border: none;
     cursor: pointer;
     font-size: 16px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: white;
     transition: .3s;
     outline: 2px solid white;

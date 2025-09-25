@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MavSTUDY | Welcome</title>
+    <script type ="module" src="form.js" defer></script>
+    <link rel="icon" href="images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="main.css">
+</head>
+<header>
+    <div class="headerText">
+        <img src="images/favicon.png" id="logo">
+        <a href="index.html">MavSTUDY</a>
+    </div>
+</header>
+<body>
+    <div class="container">
+        <form for="">
+            <h1 id="welcomeMessage">Welcome, User</h1>
+            <label>Major</label>
+            <select id="majorDropdown" required>
+                <option value="" disabled selected>Select your major</option>
+                <option value="accounting">Accounting</option>
+                <option value="aviation">Aviation</option>
+                <option value="biology">Biology</option>
+                <option value="business-administration">Business Administration</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="communication-studies">Communication Studies</option>
+                <option value="computer-science">Computer Science</option>
+                <option value="criminology-criminal-justice">Criminology & Criminal Justice</option>
+                <option value="cybersecurity">Cybersecurity</option>
+                <option value="economics">Economics</option>
+                <option value="education-library-science">Education - Library Science</option>
+                <option value="emergency-management">Emergency Management</option>
+                <option value="english">English</option>
+                <option value="environmental-science">Environmental Science</option>
+                <option value="fine-arts">Fine Arts</option>
+                <option value="geography">Geography</option>
+                <option value="gerontology">Gerontology</option>
+                <option value="history">History</option>
+                <option value="information-science-technology">Information Science & Technology</option>
+                <option value="international-studies">International Studies</option>
+                <option value="journalism">Journalism</option>
+                <option value="management-information-systems">Management Information Systems</option>
+                <option value="mathematics">Mathematics</option>
+                <option value="music">Music</option>
+                <option value="neuroscience">Neuroscience</option>
+                <option value="philosophy">Philosophy</option>
+                <option value="physics">Physics</option>
+                <option value="political-science">Political Science</option>
+                <option value="psychology">Psychology</option>
+                <option value="public-administration">Public Administration</option>
+                <option value="religious-studies">Religious Studies</option>
+                <option value="sociology">Sociology</option>
+                <option value="studio-art">Studio Art</option>
+                <option value="theatre">Theatre</option>
+                <option value="women-gender-studies">Women's and Gender Studies</option>
+            </select>
+            <label>Grade</label>
+            <select id="gradeDropdown" required>
+                <option value="" disabled selected>Select your grade</option>
+                <option value="freshman">Freshman</option>
+                <option value="sophmore">Sophmore</option>
+                <option value="junior">Junior</option>
+                <option value="senior">Senior</option>
+                <option value="Graduate">Graduate</option>
+            </select>
+            <label>Date of Birth</label>
+            <input type="date" id="dateOfBirth" required>
+            <input type="submit" id="saveUserDetailsBtn" value="save user details">
+        </form>
+        <p id="messageHandler">This is the message handler. All is good!</p>
+    </div>
+</body>
+</html>
