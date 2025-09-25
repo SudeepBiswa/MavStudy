@@ -16,8 +16,18 @@
 </header>
 <body>
     <div class="container">
-        <form for="">
-            <h1 id="welcomeMessage">Welcome, User</h1>
+        <form>
+            <h1>User Details</h1>
+            <div class="doubleInput">
+                <div>
+                    <label>First Name</label>
+                    <input type="text" placeholder="First" id="userFirstName" required>
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Last" id="userLastName" required>
+                </div>
+            </div>
             <label>Major</label>
             <select id="majorDropdown" required>
                 <option value="" disabled selected>Select your major</option>
@@ -82,6 +92,7 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
+            <hr>
             <input type="submit" id="saveUserDetailsButton" value="save user details">
         </form>
         <p id="messageHandler">This is the message handler. All is good!</p>

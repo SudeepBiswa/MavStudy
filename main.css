@@ -95,10 +95,22 @@ header .headerText img{
     background: black;
     border: none;
     box-shadow: 0 0 30px black;
+    font-size: 90%;
 }
 .container form h1{
     text-align: center;
     color: white;
+}
+.container .doubleInput{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.container .doubleInput div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 .container form label{
     color: white;
@@ -162,6 +174,12 @@ header .headerText img{
 .container form input[type="submit"]:hover{
     background-color: white;
     color: black;
+}
+.container form hr{
+    width: 85%;
+    border: none;
+    border-top: 1px solid var(--lightGrey);
+    margin: 20px auto;
 }
 #messageHandler{
     position: absolute;
