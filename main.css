@@ -119,7 +119,7 @@ header .headerText img{
 .container form input::placeholder{
     color: var(--red);
 }
-.container form input:not(:placeholder-shown), .container form input:focus{
+.container form input[type="email"]:not(:placeholder-shown), .container form input[type="password"]:not(:placeholder-shown), .container form input:focus{
     background-color: var(--red);
 }
 .container form input:focus::placeholder{
