@@ -9,3 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+function changeRoomsViewerMenu(option, event){
+    const menuItems = document.querySelectorAll('.roomsViewerMenu h1');
+    menuItems.forEach(item => {
+        item.classList.remove('selected');
+    });
+    
+    event.target.classList.add('selected');
+}
