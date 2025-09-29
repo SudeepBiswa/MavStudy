@@ -100,6 +100,7 @@ header .headerText img{
     justify-content: start;
 }
 .homeContainer .welcomeMessage{
+    position: absolute;
     display: flex;
     width: fit-content;
     margin: 0;
@@ -108,75 +109,58 @@ header .headerText img{
     color: white;
     background-color: var(--red);
 }
-.homeContainer .roomsViewer{
+.groupMatcher{
+    position: relative;
     display: flex;
-    width: fit-content;
-    margin: 0;
-    padding: 15px;
-    color: white;
-    background-color: black;
+    width: 100%;
     flex-grow: 1;
-    flex-direction: column;
-    box-shadow: 0 0 15px 0px black;
-    font-size: 80%;
-    gap: 15px;
-}
-.homeContainer .roomsViewer .roomsViewerMenu{
-    display: flex;
-    width: 100%;
-    max-width: 300px;
-    height: fit-content;
-    margin: 0;
-    padding: 5px;
-    gap: 5px;
+    gap: 30px;
     justify-content: center;
-    background-color: white;
-    color: black;
+    align-items: stretch;
 }
-.homeContainer .roomsViewer .roomsViewerMenu h1{
-    width: 100%;
-    margin: 0;
-    padding: 15px;
-    cursor: pointer;
-    text-align: center;
-}
-.homeContainer .roomsViewer .roomsViewerMenu h1:hover{
-    color: white;
-    background-color: var(--red);
-}
-.homeContainer .roomsViewer .roomsViewerMenu .selected{
-    color: white;
-    background-color: var(--red);
-}
-.homeContainer .roomsViewer .rooms{
+.groupMatcher .controls{
+    position: absolute;
     display: flex;
     width: 100%;
-    flex-direction: column;
-    gap: 15px;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
-.homeContainer .roomsViewer .rooms .room{
+.groupMatcher .controls h1{
+    display: flex;
+    color: white;
+    background-color: var(--red);
+    cursor: pointer;
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    justify-content: center;
+    align-items: center;
+}
+.groupMatcher .controls h1:hover{
+    background-color: var(--lightGrey);
+}
+.groupMatcher .groups{
     display: flex;
     width: 100%;
     margin: 0;
     padding: 15px;
-    justify-content: start;
-    gap: 15px;
-    background-color: var(--red);
+    flex: 1;
+    gap: 30px;
+    justify-content: center;
 }
-.homeContainer .roomsViewer .rooms .room h1{
-    margin: 0;
-    padding: 15px;
+.groupMatcher .groups div{
+    display: flex;
+    width: 30%;
+    height: 100%;
+    margin: auto 0;
+    padding: 30px;
+    color: white;
+    background-color: var(--darkGrey);
+    box-shadow: 0 0 15px black;
 }
-.homeContainer .roomsViewer .rooms .room h2{
-    color: var(--red);
-    background-color: white;
-    margin: 0;
-    padding: 15px 30px;
-    cursor: pointer;
-}
-.homeContainer .roomsViewer .rooms .room h2:hover{
-    color: var(--red);
-    background-color: black;
+.groupMatcher .groups .outerGroup{
+    width: 20%;
+    height: 75%;
 }
 .container{
     position: relative;
@@ -227,9 +211,7 @@ header .headerText img{
     margin: 0;
     padding: 15px;
 }
-.container form input:hover{
-    
-}
+/* removed empty hover rule to satisfy linter */
 .container form input::placeholder{
     color: var(--red);
 }
@@ -330,5 +312,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
     margin: 0;
 }
 input[type=number]{
+    appearance: textfield;
     -moz-appearance: textfield;
 }
