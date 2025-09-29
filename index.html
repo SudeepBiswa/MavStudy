@@ -7,6 +7,7 @@
     <script type ="module" src="form.js" defer></script>
     <link rel="icon" href="images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet" />
 </head>
 <body>
     <header>
@@ -14,6 +15,7 @@
             <img src="images/favicon.png" id="logo">
             <a href="index.html">MavSTUDY</a>
         </div>
+        <span class="material-symbols-rounded" style="font-size: 35px;">account_circle</span>
     </header>
     <div class="homeContainer">
         <div class="welcomeMessage">
@@ -21,17 +23,29 @@
         </div>
         <div class="groupMatcher">
             <div class="controls">
-                <h1><</h1>
-                <h1>></h1>
+                <h1 onclick=""><</h1>
+                <h2 onclick="">Match</h2>
+                <h1 onclick="">></h1>
             </div>
             <div class="groups">
-                <div class="outerGroup">
+                <div class="group" style="height: 85%;">
+                    <div class="groupInfo">
+                        <div class="groupTitle">
+                            <h1>User's Room</h1>
+                            <h2>5/5</h2>
+                        </div>
+                        <div class="groupDescription">
+                            <h1>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure aliquid incidunt dolorum necessitatibus vel! Repellat, quas? Hic, quasi voluptates doloremque qui necessitatibus ipsum, quisquam nobis quia a odit nam eligendi.</h1>
+                        </div>
+                        <div class="groupUsers">
+                            <h1>User 1, User 2, User 3, User 4, User 5</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="group">
                     <h1>User's Room</h1>
                 </div>
-                <div class="centerGroup">
-                    <h1>User's Room</h1>
-                </div>
-                <div class="outerGroup">
+                <div class="group" style="height: 85%;">
                     <h1>User's Room</h1>
                 </div>
             </div>
