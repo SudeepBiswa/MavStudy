@@ -78,6 +78,7 @@ header .headerText a{
     align-items: center;
     justify-content: center;
     margin: 0;
+    padding: 3px 0 0 0;
     position: relative;
 }
 header .headerText img{
@@ -86,6 +87,12 @@ header .headerText img{
     margin: 0;
     padding: 0;
     border-radius: 0;
+}
+header .headerIcons{
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 10px;
 }
 /* For center header style */
 /* header .headerText img{
@@ -122,35 +129,19 @@ header .headerText img{
     align-items: stretch;
     flex-direction: column;
 }
-.groupMatcher .topContainer{
+.groupMatcher .groupsContainer{
     position: relative;
     display: flex;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    justify-content: start;
-    align-items: center;
-}
-.groupMatcher .topContainer h1{
-    width: fit-content;
-    margin: 0;
-    padding: 15px;
-    color: white;
-    background-color: var(--red);
-}
-.groupMatcher .centerContainer{
-    position: relative;
-    display: flex;
-    width: 100%;
+    width: 75%;
     min-height: 0;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     justify-content: space-between;
     align-items: stretch;
     flex: 1;
     gap: 15px;
 }
-.groupMatcher .bottomContainer{
+.groupMatcher .groupsControls{
     position: relative;
     display: flex;
     width: 100%;
@@ -158,26 +149,9 @@ header .headerText img{
     padding: 0;
     justify-content: center;
     align-items: center;
+    gap: 15px;
 }
-.groupMatcher .centerContainer button{
-    display: flex;
-    color: white;
-    background-color: var(--red);
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    margin: auto 0;
-    padding: 0;
-    aspect-ratio: 1 / 1;
-    justify-content: center;
-    align-items: center;
-    border: none;
-}
-.groupMatcher .centerContainer button:hover{
-    filter: brightness(0.8);
-    transform: scale(1.1);
-}
-.groupMatcher .bottomContainer button{
+.groupMatcher .groupsControls button{
     display: flex;
     color: white;
     background-color: var(--red);
@@ -185,16 +159,23 @@ header .headerText img{
     width: fit-content;
     height: 50px;
     margin: 0;
-    padding: 15px 45px;
+    padding: 15px 60px;
     justify-content: center;
     align-items: center;
     border: none;
 }
-.groupMatcher .bottomContainer button:hover{
-    filter: brightness(0.8);
-    transform: scale(1.1);
+.groupMatcher .groupsControls button:hover{
+    filter: brightness(0.9);
+    transform: scale(1.05);
 }
-.groupMatcher .centerContainer .groups{
+.groupMatcher .groupsControls #squareButton{
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 1 / 1;
+}
+.groupMatcher .groupsContainer .groups{
     display: flex;
     width: 100%;
     margin: 0;
@@ -203,14 +184,47 @@ header .headerText img{
     gap: 15px;
     align-items: center;
 }
-.groupMatcher .centerContainer .groups .group{
+.groupMatcher .groupsContainer .groups .group{
     display: flex;
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 30px;
     flex: 1;
     background-color: var(--darkGrey);
+    color: white;
+    flex-direction: column;
+    gap: 30px;
+}
+.groupMatcher .groupsContainer .groups .group .groupTitle{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--red);
+    flex-shrink: 0;
+    justify-content: space-between;
+}
+.groupMatcher .groupsContainer .groups .group .groupTags{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--red);
+    flex-shrink: 0;
+    justify-content: space-between;
+}
+.groupMatcher .groupsContainer .groups .group .groupDescription{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--red);
+    flex-shrink: 0;
+    justify-content: space-between;
 }
 .container{
     position: relative;
@@ -333,21 +347,11 @@ footer{
     border-top: 3px solid var(--red);
 }
 /* Google Material Icons */
-.material-symbols-outlined{
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 300,
-        'GRAD' 0,
-        'opsz' 24;
+.material-icons-round{
     cursor: pointer;
 }
-.material-symbols-outlined:hover{
-    font-variation-settings:
-        'FILL' 1,
-        'wght' 300,
-        'GRAD' 0,
-        'opsz' 24;
-    transform: scale(1.1);
+.material-icons-round:hover{
+    color: var(--red);
 }
 /*Scrollbar*/
 ::-webkit-scrollbar{

@@ -1,22 +1,11 @@
-1. After logging in for the FIRST time, home page should have a Welcome message and a have user fill out a 
-form for their profile information.
-
-2. Questions should include: What is your major, Year in school, date of birth, # credits being taken this semester
-and the type of study group size wanted (drop down with range 1-5, anything more is overkill in my opinion) 
-Keep it simple for now, later can add a section for the specific classes you are taking (may need to get access to UNO class catalog)
-
-3. Questions should be answered with a drop-down menu (easier to prevent users from breaking the form with invalid text input)
-
-AFTER FIRST LOGIN IS DONE:
-
-4. Direct user to another page that would show them potential "matches" for users that have similar profile info as them.
+1. Direct user to another page that would show them potential "matches" for users that have similar profile info as them.
 This feature would be backend implemented, as for specifics that is to come after frontend is completed.
 
+Suggestion Guide:
+    If anyone has any suggestions please leave them below and give a brief explanation of where it would be implemented and what frontend should look like.
+    If possible, I think it would be better to start in this format:
+    "As a user, I want to be able to [X] so that I can [X]. The front end for this feature should include [X] type of inputs and should look like [X]."
 
-If anyone has any suggestions please leave them below and give a brief explanation of where it would be implemented and what frontend should look like.
-If possible, I think it would be better to start in this format:
-"As a user, I want to be able to [X] so that I can [X]. The front end for this feature should include [X] type of inputs and should look like [X]."
-
-So using my suggestions as an example:
-"As a user, I want to be able to add profile information so that I can find similar users. The front end for this feature should include drop-downs for inputting information
-and the page should have a design similar to the login/sign-up page."
+    So using my suggestions as an example:
+    "As a user, I want to be able to add profile information so that I can find similar users. The front end for this feature should include drop-downs for inputting information
+    and the page should have a design similar to the login/sign-up page."
