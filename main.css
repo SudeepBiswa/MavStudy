@@ -116,6 +116,22 @@ header .headerIcons{
     flex-grow: 1;
     flex-direction: column;
     justify-content: start;
+    border-radius: 0;
+}
+.homeContainer::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    background-image: url('images/background.png');
+    background-size: cover;
+    background-position: center;
+
+    filter: blur(2px);
+    z-index: 0;
 }
 .groupMatcher{
     position: relative;
@@ -163,10 +179,13 @@ header .headerIcons{
     justify-content: center;
     align-items: center;
     border: none;
+    background-color: rgba(212, 27, 30, 0.5);
+    backdrop-filter: blur(2px);
 }
 .groupMatcher .groupsControls button:hover{
     filter: brightness(0.9);
     transform: scale(1.05);
+    backdrop-filter: blur(4px);
 }
 .groupMatcher .groupsControls #squareButton{
     width: 50px;
