@@ -29,7 +29,7 @@ createButton.addEventListener("click", async (event) => {
         //login registry
         await addEvent(user, "signUp");
 
-        setTimeout(() => { window.location.href = "welcome.html"; }, 1000);
+        setTimeout(() => { window.location.href = "profile.html"; }, 1000);
     } catch (error) {
         messageHandler.style.color = "red";
         messageHandler.textContent = error.message;

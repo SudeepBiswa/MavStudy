@@ -1,6 +1,7 @@
 :root{
     --gold: #e6d196;
     --red: #d41b1e;
+    --redTransparent: rgba(212, 27, 30, 0.5);
     --green: #95CD6E;
     --darkGrey: #0f0f0f;
     --lightGrey: #212121;
@@ -179,7 +180,7 @@ header .headerIcons{
     justify-content: center;
     align-items: center;
     border: none;
-    background-color: rgba(212, 27, 30, 0.5);
+    background-color: var(--redTransparent);
     backdrop-filter: blur(2px);
 }
 .groupMatcher .groupsControls button:hover{
@@ -345,6 +346,126 @@ header .headerIcons{
     border: none;
     border-top: 1px solid var(--lightGrey);
     margin: 20px auto;
+}
+.conversationsContainer{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    flex-direction: row;
+    background-color: black;
+    border-radius: 0;
+    color: white;
+}
+.conversationsContainer .conversationsList{
+    display: flex;
+    width: 30%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    flex-direction: column;
+}
+.conversationsContainer .conversationsList .conversationsListActiveConversation{
+    width: 100%;
+    background-color: var(--red);
+    margin: 0;
+    padding: 15px;
+    white-space: nowrap;
+    border-radius: 0;
+    cursor: pointer;
+}
+.conversationsContainer .conversationsList .conversationsListConversation{
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    white-space: nowrap;
+    border-radius: 0;
+    cursor: pointer;
+}
+.conversationsContainer .conversationsList .conversationsListConversation:hover{
+    background-color: var(--lightGrey);
+}
+.conversationsContainer .activeConversation{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    flex-direction: column;
+}
+.conversationsContainer .activeConversation .messages{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 15px;
+}
+.conversationsContainer .activeConversation .messages .message{
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    max-width: 60%;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+}
+.conversationsContainer .activeConversation .messages .message .messageSenderInfo{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    flex-direction: column;
+}
+.conversationsContainer .activeConversation .messages .message .messageContent{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    flex-direction: column;
+    background-color: var(--red);
+}
+
+.conversationsContainer .activeConversation .messages .message .messageContent .messageInfo{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: end;
+}
+.conversationsContainer .activeConversation .messageBar{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    gap: 15px;
+    flex-direction: row;
+}
+.conversationsContainer .activeConversation .messageBar input{
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--lightGrey);
+    border: 0;
+    outline: none;
+}
+.conversationsContainer .activeConversation .messageBar button{
+    display: flex;
+    color: white;
+    background-color: var(--red);
+    cursor: pointer;
+    width: fit-content;
+    height: 50px;
+    margin: 0;
+    padding: 15px 60px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: var(--red);
+    backdrop-filter: blur(2px);
+}
+.conversationsContainer .activeConversation .messageBar button:hover{
+    background-color: var(--red);
+    transform: scale(1.05);
+    backdrop-filter: blur(4px);
 }
 #messageHandler{
     width: 100%;
