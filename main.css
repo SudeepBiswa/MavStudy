@@ -180,7 +180,7 @@ header .headerIcons{
     justify-content: center;
     align-items: center;
     border: none;
-    background-color: var(--redTransparent);
+    background-color: var(--red);
     backdrop-filter: blur(2px);
 }
 .groupMatcher .groupsControls button:hover{
@@ -245,6 +245,74 @@ header .headerIcons{
     background-color: var(--red);
     flex-shrink: 0;
     justify-content: space-between;
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--red);
+    flex-shrink: 0;
+    gap: 10px;
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers li::after{
+    content: ",";
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers li:last-child::after{
+    content: "";
+}
+li{
+    width: fit-content;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 8px;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+}
+li a::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: white;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    border-radius: 10px;
+}
+li a:hover::before{
+    transform: scaleX(1);
+}
+/* .groupMatcher .groupsContainer .groups .group .groupMembers a{
+    text-decoration: none;
+    margin: 0;
+    padding: 10px;
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers a::after{
+    content: ",";
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers a:last-child::after{
+    content: "";
+}
+.groupMatcher .groupsContainer .groups .group .groupMembers a::before{
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: white;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    border-radius: 10px;
+} */
+.groupMatcher .groupsContainer .groups .group .groupMembers a:hover::before{
+    transform: scaleX(1);
 }
 .container{
     position: relative;
