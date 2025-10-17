@@ -91,10 +91,44 @@
                 <button id="squareButton" onclick="">></button>
             </div>
         </div>
+        <div class="viewProfile" id="viewProfile">
+            <div class="viewProfileInfo">
+                <div class="viewProfileInfoRow">
+                    <h1>First and Last Name</h1>
+                    <h1>Age</h1>
+                </div>
+                <div class="viewProfileInfoRow">
+                    <h1>Major</h1>
+                    <h1>Enrollment</h1>
+                </div>
+                <div class="viewProfileInfoRow">
+                    <li><a href="">email@unomaha.edu</a></li>
+                </div>
+            </div>
+            <div class="viewProfileActions">
+                <button onclick="">Report</button>
+                <button onclick="">Block</button>
+            </div>
+            <div class="viewProfileActions">
+                <button onclick="">Message</button>
+            </div>
+            <div class="viewProfileActions">
+                <button onclick="changeViewProfileState('close')">Close</button>
+            </div>
+        </div>
     </div>
     <footer>
         <h1>Created by Alejandro, Ashita, Eduardo, Mickey, Sudeep, and Talon</h1>
     </footer>
-    <script src="script.js" defer></script>
+    <script>
+        function changeViewProfileState(state){
+            if(state == "open"){
+                document.getElementById("viewProfile").style.display = "flex";
+            }
+            else{
+                document.getElementById("viewProfile").style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
