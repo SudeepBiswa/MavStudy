@@ -16,18 +16,32 @@
             <img src="images/favicon.png" id="logo">
             <a href="index.html">MavSTUDY</a>
         </div>
-        <div class="headerIcons">
-            <a href="conversations.html", id="convo">
+        <div class="headerLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="conversations.html">Conversations</a></li>
+            <li><a href="profile.html">Profile</a></li>
+        </div>
+        <!-- <div class="headerIcons">
+            <a>
+                <span class="material-icons-round" style="font-size: 30px;">search</span>
+            </a>
+            <a>
+                <span class="material-icons-round" style="font-size: 30px;">add</span>
+            </a>
+            <a href="conversations.html">
                 <span class="material-icons-round" style="font-size: 30px;">chat</span>
             </a>
-            <a href="profile.html", id="chatty">
-                <span class="material-icons-round" style="font-size: 30px;">account_circle</span>
+            <a href="profile.html">
+                <span class="material-icons-round" style="font-size: 30px;">person</span>
             </a>
-        </div>
+        </div> -->
     </header>
     <div class="container">
         <form id="userDetailsForm">
             <h1>User Details</h1>
+            <!-- We will just need to disable this for current users or create a separate 
+             creation page, but right now profile.html is dual purpose for creation and 
+             editing profile details -->
             <div class="doubleInput">
                 <div>
                     <label>First Name</label>
@@ -93,14 +107,6 @@
                 <option value="" disabled selected>Select your enrollment status</option>
                 <option value="fullTime">Full-Time (12+ credits)</option>
                 <option value="partTime">Part-Time (&lt;12 credits)</option>
-            </select>
-            <label>Group Size</label>
-            <select id="groupSizeDropdown" required>
-                <option value="" disabled selected>Select your desired group size</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
             </select>
             <hr>
             <input type="submit" id="saveUserDetailsButton" value="save user details">

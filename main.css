@@ -94,7 +94,15 @@ header .headerIcons{
     display: flex;
     position: relative;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+}
+header .headerLinks{
+    display: flex;
+    position: relative;
+    align-items: center;
+    gap: 15px;
+    font-size: 80%;
+    text-transform: uppercase;
 }
 li{
     width: fit-content;
@@ -284,6 +292,81 @@ li a:hover::before{
 .groupMatcher .groupsContainer .groups .group .groupMembers li:last-child::after{
     content: "";
 }
+.lookingForGroup{
+    position: absolute;
+    display: flex;
+    width: 40%;
+    margin: 0;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    backdrop-filter: blur(2px);
+    color: white;
+    z-index: 1;
+    gap: 15px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.lookingForGroup form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    height: fit-content;
+    padding: 30px;
+    background: black;
+    border: none;
+    font-size: 90%;
+}
+.lookingForGroup form select{
+    width: 100%;
+    color: var(--veryLightGrey);
+    background: var(--lightGrey);
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 15px;
+    cursor: pointer;
+    border-right: 15px solid transparent;
+}
+.lookingForGroup form select:focus, .lookingForGroup form select:valid{
+    background-color: var(--red);
+    color: white;
+}
+.lookingForGroup form select option{
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+.lookingForGroup form input[type="submit"], .lookingForGroup form button{
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--lightGrey);
+    border: none;
+    cursor: pointer;
+    font-size: 95%;
+    text-transform: capitalize;
+    color: white;
+}
+.lookingForGroup form input[type="submit"]:hover, .lookingForGroup form button:hover{
+    background-color: var(--red);
+    transform: scale(1.05);
+}
+.lookingForGroup form hr{
+    width: 85%;
+    border: none;
+    border-top: 2px solid var(--lightGrey);
+    margin: 20px auto;
+}
+.lookingForGroup form input[type="range"]{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    accent-color: var(--red);
+}
 .viewProfile{
     position: absolute;
     display: flex;
@@ -299,7 +382,6 @@ li a:hover::before{
     z-index: 1;
     gap: 15px;
     flex-direction: column;
-    box-shadow: 0 0 15px black;
     justify-content: space-between;
 }
 .viewProfile .viewProfileInfo{
@@ -364,7 +446,6 @@ li a:hover::before{
     padding: 45px;
     background: black;
     border: none;
-    box-shadow: 0 0 15px 0px black;
     font-size: 90%;
 }
 .container form h1{
@@ -441,7 +522,7 @@ li a:hover::before{
 .container form hr{
     width: 85%;
     border: none;
-    border-top: 1px solid var(--lightGrey);
+    border-top: 2px solid var(--lightGrey);
     margin: 20px auto;
 }
 .conversationsContainer{
@@ -449,20 +530,23 @@ li a:hover::before{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 15px;
     flex-grow: 1;
     flex-direction: row;
-    background-color: black;
     border-radius: 0;
     color: white;
+    gap: 15px;
 }
 .conversationsContainer .conversationsList{
     display: flex;
     width: 30%;
     margin: 0;
-    padding: 0;
+    padding: 15px;
     border-radius: 0;
     flex-direction: column;
+    background-color: var(--darkGrey);
+    border-radius: 15px;
+    gap: 15px;
 }
 .conversationsContainer .conversationsList .conversationsListActiveConversation{
     width: 100%;
@@ -472,6 +556,7 @@ li a:hover::before{
     white-space: nowrap;
     border-radius: 0;
     cursor: pointer;
+    border-radius: 15px;
 }
 .conversationsContainer .conversationsList .conversationsListConversation{
     width: 100%;
@@ -480,6 +565,7 @@ li a:hover::before{
     white-space: nowrap;
     border-radius: 0;
     cursor: pointer;
+    border-radius: 15px;
 }
 .conversationsContainer .conversationsList .conversationsListConversation:hover{
     background-color: var(--lightGrey);
@@ -488,8 +574,9 @@ li a:hover::before{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 15px;
+    padding: 30px;
     flex-direction: column;
+    background-color: var(--darkGrey);
 }
 .conversationsContainer .activeConversation .messages{
     display: flex;

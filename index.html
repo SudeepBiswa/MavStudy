@@ -16,14 +16,27 @@
             <img src="images/favicon.png" id="logo">
             <a href="index.html">MavSTUDY</a>
         </div>
-        <div class="headerIcons">
+        <div class="headerLinks">
+            <li><a href="index.html">Home</a></li>
+            <li><a>Search</a></li>
+            <li><a>Create</a></li>
+            <li><a href="conversations.html">Conversations</a></li>
+            <li><a href="profile.html">Profile</a></li>
+        </div>
+        <!-- <div class="headerIcons">
+            <a>
+                <span class="material-icons-round" style="font-size: 30px;">search</span>
+            </a>
+            <a>
+                <span class="material-icons-round" style="font-size: 30px;">add</span>
+            </a>
             <a href="conversations.html">
                 <span class="material-icons-round" style="font-size: 30px;">chat</span>
             </a>
             <a href="profile.html">
-                <span class="material-icons-round" style="font-size: 30px;">account_circle</span>
+                <span class="material-icons-round" style="font-size: 30px;">person</span>
             </a>
-        </div>
+        </div> -->
     </header>
     <div class="homeContainer">
         <div class="groupMatcher">
@@ -113,20 +126,42 @@
                 <button onclick="">Message</button>
             </div>
             <div class="viewProfileActions">
-                <button onclick="changeViewProfileState('close')">Close</button>
+                <button onclick="closeMenu('viewProfile', 'close')">Close</button>
             </div>
+        </div>
+        <div class="lookingForGroup" id="lookingForGroup">
+            <form id="lookingForGroupForm">
+                <label id="groupSizeLabel">Group Size</label>
+                <select id="groupSizeDropdown" required>
+                    <option value="" disabled selected>Select your desired group size</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <!-- <input type="range" min="2" max="5" value="2" id="groupSizeRange"> -->
+                <hr>
+                <button id="lookingForGroupButton">Looking For Group</button>
+                <button id="closeLookingForGroupButton" onclick="closeMenu('lookingForGroup', 'close')">Close</button>
+            </form>
         </div>
     </div>
     <footer>
         <h1>Created by Alejandro, Ashita, Eduardo, Mickey, Sudeep, and Talon</h1>
     </footer>
     <script>
-        function changeViewProfileState(state){
+        // var groupSizeRange = document.getElementById("groupSizeRange");
+        // var groupSizeLabel = document.getElementById("groupSizeLabel");
+        // groupSizeLabel.innerHTML = 'Group Size (' + groupSizeRange.value + ')';
+        // groupSizeRange.oninput = function(){
+        //     groupSizeLabel.innerHTML = 'Group Size (' + this.value + ')';
+        // }
+        function closeMenu(id, state){
             if(state == "open"){
-                document.getElementById("viewProfile").style.display = "flex";
+                document.getElementById(id).style.display = "flex";
             }
             else{
-                document.getElementById("viewProfile").style.display = "none";
+                document.getElementById(id).style.display = "none";
             }
         }
     </script>
