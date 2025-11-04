@@ -3,31 +3,38 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/fi
 import { doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("userDetailsForm");
-    const messageHandler = document.getElementById("messageHandler");
-    const submitBtn = document.getElementById("saveUserDetailsButton")
+    let path = window.location.href
+    let page = path.substring(path.lastIndexOf("/") + 1) || 'nil';
+    console.log(page)
 
-    const convo = document.getElementById("convo");
-    const chat =  document.getElementById("chatty")
+    //if(page = "profile.html"){
+        const form = document.getElementById("userDetailsForm");
+        const messageHandler = document.getElementById("messageHandler");
+        const submitBtn = document.getElementById("saveUserDetailsButton")
 
-    const lFirstName = document.getElementById("userFirstName");
-    const lLastName = document.getElementById("userLastName");
-    const lMajor = document.getElementById("majorDropdown");
-    const lGrade = document.getElementById("gradeDropdown");
-    const lAge = document.getElementById("ageInput");
-    const lEnrollment = document.getElementById("enrollmentStatusDropdown");
-    const lGroupSize = document.getElementById("groupSizeDropdown");
+        const convo = document.getElementById("convo");
+        const chat =  document.getElementById("chatty")
 
+        const lFirstName = document.getElementById("userFirstName");
+        const lLastName = document.getElementById("userLastName");
+        const lMajor = document.getElementById("majorDropdown");
+        const lGrade = document.getElementById("gradeDropdown");
+        const lAge = document.getElementById("ageInput");
+        const lEnrollment = document.getElementById("enrollmentStatusDropdown");
+        const lGroupSize = document.getElementById("groupSizeDropdown");
+    //}
+
+    
 
     // if user is NOT authenticated redirect to login page
     onAuthStateChanged(auth, async(user) => {
-        //let path = window.location.href
-        //let page = path.substring(path.lastIndexOf("/") + 1) || 'nil';
-       
+        
+        console.log(user)
         if (!user) {
-            //if (page != "login.html"){
+            
+            if (page != "login.html"){
                 window.location.href = "login.html";
-           // }
+            }
             return;
         }
 
@@ -41,7 +48,7 @@ window.addEventListener("DOMContentLoaded", () => {
             submitBtn.value = "Create Profile"; 
             convo.style.visibility = "hidden";
             chatty.style.visibility = "hidden";
-            
+                
         }
         else{
             lFirstName.value = userData.ProfileData.firstName
@@ -54,8 +61,6 @@ window.addEventListener("DOMContentLoaded", () => {
             lEnrollment.value = userData.ProfileData.enrollmentStatus
             lGroupSize.value = userData.ProfileData.groupSize
         }
-
-       
         
         //stores user details from form
         form.addEventListener("submit", async (event) => {

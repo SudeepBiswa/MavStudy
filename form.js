@@ -1,29 +1,29 @@
 import { auth, db } from "./firebase-init.js";
-import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { addDoc, collection, serverTimestamp, setDoc, doc, getFirestore} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { createUserWithEmailAndPassword, signOut, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { addDoc, collection, serverTimestamp, setDoc, doc, getFirestore, getDoc} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 //text
 const messageHandler = document.getElementById("messageHandler");
 
 const createButton = document.getElementById("createButton");
 
- const ProfileData = {
-            InitialAccountCreationComplete: false,
-            firstName: "",
-            lastName: "",
-            major: "",
-            grade: "",
-            age: null,
-            enrollmentStatus: "",
-            groupSize: "",
-            accountCreationDate: new Date()
-        };
-
+const ProfileData = {
+    InitialAccountCreationComplete: false,
+    firstName: "",
+    lastName: "",
+    major: "",
+    grade: "",
+    age: null,
+    enrollmentStatus: "",
+    groupSize: "",
+     accountCreationDate: new Date()
+};
+console.log(auth)
 //buttons
 createButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
+    const email = document.getElementById("email").value.trim().toLowerCase();
     const password = document.getElementById("password").value.trim();
 
     try {
@@ -39,7 +39,7 @@ createButton.addEventListener("click", async (event) => {
    
         
         
-    await setDoc(doc(db, "users", user.uid), {ProfileData});
+    await setDoc(doc(db, "users", user.uid), {ProfileData}, {merge: true});
 
     messageHandler.style.color = "green";
     messageHandler.textContent = "Account created";
@@ -61,28 +61,34 @@ const loginButton = document.getElementById("loginButton");
 loginButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    //login feature
-    if (!email || !password){
-        messageHandler.textContent = "Please enter both email and password!";
-        messageHandler.style.color = "red";
-        return;
-    }
-
     try{
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value.trim();
+        console.log(email + " " + password)
+
+        //console.log(auth.currentUser)
+
+        //login feature
+        // if (!email || !password){
+        //     messageHandler.textContent = "Please enter both email and password!";
+        //     messageHandler.style.color = "red";
+        //     return;
+        // }
+        console.log(auth)
         const userCred = await signInWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
+        console.log("all good 2")
+
         const ref = await getDoc(doc(db, "users", user.uid));
-        if(!ref){
+        if(!ref.exists()){
             messageHandler.textContent = "UserData DOES NOT EXIST: CREATING USERDATA!!";
             messageHandler.style.color = "yellow";
+            await setDoc(ref, {ProfileData});
             setTimeout(() => {
                 messageHandler.textContent = "USERDATA CREATED!!";
                 messageHandler.style.color = "green";
             }, 1000)
-            await setDoc(ref, {ProfileData});
+            
            
         }
 
