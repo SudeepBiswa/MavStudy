@@ -8,8 +8,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const messageHandler = document.getElementById("messageHandler");
     const submitBtn = document.getElementById("saveUserDetailsButton")
 
-    const convo = document.getElementById("convo");
-    const chat =  document.getElementById("chatty")
+    const convoBtn = document.getElementById("convoBtn");
+    const homeBtn =  document.getElementById("homeBtn")
 
     const lFirstName = document.getElementById("userFirstName");
     const lLastName = document.getElementById("userLastName");
@@ -17,7 +17,6 @@ window.addEventListener("DOMContentLoaded", () => {
     const lGrade = document.getElementById("gradeDropdown");
     const lAge = document.getElementById("ageInput");
     const lEnrollment = document.getElementById("enrollmentStatusDropdown");
-    const lGroupSize = document.getElementById("groupSizeDropdown");
 
     console.log(auth.currentUser)
 
@@ -40,8 +39,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if(!userData.ProfileData.InitialAccountCreationComplete){
             submitBtn.value = "Create Profile"; 
-            convo.style.visibility = "hidden";
-            chatty.style.visibility = "hidden";
+            convoBtn.style.visibility = "hidden";
+            homeBtn.style.visibility = "hidden";
                 
         }
         else{
@@ -53,7 +52,6 @@ window.addEventListener("DOMContentLoaded", () => {
             lGrade.value = userData.ProfileData.grade
             lAge.value = userData.ProfileData.age
             lEnrollment.value = userData.ProfileData.enrollmentStatus
-            lGroupSize.value = userData.ProfileData.groupSize
         }
         
         //stores user details from form
@@ -69,8 +67,7 @@ window.addEventListener("DOMContentLoaded", () => {
             major: document.getElementById("majorDropdown").value,
             grade: document.getElementById("gradeDropdown").value,
             age: parseInt(document.getElementById("ageInput").value),
-            enrollmentStatus: document.getElementById("enrollmentStatusDropdown").value,
-            groupSize: parseInt(document.getElementById("groupSizeDropdown").value)
+            enrollmentStatus: document.getElementById("enrollmentStatusDropdown").value
         };
         
         try {
@@ -78,7 +75,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if(!userData.ProfileData.InitialAccountCreationComplete){
                 canGoToNextPage = true;
             }
-            await updateDoc(doc(db, "users", user.uid), {ProfileData: studentData});
+            await setDoc(doc(db, "users", user.uid), {ProfileData: studentData}, {merge: true});
             messageHandler.style.color = "green";
             if(canGoToNextPage){
                 messageHandler.textContent = "PROFILE CREATED!!";

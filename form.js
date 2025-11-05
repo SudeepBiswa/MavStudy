@@ -25,7 +25,6 @@ createButton.addEventListener("click", async (event) => {
         grade: "",
         age: null,
         enrollmentStatus: "",
-        groupSize: "",
         accountCreationDate: new Date()
     };
 
@@ -80,7 +79,6 @@ loginButton.addEventListener("click", async (event) => {
             grade: "",
             age: null,
             enrollmentStatus: "",
-            groupSize: "",
             accountCreationDate: new Date()
         };
 
@@ -110,6 +108,8 @@ loginButton.addEventListener("click", async (event) => {
                 messageHandler.textContent = "USERDATA CREATED!!";
                 messageHandler.style.color = "green";
             }, 1000);
+
+            window.location.href = "profile.html";
         }
 
 
