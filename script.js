@@ -3,26 +3,23 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/fi
 import { doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 window.addEventListener("DOMContentLoaded", () => {
-    let path = window.location.href
-    let page = path.substring(path.lastIndexOf("/") + 1) || 'nil';
-    console.log(page)
 
-    //if(page = "profile.html"){
-        const form = document.getElementById("userDetailsForm");
-        const messageHandler = document.getElementById("messageHandler");
-        const submitBtn = document.getElementById("saveUserDetailsButton")
+    const form = document.getElementById("userDetailsForm");
+    const messageHandler = document.getElementById("messageHandler");
+    const submitBtn = document.getElementById("saveUserDetailsButton")
 
-        const convo = document.getElementById("convo");
-        const chat =  document.getElementById("chatty")
+    const convo = document.getElementById("convo");
+    const chat =  document.getElementById("chatty")
 
-        const lFirstName = document.getElementById("userFirstName");
-        const lLastName = document.getElementById("userLastName");
-        const lMajor = document.getElementById("majorDropdown");
-        const lGrade = document.getElementById("gradeDropdown");
-        const lAge = document.getElementById("ageInput");
-        const lEnrollment = document.getElementById("enrollmentStatusDropdown");
-        const lGroupSize = document.getElementById("groupSizeDropdown");
-    //}
+    const lFirstName = document.getElementById("userFirstName");
+    const lLastName = document.getElementById("userLastName");
+    const lMajor = document.getElementById("majorDropdown");
+    const lGrade = document.getElementById("gradeDropdown");
+    const lAge = document.getElementById("ageInput");
+    const lEnrollment = document.getElementById("enrollmentStatusDropdown");
+    const lGroupSize = document.getElementById("groupSizeDropdown");
+
+    console.log(auth.currentUser)
 
     
 
@@ -31,10 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
         
         console.log(user)
         if (!user) {
-            
-            if (page != "login.html"){
                 window.location.href = "login.html";
-            }
             return;
         }
 

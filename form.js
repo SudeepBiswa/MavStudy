@@ -7,17 +7,7 @@ const messageHandler = document.getElementById("messageHandler");
 
 const createButton = document.getElementById("createButton");
 
-const ProfileData = {
-    InitialAccountCreationComplete: false,
-    firstName: "",
-    lastName: "",
-    major: "",
-    grade: "",
-    age: null,
-    enrollmentStatus: "",
-    groupSize: "",
-     accountCreationDate: new Date()
-};
+
 console.log(auth)
 //buttons
 createButton.addEventListener("click", async (event) => {
@@ -26,6 +16,19 @@ createButton.addEventListener("click", async (event) => {
     const email = document.getElementById("email").value.trim().toLowerCase();
     const password = document.getElementById("password").value.trim();
 
+    const ProfileData = {
+        userEmail: email,
+        InitialAccountCreationComplete: false,
+        firstName: "",
+        lastName: "",
+        major: "",
+        grade: "",
+        age: null,
+        enrollmentStatus: "",
+        groupSize: "",
+        accountCreationDate: new Date()
+    };
+
     try {
     if (!(email.endsWith("@unomaha.edu") || email.endsWith("@nebraska.edu"))) {
         messageHandler.style.color = "red";
@@ -33,6 +36,7 @@ createButton.addEventListener("click", async (event) => {
         return;
     }
 
+    await setPersistence(auth, browserSessionPersistence);
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     
@@ -61,10 +65,24 @@ const loginButton = document.getElementById("loginButton");
 loginButton.addEventListener("click", async (event) => {
     event.preventDefault();
 
+    
+
     try{
         const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value.trim();
-        console.log(email + " " + password)
+        
+        const ProfileData = {
+            userEmail: email,
+            InitialAccountCreationComplete: false,
+            firstName: "",
+            lastName: "",
+            major: "",
+            grade: "",
+            age: null,
+            enrollmentStatus: "",
+            groupSize: "",
+            accountCreationDate: new Date()
+        };
 
         //console.log(auth.currentUser)
 
@@ -74,23 +92,26 @@ loginButton.addEventListener("click", async (event) => {
         //     messageHandler.style.color = "red";
         //     return;
         // }
-        console.log(auth)
+        await setPersistence(auth, browserSessionPersistence);
         const userCred = await signInWithEmailAndPassword(auth, email, password);
         const user = userCred.user;
         console.log("all good 2")
 
-        const ref = await getDoc(doc(db, "users", user.uid));
-        if(!ref.exists()){
+        const docRef = doc(db, "users", user.uid);        
+        const docSnap = await getDoc(docRef);            
+
+        if (!docSnap.exists()) {
             messageHandler.textContent = "UserData DOES NOT EXIST: CREATING USERDATA!!";
             messageHandler.style.color = "yellow";
-            await setDoc(ref, {ProfileData});
+
+            await setDoc(docRef, { ProfileData });       
+
             setTimeout(() => {
                 messageHandler.textContent = "USERDATA CREATED!!";
                 messageHandler.style.color = "green";
-            }, 1000)
-            
-           
+            }, 1000);
         }
+
 
         messageHandler.textContent = "Login Successful!"
         messageHandler.style.color = "green";
