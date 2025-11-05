@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-init.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { doc, setDoc, updateDoc, getDoc, runTransaction } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -23,6 +23,60 @@ window.addEventListener("DOMContentLoaded", () => {
         const lgroupDescription = document.getElementById("groupDescription")
 
         const createGroupBtn = document.getElementById("createGroupButton");
+
+        const groupsContainer = document.querySelector(".groups");
+        async function loadPosts() {
+            const groupsContainer = document.querySelector(".groups");
+            groupsContainer.innerHTML = "<h3>Loading posts...</h3>";
+
+            // Fetch posts from Firestore
+            try {
+                const querySnapshot = await getDocs(collection(db, "posts"));
+                console.log("Fetched posts:", querySnapshot.size);
+
+                if (querySnapshot.empty) {
+                    groupsContainer.innerHTML = "<h2>No study groups available right now.</h2>";
+                    return;
+                }
+
+                groupsContainer.innerHTML = ""; // clear loading text
+
+                // Iterate through posts and display them
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    console.log("Post data:", data);
+
+                    const groupDiv = document.createElement("div");
+                    groupDiv.classList.add("group");
+
+                    groupDiv.innerHTML = `
+                        <div class="groupTitle">
+                            <h1>${data.user1?.firstLastName || "Unknown User"}</h1>
+                            <h1>${data.groupAgeMin || "?"}-${data.groupAgeMax || "?"}</h1>
+                            <h1>${data.groupSizeMin || "?"}/${data.groupSizeMax || "?"}</h1>
+                        </div>
+                        <div class="groupMembers">
+                            <li><a onclick="closeMenu('viewProfile', 'open')">${data.user1?.firstLastName || "Unknown"}</a></li>
+                        </div>
+                        <div class="groupTags">
+                            <h1>${data.groupTags || "No tags"}</h1>
+                        </div>
+                        <div class="groupDescription">
+                            <h1>${data.groupDescription || "No description provided."}</h1>
+                        </div>
+                    `;
+
+                    groupsContainer.appendChild(groupDiv);
+                });
+
+            } catch (err) {
+                console.error("Error loading posts:", err);
+                groupsContainer.innerHTML = "<h2>Error loading posts</h2>";
+            }
+        }
+        // load posts right away
+        await loadPosts();
+
 
         createGroupBtn.addEventListener("click", async (event) => {
             event.preventDefault();
