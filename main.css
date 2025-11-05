@@ -541,6 +541,14 @@ li a:hover::before{
     color: white;
     padding: 10px;
 }
+.container form input[type="file"]{
+    width: 100%;
+    margin: 0;
+    padding: 15px;
+    background-color: var(--lightGrey);
+    cursor: pointer;
+    color: var(--veryLightGrey);
+}
 .container form input[type="submit"]{
     width: 100%;
     margin: 0;
@@ -761,6 +769,8 @@ input[type=number]{
 .tagpicker-chips{
     display: flex;
     gap: 15px;
+    max-width: 100%;
+    overflow: scroll;
 }
 .tagchip{
     display: inline-flex;
@@ -769,6 +779,7 @@ input[type=number]{
     background: var(--red);
     cursor: pointer;
     user-select: none;
+    white-space: nowrap;
 }
 .tagchip:hover{
     filter: brightness(0.7);
