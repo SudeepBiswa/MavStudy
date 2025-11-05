@@ -21,85 +21,87 @@
             <li><a href="conversations.html" id="convoBtn">Conversations</a></li>
         </div>
     </header>
-    <div class="menu" style="position: relative;margin: 15px auto;transform: none;top: auto;left: auto;z-index: 0;">
-        <div class="menuTitle">
-            <h1>User Details</h1>
-        </div>
-        <form id="userDetailsForm">
-            <!-- We will just need to disable this for current users or create a separate 
-             creation page, but right now profile.html is dual purpose for creation and 
-             editing profile details -->
-            <div class="doubleInput">
-                <div>
-                    <label>First Name</label>
-                    <input type="text" placeholder="First" id="userFirstName" required>
-                </div>
-                <div>
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Last" id="userLastName" required>
-                </div>
+    <div class="homeContainer">
+        <div class="menu" style="position: relative;margin: 0 auto;transform: none;top: auto;left: auto;z-index: 0;">
+            <div class="menuTitle">
+                <h1>User Details</h1>
             </div>
-            <label>Profile Picture</label>
-            <input type="file" accept=".jpg, .jpeg, .png" id="userProfilePicture">
-            <label>Major</label>
-            <select id="majorDropdown" required>
-                <option value="" disabled selected>Select your major</option>
-                <option value="accounting">Accounting</option>
-                <option value="aviation">Aviation</option>
-                <option value="biology">Biology</option>
-                <option value="business-administration">Business Administration</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="communication-studies">Communication Studies</option>
-                <option value="computer-science">Computer Science</option>
-                <option value="criminology-criminal-justice">Criminology & Criminal Justice</option>
-                <option value="cybersecurity">Cybersecurity</option>
-                <option value="economics">Economics</option>
-                <option value="education-library-science">Education - Library Science</option>
-                <option value="emergency-management">Emergency Management</option>
-                <option value="english">English</option>
-                <option value="environmental-science">Environmental Science</option>
-                <option value="fine-arts">Fine Arts</option>
-                <option value="geography">Geography</option>
-                <option value="gerontology">Gerontology</option>
-                <option value="history">History</option>
-                <option value="information-science-technology">Information Science & Technology</option>
-                <option value="international-studies">International Studies</option>
-                <option value="journalism">Journalism</option>
-                <option value="management-information-systems">Management Information Systems</option>
-                <option value="mathematics">Mathematics</option>
-                <option value="music">Music</option>
-                <option value="neuroscience">Neuroscience</option>
-                <option value="philosophy">Philosophy</option>
-                <option value="physics">Physics</option>
-                <option value="political-science">Political Science</option>
-                <option value="psychology">Psychology</option>
-                <option value="public-administration">Public Administration</option>
-                <option value="religious-studies">Religious Studies</option>
-                <option value="sociology">Sociology</option>
-                <option value="studio-art">Studio Art</option>
-                <option value="theatre">Theatre</option>
-                <option value="women-gender-studies">Women's and Gender Studies</option>
-            </select>
-            <label>Grade</label>
-            <select id="gradeDropdown" required>
-                <option value="" disabled selected>Select your grade</option>
-                <option value="freshman">Freshman</option>
-                <option value="sophmore">Sophmore</option>
-                <option value="junior">Junior</option>
-                <option value="senior">Senior</option>
-                <option value="Graduate">Graduate</option>
-            </select>
-            <label>Age</label>
-            <input type="number" id="ageInput" placeholder="Enter your age" min="18" max="99" required>
-            <label>Enrollment Status</label>
-            <select id="enrollmentStatusDropdown" required>
-                <option value="" disabled selected>Select your enrollment status</option>
-                <option value="fullTime">Full-Time (12+ credits)</option>
-                <option value="partTime">Part-Time (&lt;12 credits)</option>
-            </select>
-        </form>
-        <button id="saveUserDetailsButton" value="save user details">Save</button>
-        <p id="messageHandler">This is the message handler. All is good!</p>
+            <form id="userDetailsForm">
+                <!-- We will just need to disable this for current users or create a separate 
+                 creation page, but right now profile.html is dual purpose for creation and 
+                 editing profile details -->
+                <div class="doubleInput">
+                    <div>
+                        <label>First Name</label>
+                        <input type="text" placeholder="First" id="userFirstName" required>
+                    </div>
+                    <div>
+                        <label>Last Name</label>
+                        <input type="text" placeholder="Last" id="userLastName" required>
+                    </div>
+                </div>
+                <label>Profile Picture</label>
+                <input type="file" accept=".jpg, .jpeg, .png" id="userProfilePicture">
+                <label>Major</label>
+                <select id="majorDropdown" required>
+                    <option value="" disabled selected>Select your major</option>
+                    <option value="accounting">Accounting</option>
+                    <option value="aviation">Aviation</option>
+                    <option value="biology">Biology</option>
+                    <option value="business-administration">Business Administration</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="communication-studies">Communication Studies</option>
+                    <option value="computer-science">Computer Science</option>
+                    <option value="criminology-criminal-justice">Criminology & Criminal Justice</option>
+                    <option value="cybersecurity">Cybersecurity</option>
+                    <option value="economics">Economics</option>
+                    <option value="education-library-science">Education - Library Science</option>
+                    <option value="emergency-management">Emergency Management</option>
+                    <option value="english">English</option>
+                    <option value="environmental-science">Environmental Science</option>
+                    <option value="fine-arts">Fine Arts</option>
+                    <option value="geography">Geography</option>
+                    <option value="gerontology">Gerontology</option>
+                    <option value="history">History</option>
+                    <option value="information-science-technology">Information Science & Technology</option>
+                    <option value="international-studies">International Studies</option>
+                    <option value="journalism">Journalism</option>
+                    <option value="management-information-systems">Management Information Systems</option>
+                    <option value="mathematics">Mathematics</option>
+                    <option value="music">Music</option>
+                    <option value="neuroscience">Neuroscience</option>
+                    <option value="philosophy">Philosophy</option>
+                    <option value="physics">Physics</option>
+                    <option value="political-science">Political Science</option>
+                    <option value="psychology">Psychology</option>
+                    <option value="public-administration">Public Administration</option>
+                    <option value="religious-studies">Religious Studies</option>
+                    <option value="sociology">Sociology</option>
+                    <option value="studio-art">Studio Art</option>
+                    <option value="theatre">Theatre</option>
+                    <option value="women-gender-studies">Women's and Gender Studies</option>
+                </select>
+                <label>Grade</label>
+                <select id="gradeDropdown" required>
+                    <option value="" disabled selected>Select your grade</option>
+                    <option value="freshman">Freshman</option>
+                    <option value="sophmore">Sophmore</option>
+                    <option value="junior">Junior</option>
+                    <option value="senior">Senior</option>
+                    <option value="Graduate">Graduate</option>
+                </select>
+                <label>Age</label>
+                <input type="number" id="ageInput" placeholder="Enter your age" min="18" max="99" required>
+                <label>Enrollment Status</label>
+                <select id="enrollmentStatusDropdown" required>
+                    <option value="" disabled selected>Select your enrollment status</option>
+                    <option value="fullTime">Full-Time (12+ credits)</option>
+                    <option value="partTime">Part-Time (&lt;12 credits)</option>
+                </select>
+            </form>
+            <button id="saveUserDetailsButton" value="save user details">Save</button>
+            <p id="messageHandler">This is the message handler. All is good!</p>
+        </div>
     </div>
     <footer>
         <h1>Created by Alejandro, Ashita, Eduardo, Mickey, Sudeep, and Talon</h1>

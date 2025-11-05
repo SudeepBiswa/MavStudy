@@ -217,7 +217,7 @@ li a:hover::before{
 }
 .groupMatcher .groupsControls button:hover{
     background-color: var(--red);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 .groupMatcher .groupsControls #squareButton{
     width: 50px;
@@ -324,7 +324,7 @@ li a:hover::before{
     border: none;
     font-size: 90%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     border-radius: 0;
 }
 .menu form input{
@@ -389,7 +389,7 @@ li a:hover::before{
 }
 .menu input[type="submit"]:hover, .menu button:hover{
     background-color: var(--red);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 .menu form hr{
     width: 85%;
@@ -474,7 +474,7 @@ li a:hover::before{
 }
 .viewProfile .viewProfileActions button:hover{
     background-color: var(--red);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
 }
 .conversationsContainer{
     position: relative;
@@ -599,7 +599,7 @@ li a:hover::before{
 }
 .conversationsContainer .activeConversation .messageBar button:hover{
     background-color: var(--red);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
     backdrop-filter: blur(4px);
 }
 #messageHandler{
