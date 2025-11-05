@@ -292,11 +292,11 @@ li a:hover::before{
 .groupMatcher .groupsContainer .groups .group .groupMembers li:last-child::after{
     content: "";
 }
-.createGroup{
+.menu{
     position: absolute;
     display: flex;
     width: 40%;
-    max-height: 100%;
+    max-height: 90%;
     margin: 0;
     padding: 30px;
     top: 50%;
@@ -310,7 +310,11 @@ li a:hover::before{
     flex-direction: column;
     justify-content: space-between;
 }
-.createGroup form{
+.menu .menuTitle{
+    width: 100%;
+    text-align: center;
+}
+.menu form{
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -319,10 +323,11 @@ li a:hover::before{
     padding: 0;
     border: none;
     font-size: 90%;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     border-radius: 0;
 }
-.createGroup form input{
+.menu form input{
     width: 100%;
     color: white;
     background: var(--lightGrey);
@@ -331,27 +336,27 @@ li a:hover::before{
     padding: 15px;
     outline: none;
 }
-.createGroup form input::placeholder{
+.menu form input::placeholder{
     color: var(--veryLightGrey);
 }
-.createGroup form input:focus::placeholder{
+.menu form input:focus::placeholder{
     color: white;
 }
-.createGroup form input[type="email"]:not(:placeholder-shown), .createGroup form input[type="password"]:not(:placeholder-shown), .createGroup form input[type="number"]:not(:placeholder-shown), .createGroup form input[type="text"]:not(:placeholder-shown), .createGroup form input:focus{
+.menu form input[type="email"]:not(:placeholder-shown), .menu form input[type="password"]:not(:placeholder-shown), .menu form input[type="number"]:not(:placeholder-shown), .menu form input[type="text"]:not(:placeholder-shown), .menu form input:focus{
     background-color: var(--red);
 }
-.createGroup .doubleInput{
+.menu .doubleInput{
     display: flex;
     flex-direction: row;
     gap: 15px;
 }
-.createGroup .doubleInput div{
+.menu .doubleInput div{
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-.createGroup form select{
+.menu form select{
     width: 100%;
     color: var(--veryLightGrey);
     background: var(--lightGrey);
@@ -362,16 +367,16 @@ li a:hover::before{
     cursor: pointer;
     border-right: 15px solid transparent;
 }
-.createGroup form select:focus, .createGroup form select:valid{
+.menu form select:focus, .menu form select:valid{
     background-color: var(--red);
     color: white;
 }
-.createGroup form select option{
+.menu form select option{
     background-color: black;
     color: white;
     padding: 10px;
 }
-.createGroup input[type="submit"], .createGroup button{
+.menu input[type="submit"], .menu button{
     width: 100%;
     margin: 0;
     padding: 15px;
@@ -382,27 +387,34 @@ li a:hover::before{
     text-transform: capitalize;
     color: white;
 }
-.createGroup input[type="submit"]:hover, .createGroup button:hover{
+.menu input[type="submit"]:hover, .menu button:hover{
     background-color: var(--red);
     transform: scale(1.05);
 }
-.createGroup form hr{
+.menu form hr{
     width: 85%;
     border: none;
     border-top: 2px solid var(--lightGrey);
     margin: 20px auto;
 }
-.createGroup form input[type="range"]{
+.menu form input[type="range"]{
     width: 100%;
     margin: 0;
     padding: 0;
     accent-color: var(--red);
 }
-.createGroup .createGroupButtons{
-    display: flex;
+.menu form input[type="file"]{
+    width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 15px;
+    background-color: var(--lightGrey);
+    cursor: pointer;
+    color: var(--veryLightGrey);
+}
+.menu .menuActions{
+    display: flex;
     gap: 15px;
+    flex-direction: row;
 }
 .viewProfile{
     position: absolute;
@@ -463,112 +475,6 @@ li a:hover::before{
 .viewProfile .viewProfileActions button:hover{
     background-color: var(--red);
     transform: scale(1.05);
-}
-.container{
-    position: relative;
-    margin: 0 auto;
-    padding: 15px;
-    width: 500px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.container form{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    height: fit-content;
-    padding: 45px;
-    background: black;
-    border: none;
-    font-size: 90%;
-}
-.container form h1{
-    text-align: center;
-    color: white;
-}
-.container .doubleInput{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-}
-.container .doubleInput div{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-.container form label{
-    color: white;
-}
-.container form input{
-    width: 100%;
-    color: white;
-    background: var(--lightGrey);
-    border: none;
-    margin: 0;
-    padding: 15px;
-    outline: none;
-}
-.container form input::placeholder{
-    color: var(--veryLightGrey);
-}
-.container form input:focus::placeholder{
-    color: white;
-}
-.container form input[type="email"]:not(:placeholder-shown), .container form input[type="password"]:not(:placeholder-shown), .container form input[type="number"]:not(:placeholder-shown), .container form input[type="text"]:not(:placeholder-shown), .container form input:focus{
-    background-color: var(--red);
-}
-.container form select{
-    width: 100%;
-    color: var(--veryLightGrey);
-    background: var(--lightGrey);
-    outline: none;
-    border: none;
-    margin: 0;
-    padding: 15px;
-    cursor: pointer;
-    border-right: 15px solid transparent;
-}
-.container form select:focus, .container form select:valid{
-    background-color: var(--red);
-    color: white;
-}
-.container form select option{
-    background-color: black;
-    color: white;
-    padding: 10px;
-}
-.container form input[type="file"]{
-    width: 100%;
-    margin: 0;
-    padding: 15px;
-    background-color: var(--lightGrey);
-    cursor: pointer;
-    color: var(--veryLightGrey);
-}
-.container form input[type="submit"]{
-    width: 100%;
-    margin: 0;
-    padding: 15px;
-    background-color: var(--lightGrey);
-    border: none;
-    cursor: pointer;
-    font-size: 95%;
-    text-transform: capitalize;
-    color: white;
-}
-.container form input[type="submit"]:hover{
-    background-color: var(--red);
-    transform: scale(1.05);
-}
-.container form hr{
-    width: 85%;
-    border: none;
-    border-top: 2px solid var(--lightGrey);
-    margin: 20px auto;
 }
 .conversationsContainer{
     position: relative;
@@ -723,7 +629,7 @@ footer{
     color: var(--red);
 }
 /*Scrollbar*/
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     width: 8px;
     display: none;
 }
@@ -744,6 +650,26 @@ footer{
 .patches{
     -ms-overflow-style: none;
     scrollbar-width: none;
+} */
+::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+}
+::-webkit-scrollbar-track{
+    border-radius: 100px;
+    background: var(--lightGrey);
+}
+::-webkit-scrollbar-thumb{
+    background: var(--red);
+    border-radius: 100px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: var(--redTransparent);
+}
+::-webkit-scrollbar-corner{
+    background: rgba(0,0,0,0);
 }
 /* Remove Arrows from Number Input */
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
@@ -770,7 +696,9 @@ input[type=number]{
     display: flex;
     gap: 15px;
     max-width: 100%;
-    overflow: scroll;
+    overflow-x: auto;
+    padding: 0 0 15px 0;
+    border-radius: 0;
 }
 .tagchip{
     display: inline-flex;

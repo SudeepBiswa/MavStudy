@@ -18,6 +18,7 @@
         </div>
         <div class="headerLinks">
             <li><a onclick="closeMenu('createGroup', 'open')">Create</a></li>
+            <li><a onclick="closeMenu('groupMatcherPreferences', 'open')">Preferences</a></li>
             <li><a href="conversations.html">Conversations</a></li>
             <li><a href="profile.html">Profile</a></li>
         </div>
@@ -91,6 +92,47 @@
                 <button id="squareButton" onclick="">></button>
             </div>
         </div>
+        <div class="menu" id="groupMatcherPreferences" style="display: none;">
+            <div class="menuTitle">
+                <h1>Study Group Preferences</h1>
+            </div>
+            <form id="groupMatcherPreferencesForm">
+                <label id="groupSizeLabel">Group Size</label>
+                <div class="doubleInput">
+                    <div>
+                        <input type="text" placeholder="Min (2)" id="groupSizeMin">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Max (5)" id="groupSizeMax">
+                    </div>
+                </div>
+                <label>Location</label>
+                <input type="text" placeholder="Enter group location" id="groupLocation">
+                <label>Age</label>
+                <div class="doubleInput">
+                    <div>
+                        <input type="text" placeholder="Min (18)" id="groupAgeMin">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Max" id="groupAgeMax">
+                    </div>
+                </div>
+                <label>Tags</label>
+                <div class="tagpicker" id="groupMatcherPreferencesTags" data-suggestions='["Computer Science","Mechanical Engineering","Electrical Engineering","Civil Engineering","Aerospace","Physics","Mathematics","Artificial Intelligence","Machine Learning","Robotics","Data Science","Chemistry","Biology","Business","Economics","Design","Human-Computer Interaction","Cybersecurity","Software Engineering","Entrepreneurship"]'>
+                <div class="tagpicker-input-row">
+                    <input class="tagpicker-input" type="text" placeholder="Enter study group tags" aria-autocomplete="list" role="combobox" aria-expanded="false">
+                    <div class="tagpicker-listbox" role="listbox" hidden></div>
+                </div>
+                <div class="tagpicker-chips"></div>
+                <input class="tagpicker-hidden" type="hidden" name="groupTags">
+                <div class="sr-only" role="status" aria-live="polite"></div>
+                </div>
+            </form>
+            <div class="menuActions">
+                <button id="createGroupButton" onclick="closeMenu('groupMatcherPreferences', 'close');">Save</button>
+                <button onclick="closeMenu('groupMatcherPreferences', 'close')">Close</button>
+            </div>
+        </div>
         <div class="viewProfile" id="viewProfile" style="display: none;">
             <div class="viewProfileInfo">
                 <div class="viewProfileInfoRow">
@@ -116,9 +158,9 @@
                 <button onclick="closeMenu('viewProfile', 'close')">Close</button>
             </div>
         </div>
-        <div class="createGroup" id="createGroup" style="display: none;">
-            <div>
-                <h1 style="text-align: center;">Study Group Creator</h1>
+        <div class="menu" id="createGroup" style="display: none;">
+            <div class="menuTitle">
+                <h1>Study Group Creator</h1>
             </div>
             <form id="createGroupForm">
                 <label id="groupSizeLabel">Group Size (Optional)</label>
@@ -142,14 +184,21 @@
                     </div>
                 </div>
                 <label>Tags</label>
-                <input type="text" placeholder="Tags" id="groupTags" required>
+                <div class="tagpicker" id="createGroupTags" data-suggestions='["Computer Science","Mechanical Engineering","Electrical Engineering","Civil Engineering","Aerospace","Physics","Mathematics","Artificial Intelligence","Machine Learning","Robotics","Data Science","Chemistry","Biology","Business","Economics","Design","Human-Computer Interaction","Cybersecurity","Software Engineering","Entrepreneurship"]'>
+                <div class="tagpicker-input-row">
+                    <input class="tagpicker-input" type="text" placeholder="Enter study group tags" aria-autocomplete="list" role="combobox" aria-expanded="false">
+                    <div class="tagpicker-listbox" role="listbox" hidden></div>
+                </div>
+                <div class="tagpicker-chips"></div>
+                <input class="tagpicker-hidden" type="hidden" name="groupTags">
+                <div class="sr-only" role="status" aria-live="polite"></div>
+                </div>
                 <label>Description</label>
                 <input type="text" placeholder="Enter group description" id="groupDescription" required>
-                <!-- <input type="range" min="2" max="5" value="2" id="groupSizeRange"> -->
             </form>
-            <div class="createGroupButtons">
-                <button id="createGroupButton">Create Group</button>
-                <button id="closecreateGroupButton" onclick="closeMenu('createGroup', 'close')">Cancel</button>
+            <div class="menuActions">
+                <button id="createGroupButton" onclick="closeMenu('createGroup', 'close');">Create Group</button>
+                <button onclick="closeMenu('createGroup', 'close')">Cancel</button>
             </div>
         </div>
     </div>
@@ -157,13 +206,10 @@
         <h1>Created by Alejandro, Ashita, Eduardo, Mickey, Sudeep, and Talon</h1>
     </footer>
     <script>
-        // var groupSizeRange = document.getElementById("groupSizeRange");
-        // var groupSizeLabel = document.getElementById("groupSizeLabel");
-        // groupSizeLabel.innerHTML = 'Group Size (' + groupSizeRange.value + ')';
-        // groupSizeRange.oninput = function(){
-        //     groupSizeLabel.innerHTML = 'Group Size (' + this.value + ')';
-        // }
         function closeMenu(id, state){
+            document.querySelectorAll('.homeContainer .menu, .homeContainer .viewProfile').forEach(element => {
+                element.style.display = 'none';
+            });
             if(state == "open"){
                 document.getElementById(id).style.display = "flex";
             }
@@ -172,217 +218,40 @@
             }
         }
         // Group Tag Input
-        (function () {
-            const SUGGESTIONS = [
-                "Computer Science","Mechanical Engineering","Electrical Engineering","Civil Engineering",
-                "Aerospace","Physics","Mathematics","Artificial Intelligence","Machine Learning",
-                "Robotics","Data Science","Chemistry","Biology","Business","Economics","Design",
-                "Human-Computer Interaction","Cybersecurity","Software Engineering","Entrepreneurship"
-            ];
+        (()=>{const DEF=["Computer Science","Mechanical Engineering","Electrical Engineering","Civil Engineering","Aerospace","Physics","Mathematics","Artificial Intelligence","Machine Learning","Robotics","Data Science","Chemistry","Biology","Business","Economics","Design","Human-Computer Interaction","Cybersecurity","Software Engineering","Entrepreneurship"];
+        const esc=s=>s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        const hl=(t,q)=>{if(!q) return esc(t); const i=t.toLowerCase().indexOf(q.toLowerCase()); return i<0?esc(t):esc(t.slice(0,i))+"<strong>"+esc(t.slice(i,i+q.length))+"</strong>"+esc(t.slice(i+q.length));};
+        document.querySelectorAll('.tagpicker').forEach(root=>{
+        const S=JSON.parse(root.dataset.suggestions||'[]'); const SUG=S.length?S:DEF;
+        const input=root.querySelector('.tagpicker-input');
+        const list=root.querySelector('.tagpicker-listbox');
+        const chips=root.querySelector('.tagpicker-chips');
+        const hidden=root.querySelector('.tagpicker-hidden');
+        const live=root.querySelector('.sr-only');
+        let sel=(hidden.value||'').split(',').map(s=>s.trim()).filter(Boolean), filt=[], idx=-1;
 
-            const hidden = document.getElementById("groupTags");
-            if (!hidden) return;
+        const sync=()=>hidden.value=sel.join(', ');
+        const renderChips=()=>{chips.innerHTML=''; sel.forEach(t=>{const c=document.createElement('span'); c.className='tagchip'; c.textContent=t; c.onclick=()=>rem(t); chips.appendChild(c);});};
+        const renderList=()=>{list.innerHTML=filt.map((v,i)=>`<div class="tagpicker-option" role="option" id="opt-${i}" aria-selected="${i===idx}">${hl(v,input.value)}</div>`).join(''); list.hidden=!filt.length; input.setAttribute('aria-expanded', String(!!filt.length));};
+        const upd=()=>{const q=input.value.trim().toLowerCase(); filt=SUG.filter(s=>!sel.includes(s)&&(!q||s.toLowerCase().includes(q))).slice(0,8); idx=filt.length?0:-1; renderList(); if(live) live.textContent=filt.length?`${filt.length} suggestion${filt.length>1?'s':''} available.`:'No suggestions.';};
+        const add=t=>{ if(!t||sel.includes(t)) return input.value='',upd(); sel.push(t); renderChips(); sync(); input.value=''; upd(); };
+        const rem=t=>{ sel=sel.filter(x=>x!==t); renderChips(); sync(); upd(); if(live) live.textContent=`${t} removed.`; };
 
-            hidden.type = "hidden";
+        list.addEventListener('mousedown',e=>{const d=e.target.closest('.tagpicker-option'); if(!d) return; e.preventDefault(); add(filt[[...list.children].indexOf(d)]); list.hidden=true; input.focus();});
+        input.addEventListener('keydown',e=>{
+            const open=!list.hidden&&filt.length;
+            if(e.key==='ArrowDown'){ if(!open) return upd(); e.preventDefault(); idx=(idx+1)%filt.length; renderList(); input.setAttribute('aria-activedescendant',`opt-${idx}`); }
+            else if(e.key==='ArrowUp'&&open){ e.preventDefault(); idx=(idx-1+filt.length)%filt.length; renderList(); input.setAttribute('aria-activedescendant',`opt-${idx}`); }
+            else if(e.key==='Enter'){ e.preventDefault(); if(open&&idx>-1){ add(filt[idx]); list.hidden=true; } else { const ex=(SUG.find(s=>s.toLowerCase()===input.value.trim().toLowerCase())); if(ex) add(ex); } }
+            else if(e.key==='Backspace'&&input.value===''&&sel.length){ e.preventDefault(); rem(sel[sel.length-1]); }
+            else if(e.key==='Escape'){ list.hidden=true; input.setAttribute('aria-expanded','false'); }
+        });
+        input.addEventListener('input',upd);
+        input.addEventListener('blur',()=>setTimeout(()=>{list.hidden=true; input.setAttribute('aria-expanded','false');},120));
 
-            // ===== New layout: input row + chip row =====
-            const wrapper = document.createElement("div");
-            wrapper.className = "tagpicker";
-            wrapper.setAttribute("role", "application");
+        renderChips(); sync(); // hydrate if hidden already has value
+        });})();
 
-            const inputRow = document.createElement("div");
-            inputRow.className = "tagpicker-input-row";
-
-            const chipRow = document.createElement("div");
-            chipRow.className = "tagpicker-chips";
-
-            const input = document.createElement("input");
-            input.type = "text";
-            input.className = "tagpicker-input";
-            input.placeholder = "Enter study group tags";
-            input.setAttribute("aria-autocomplete", "list");
-            input.setAttribute("aria-expanded", "false");
-            input.setAttribute("role", "combobox");
-
-            const listbox = document.createElement("div");
-            listbox.className = "tagpicker-listbox";
-            listbox.setAttribute("role", "listbox");
-            listbox.style.display = "none";
-
-            const live = document.createElement("div");
-            live.className = "sr-only";
-            live.setAttribute("role", "status");
-            live.setAttribute("aria-live", "polite");
-
-            // Build DOM
-            inputRow.appendChild(input);
-            inputRow.appendChild(listbox); // listbox anchored to input row
-            wrapper.appendChild(inputRow);
-            wrapper.appendChild(chipRow);   // chips appear below input
-            wrapper.appendChild(live);
-
-            hidden.insertAdjacentElement("afterend", wrapper);
-
-            // Clicking anywhere on input row focuses input
-            inputRow.addEventListener("click", () => input.focus());
-
-            // ===== State =====
-            let selected = [];
-            let filtered = [];
-            let activeIndex = -1;
-
-            // Hydrate from existing hidden value (comma-separated)
-            if (hidden.value.trim()) {
-                selected = hidden.value.split(",").map(s => s.trim()).filter(Boolean);
-                renderChips();
-                syncHidden();
-            }
-
-            // ===== Rendering =====
-            function renderChips() {
-                chipRow.innerHTML = "";
-                selected.forEach(tag => {
-                const chip = document.createElement("span");
-                chip.className = "tagchip";
-                chip.textContent = tag;
-                chip.addEventListener("click", () => removeTag(tag)); // delete on click
-                chipRow.appendChild(chip);
-                });
-            }
-
-            function renderListbox() {
-                listbox.innerHTML = "";
-                if (!filtered.length) {
-                listbox.style.display = "none";
-                input.setAttribute("aria-expanded", "false");
-                return;
-                }
-                filtered.forEach((item, idx) => {
-                const opt = document.createElement("div");
-                opt.className = "tagpicker-option";
-                opt.setAttribute("role", "option");
-                opt.setAttribute("id", `tag-opt-${idx}`);
-                opt.setAttribute("aria-selected", idx === activeIndex ? "true" : "false");
-                opt.innerHTML = highlightMatch(item, input.value);
-                opt.addEventListener("mousedown", (e) => {
-                    e.preventDefault();
-                    addTag(item);
-                    closeList();
-                    input.focus();
-                });
-                listbox.appendChild(opt);
-                });
-                listbox.style.display = "block";
-                input.setAttribute("aria-expanded", "true");
-            }
-
-            // ===== Logic =====
-            function updateFiltered() {
-                const q = input.value.trim().toLowerCase();
-                filtered = SUGGESTIONS
-                .filter(s => !selected.includes(s))
-                .filter(s => q ? s.toLowerCase().includes(q) : true)
-                .slice(0, 8);
-                activeIndex = filtered.length ? 0 : -1;
-                renderListbox();
-                if (filtered.length) {
-                input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
-                live.textContent = `${filtered.length} suggestion${filtered.length>1?"s":""} available.`;
-                } else {
-                input.removeAttribute("aria-activedescendant");
-                live.textContent = "No suggestions.";
-                }
-            }
-
-            function addTag(tag) {
-                if (!tag) return;
-                if (selected.includes(tag)) {
-                input.value = "";
-                updateFiltered();
-                return;
-                }
-                selected.push(tag);
-                renderChips();
-                syncHidden();
-                input.value = "";
-                updateFiltered();
-            }
-
-            function removeTag(tag) {
-                selected = selected.filter(t => t !== tag);
-                renderChips();
-                syncHidden();
-                updateFiltered();
-                live.textContent = `${tag} removed.`;
-            }
-
-            function syncHidden() {
-                hidden.value = selected.join(", ");
-            }
-
-            function closeList() {
-                listbox.style.display = "none";
-                input.setAttribute("aria-expanded", "false");
-                activeIndex = -1;
-            }
-
-            // ===== Keyboard handling =====
-            input.addEventListener("keydown", (e) => {
-                const hasList = filtered.length > 0 && listbox.style.display !== "none";
-                switch (e.key) {
-                case "ArrowDown":
-                    if (!hasList) { updateFiltered(); return; }
-                    e.preventDefault();
-                    activeIndex = (activeIndex + 1) % filtered.length;
-                    renderListbox();
-                    input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
-                    break;
-                case "ArrowUp":
-                    if (!hasList) return;
-                    e.preventDefault();
-                    activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
-                    renderListbox();
-                    input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
-                    break;
-                case "Enter":
-                    e.preventDefault();
-                    if (hasList && activeIndex >= 0) {
-                    addTag(filtered[activeIndex]);
-                    closeList();
-                    } else {
-                    const exact = SUGGESTIONS.find(s => s.toLowerCase() === input.value.trim().toLowerCase());
-                    if (exact) addTag(exact);
-                    }
-                    break;
-                case "Backspace":
-                    if (input.value === "" && selected.length) {
-                    removeTag(selected[selected.length - 1]);
-                    e.preventDefault();
-                    }
-                    break;
-                case "Escape":
-                    closeList();
-                    break;
-                default:
-                    break;
-                }
-            });
-
-            input.addEventListener("input", updateFiltered);
-            input.addEventListener("blur", () => setTimeout(closeList, 120));
-
-            // ===== Utils =====
-            function escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-            function highlightMatch(text, query) {
-                if (!query) return escapeHtml(text);
-                const i = text.toLowerCase().indexOf(query.toLowerCase());
-                if (i === -1) return escapeHtml(text);
-                const before = escapeHtml(text.slice(0, i));
-                const match  = escapeHtml(text.slice(i, i + query.length));
-                const after  = escapeHtml(text.slice(i + query.length));
-                return `${before}<strong>${match}</strong>${after}`;
-            }
-            })();
     </script>
 </body>
 </html>
