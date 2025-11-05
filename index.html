@@ -17,26 +17,10 @@
             <a href="index.html">MavSTUDY</a>
         </div>
         <div class="headerLinks">
-            <li><a href="index.html">Home</a></li>
-            <li><a>Search</a></li>
-            <li><a>Create</a></li>
+            <li><a onclick="closeMenu('createGroup', 'open')">Create</a></li>
             <li><a href="conversations.html">Conversations</a></li>
             <li><a href="profile.html">Profile</a></li>
         </div>
-        <!-- <div class="headerIcons">
-            <a>
-                <span class="material-icons-round" style="font-size: 30px;">search</span>
-            </a>
-            <a>
-                <span class="material-icons-round" style="font-size: 30px;">add</span>
-            </a>
-            <a href="conversations.html">
-                <span class="material-icons-round" style="font-size: 30px;">chat</span>
-            </a>
-            <a href="profile.html">
-                <span class="material-icons-round" style="font-size: 30px;">person</span>
-            </a>
-        </div> -->
     </header>
     <div class="homeContainer">
         <div class="groupMatcher">
@@ -45,13 +29,14 @@
                     <div class="group" style="scale: 0.85;">
                         <div class="groupTitle">
                             <h1>User's Group</h1>
+                            <h1>18-99</h1>
                             <h1>4/5</h1>
                         </div>
                         <div class="groupMembers">
-                            <li><a onclick="">User 1</a></li>
-                            <li><a onclick="">User 2</a></li>
-                            <li><a onclick="">User 3</a></li>
-                            <li><a onclick="">User 4</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 1</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 2</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 3</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 4</a></li>
                         </div>
                         <div class="groupTags">
                             <h1>Computer Science, Engineering, Software Engineering, Math, Science</h1>
@@ -63,13 +48,14 @@
                     <div class="group">
                         <div class="groupTitle">
                             <h1>User's Group</h1>
+                            <h1>18-99</h1>
                             <h1>4/5</h1>
                         </div>
                         <div class="groupMembers">
-                            <li><a onclick="">User 1</a></li>
-                            <li><a onclick="">User 2</a></li>
-                            <li><a onclick="">User 3</a></li>
-                            <li><a onclick="">User 4</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 1</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 2</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 3</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 4</a></li>
                         </div>
                         <div class="groupTags">
                             <h1>Computer Science, Engineering, Software Engineering, Math, Science</h1>
@@ -81,13 +67,14 @@
                     <div class="group" style="scale: 0.85;">
                         <div class="groupTitle">
                             <h1>User's Group</h1>
+                            <h1>18-99</h1>
                             <h1>4/5</h1>
                         </div>
                         <div class="groupMembers">
-                            <li><a onclick="">User 1</a></li>
-                            <li><a onclick="">User 2</a></li>
-                            <li><a onclick="">User 3</a></li>
-                            <li><a onclick="">User 4</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 1</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 2</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 3</a></li>
+                            <li><a onclick="closeMenu('viewProfile', 'open')">User 4</a></li>
                         </div>
                         <div class="groupTags">
                             <h1>Computer Science, Engineering, Software Engineering, Math, Science</h1>
@@ -104,7 +91,7 @@
                 <button id="squareButton" onclick="">></button>
             </div>
         </div>
-        <div class="viewProfile" id="viewProfile">
+        <div class="viewProfile" id="viewProfile" style="display: none;">
             <div class="viewProfileInfo">
                 <div class="viewProfileInfoRow">
                     <h1>First and Last Name</h1>
@@ -129,21 +116,38 @@
                 <button onclick="closeMenu('viewProfile', 'close')">Close</button>
             </div>
         </div>
-        <div class="lookingForGroup" id="lookingForGroup">
-            <form id="lookingForGroupForm">
-                <label id="groupSizeLabel">Group Size</label>
-                <select id="groupSizeDropdown" required>
-                    <option value="" disabled selected>Select your desired group size</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+        <div class="createGroup" id="createGroup" style="display: none;">
+            <form id="createGroupForm">
+                <label id="groupSizeLabel">Group Size (Optional)</label>
+                <div class="doubleInput">
+                    <div>
+                        <input type="text" placeholder="Min" id="groupSizeMin">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Max (5)" id="groupSizeMax">
+                    </div>
+                </div>
+                <label>Location</label>
+                <input type="text" placeholder="Enter group location" id="groupLocation" required>
+                <label>Age (Optional)</label>
+                <div class="doubleInput">
+                    <div>
+                        <input type="text" placeholder="Min (18)" id="groupAgeMin">
+                    </div>
+                    <div>
+                        <input type="text" placeholder="Max" id="groupAgeMax">
+                    </div>
+                </div>
+                <label>Tags</label>
+                <input type="text" placeholder="Tags" id="groupTags" required>
+                <label>Description</label>
+                <input type="text" placeholder="Enter group description" id="groupDescription" required>
                 <!-- <input type="range" min="2" max="5" value="2" id="groupSizeRange"> -->
-                <hr>
-                <button id="lookingForGroupButton">Looking For Group</button>
-                <button id="closeLookingForGroupButton" onclick="closeMenu('lookingForGroup', 'close')">Close</button>
             </form>
+            <div class="createGroupButtons">
+                <button id="createGroupButton">Create Group</button>
+                <button id="closecreateGroupButton" onclick="closeMenu('createGroup', 'close')">Cancel</button>
+            </div>
         </div>
     </div>
     <footer>
@@ -164,6 +168,218 @@
                 document.getElementById(id).style.display = "none";
             }
         }
+        // Group Tag Input
+        (function () {
+            const SUGGESTIONS = [
+                "Computer Science","Mechanical Engineering","Electrical Engineering","Civil Engineering",
+                "Aerospace","Physics","Mathematics","Artificial Intelligence","Machine Learning",
+                "Robotics","Data Science","Chemistry","Biology","Business","Economics","Design",
+                "Human-Computer Interaction","Cybersecurity","Software Engineering","Entrepreneurship"
+            ];
+
+            const hidden = document.getElementById("groupTags");
+            if (!hidden) return;
+
+            hidden.type = "hidden";
+
+            // ===== New layout: input row + chip row =====
+            const wrapper = document.createElement("div");
+            wrapper.className = "tagpicker";
+            wrapper.setAttribute("role", "application");
+
+            const inputRow = document.createElement("div");
+            inputRow.className = "tagpicker-input-row";
+
+            const chipRow = document.createElement("div");
+            chipRow.className = "tagpicker-chips";
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.className = "tagpicker-input";
+            input.placeholder = "Enter study group tags";
+            input.setAttribute("aria-autocomplete", "list");
+            input.setAttribute("aria-expanded", "false");
+            input.setAttribute("role", "combobox");
+
+            const listbox = document.createElement("div");
+            listbox.className = "tagpicker-listbox";
+            listbox.setAttribute("role", "listbox");
+            listbox.style.display = "none";
+
+            const live = document.createElement("div");
+            live.className = "sr-only";
+            live.setAttribute("role", "status");
+            live.setAttribute("aria-live", "polite");
+
+            // Build DOM
+            inputRow.appendChild(input);
+            inputRow.appendChild(listbox); // listbox anchored to input row
+            wrapper.appendChild(inputRow);
+            wrapper.appendChild(chipRow);   // chips appear below input
+            wrapper.appendChild(live);
+
+            hidden.insertAdjacentElement("afterend", wrapper);
+
+            // Clicking anywhere on input row focuses input
+            inputRow.addEventListener("click", () => input.focus());
+
+            // ===== State =====
+            let selected = [];
+            let filtered = [];
+            let activeIndex = -1;
+
+            // Hydrate from existing hidden value (comma-separated)
+            if (hidden.value.trim()) {
+                selected = hidden.value.split(",").map(s => s.trim()).filter(Boolean);
+                renderChips();
+                syncHidden();
+            }
+
+            // ===== Rendering =====
+            function renderChips() {
+                chipRow.innerHTML = "";
+                selected.forEach(tag => {
+                const chip = document.createElement("span");
+                chip.className = "tagchip";
+                chip.textContent = tag;
+                chip.addEventListener("click", () => removeTag(tag)); // delete on click
+                chipRow.appendChild(chip);
+                });
+            }
+
+            function renderListbox() {
+                listbox.innerHTML = "";
+                if (!filtered.length) {
+                listbox.style.display = "none";
+                input.setAttribute("aria-expanded", "false");
+                return;
+                }
+                filtered.forEach((item, idx) => {
+                const opt = document.createElement("div");
+                opt.className = "tagpicker-option";
+                opt.setAttribute("role", "option");
+                opt.setAttribute("id", `tag-opt-${idx}`);
+                opt.setAttribute("aria-selected", idx === activeIndex ? "true" : "false");
+                opt.innerHTML = highlightMatch(item, input.value);
+                opt.addEventListener("mousedown", (e) => {
+                    e.preventDefault();
+                    addTag(item);
+                    closeList();
+                    input.focus();
+                });
+                listbox.appendChild(opt);
+                });
+                listbox.style.display = "block";
+                input.setAttribute("aria-expanded", "true");
+            }
+
+            // ===== Logic =====
+            function updateFiltered() {
+                const q = input.value.trim().toLowerCase();
+                filtered = SUGGESTIONS
+                .filter(s => !selected.includes(s))
+                .filter(s => q ? s.toLowerCase().includes(q) : true)
+                .slice(0, 8);
+                activeIndex = filtered.length ? 0 : -1;
+                renderListbox();
+                if (filtered.length) {
+                input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
+                live.textContent = `${filtered.length} suggestion${filtered.length>1?"s":""} available.`;
+                } else {
+                input.removeAttribute("aria-activedescendant");
+                live.textContent = "No suggestions.";
+                }
+            }
+
+            function addTag(tag) {
+                if (!tag) return;
+                if (selected.includes(tag)) {
+                input.value = "";
+                updateFiltered();
+                return;
+                }
+                selected.push(tag);
+                renderChips();
+                syncHidden();
+                input.value = "";
+                updateFiltered();
+            }
+
+            function removeTag(tag) {
+                selected = selected.filter(t => t !== tag);
+                renderChips();
+                syncHidden();
+                updateFiltered();
+                live.textContent = `${tag} removed.`;
+            }
+
+            function syncHidden() {
+                hidden.value = selected.join(", ");
+            }
+
+            function closeList() {
+                listbox.style.display = "none";
+                input.setAttribute("aria-expanded", "false");
+                activeIndex = -1;
+            }
+
+            // ===== Keyboard handling =====
+            input.addEventListener("keydown", (e) => {
+                const hasList = filtered.length > 0 && listbox.style.display !== "none";
+                switch (e.key) {
+                case "ArrowDown":
+                    if (!hasList) { updateFiltered(); return; }
+                    e.preventDefault();
+                    activeIndex = (activeIndex + 1) % filtered.length;
+                    renderListbox();
+                    input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
+                    break;
+                case "ArrowUp":
+                    if (!hasList) return;
+                    e.preventDefault();
+                    activeIndex = (activeIndex - 1 + filtered.length) % filtered.length;
+                    renderListbox();
+                    input.setAttribute("aria-activedescendant", `tag-opt-${activeIndex}`);
+                    break;
+                case "Enter":
+                    e.preventDefault();
+                    if (hasList && activeIndex >= 0) {
+                    addTag(filtered[activeIndex]);
+                    closeList();
+                    } else {
+                    const exact = SUGGESTIONS.find(s => s.toLowerCase() === input.value.trim().toLowerCase());
+                    if (exact) addTag(exact);
+                    }
+                    break;
+                case "Backspace":
+                    if (input.value === "" && selected.length) {
+                    removeTag(selected[selected.length - 1]);
+                    e.preventDefault();
+                    }
+                    break;
+                case "Escape":
+                    closeList();
+                    break;
+                default:
+                    break;
+                }
+            });
+
+            input.addEventListener("input", updateFiltered);
+            input.addEventListener("blur", () => setTimeout(closeList, 120));
+
+            // ===== Utils =====
+            function escapeHtml(s) { return s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+            function highlightMatch(text, query) {
+                if (!query) return escapeHtml(text);
+                const i = text.toLowerCase().indexOf(query.toLowerCase());
+                if (i === -1) return escapeHtml(text);
+                const before = escapeHtml(text.slice(0, i));
+                const match  = escapeHtml(text.slice(i, i + query.length));
+                const after  = escapeHtml(text.slice(i + query.length));
+                return `${before}<strong>${match}</strong>${after}`;
+            }
+            })();
     </script>
 </body>
 </html>

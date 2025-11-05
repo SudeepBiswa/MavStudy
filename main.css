@@ -292,16 +292,17 @@ li a:hover::before{
 .groupMatcher .groupsContainer .groups .group .groupMembers li:last-child::after{
     content: "";
 }
-.lookingForGroup{
+.createGroup{
     position: absolute;
     display: flex;
     width: 40%;
+    max-height: 100%;
     margin: 0;
-    padding: 0;
+    padding: 30px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: black;
+    background-color: var(--darkGrey);
     backdrop-filter: blur(2px);
     color: white;
     z-index: 1;
@@ -309,18 +310,48 @@ li a:hover::before{
     flex-direction: column;
     justify-content: space-between;
 }
-.lookingForGroup form{
+.createGroup form{
     display: flex;
     flex-direction: column;
     gap: 15px;
     width: 100%;
     height: fit-content;
-    padding: 30px;
-    background: black;
+    padding: 0;
     border: none;
     font-size: 90%;
+    overflow: scroll;
+    border-radius: 0;
 }
-.lookingForGroup form select{
+.createGroup form input{
+    width: 100%;
+    color: white;
+    background: var(--lightGrey);
+    border: none;
+    margin: 0;
+    padding: 15px;
+    outline: none;
+}
+.createGroup form input::placeholder{
+    color: var(--veryLightGrey);
+}
+.createGroup form input:focus::placeholder{
+    color: white;
+}
+.createGroup form input[type="email"]:not(:placeholder-shown), .createGroup form input[type="password"]:not(:placeholder-shown), .createGroup form input[type="number"]:not(:placeholder-shown), .createGroup form input[type="text"]:not(:placeholder-shown), .createGroup form input:focus{
+    background-color: var(--red);
+}
+.createGroup .doubleInput{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.createGroup .doubleInput div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.createGroup form select{
     width: 100%;
     color: var(--veryLightGrey);
     background: var(--lightGrey);
@@ -331,16 +362,16 @@ li a:hover::before{
     cursor: pointer;
     border-right: 15px solid transparent;
 }
-.lookingForGroup form select:focus, .lookingForGroup form select:valid{
+.createGroup form select:focus, .createGroup form select:valid{
     background-color: var(--red);
     color: white;
 }
-.lookingForGroup form select option{
+.createGroup form select option{
     background-color: black;
     color: white;
     padding: 10px;
 }
-.lookingForGroup form input[type="submit"], .lookingForGroup form button{
+.createGroup input[type="submit"], .createGroup button{
     width: 100%;
     margin: 0;
     padding: 15px;
@@ -351,21 +382,27 @@ li a:hover::before{
     text-transform: capitalize;
     color: white;
 }
-.lookingForGroup form input[type="submit"]:hover, .lookingForGroup form button:hover{
+.createGroup input[type="submit"]:hover, .createGroup button:hover{
     background-color: var(--red);
     transform: scale(1.05);
 }
-.lookingForGroup form hr{
+.createGroup form hr{
     width: 85%;
     border: none;
     border-top: 2px solid var(--lightGrey);
     margin: 20px auto;
 }
-.lookingForGroup form input[type="range"]{
+.createGroup form input[type="range"]{
     width: 100%;
     margin: 0;
     padding: 0;
     accent-color: var(--red);
+}
+.createGroup .createGroupButtons{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
 }
 .viewProfile{
     position: absolute;
@@ -376,7 +413,7 @@ li a:hover::before{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: black;
+    background-color: var(--darkGrey);
     backdrop-filter: blur(2px);
     color: white;
     z-index: 1;
@@ -708,4 +745,67 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
 input[type=number]{
     appearance: textfield;
     -moz-appearance: textfield;
+}
+/* Group Tag List */
+.tagpicker{
+    position: relative;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.tagpicker-field{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.tagpicker-chips{
+    display: flex;
+    gap: 15px;
+}
+.tagchip{
+    display: inline-flex;
+    align-items: center;
+    padding: 15px;
+    background: var(--red);
+    cursor: pointer;
+    user-select: none;
+}
+.tagchip:hover{
+    filter: brightness(0.7);
+}  
+.tagpicker-input{
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0;
+}
+.tagpicker-listbox{
+    position: absolute;
+    margin: 0;
+    padding: 15px;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: 10;
+    background: var(--red);
+    overflow: auto;
+}
+.tagpicker-option{
+    padding: 15px;
+    cursor: pointer;
+}
+.tagpicker-option[aria-selected="true"],
+.tagpicker-option:hover{
+    background: white;
+    color: var(--red);
+}
+.sr-only{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
 }
