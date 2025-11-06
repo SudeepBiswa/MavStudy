@@ -105,9 +105,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const groups = document.querySelectorAll(".group");
         function fillData(){
-            
-            
-           
             for(let i = 0; i<3; i++){
                 let data = null;
                 const group = groups[i];
@@ -162,9 +159,21 @@ window.addEventListener("DOMContentLoaded", () => {
                 groupTitles[1].textContent = ("Age:" + data.groupAgeMin || "Age: N/A")+"-"+ (data.groupAgeMax || "Age: N/A");
                 groupTitles[2].textContent = (data.groupSizeMin || "N/A") + "/" + (data.groupSizeMax || "N/A")
 
-                const memberLinks = group.querySelectorAll(".groupMembers a");
-                memberLinks[0].textContent = data.user1?.firstLastName || "Unknown";
+                const memberContainer = group.querySelector(".groupMembers");
+                memberContainer.innerHTML = "";
 
+                const maxMembers = parseInt(data.groupSizeMax) || 1;
+                for (let m = 1; m <= maxMembers; m++) {
+                    const userKey = "user" + m;
+                    const member = data[userKey];
+
+                    if (member && member.firstLastName) {
+                        const link = document.createElement("a");
+                        link.textContent = member.firstLastName;
+                        memberContainer.appendChild(link);
+                    }
+                }
+                
                 const ltag = group.querySelectorAll(".groupTags h1");
                 ltag[0].textContent = data.groupTags || "N/A";
 
@@ -257,5 +266,90 @@ window.addEventListener("DOMContentLoaded", () => {
             currentPostIndex -= 1;       
             fillData();
         })
+
+        const joinButtons = [
+            document.getElementById("joinBtn1"),
+            document.getElementById("joinBtn2"),
+            document.getElementById("joinBtn3"),
+        ];
+
+        joinButtons.forEach((btn, index) => {
+            btn.addEventListener("click", async () => {
+                try {
+                    let targetPostIndex = currentPostIndex;
+                    if (index === 0) targetPostIndex = currentPostIndex - 1; // left
+                    if (index === 2) targetPostIndex = currentPostIndex + 1; // right
+
+                    if (targetPostIndex < 0 || targetPostIndex >= arrPostsStack.length) {
+                        console.warn("Invalid join click — no post in that direction.");
+                        return;
+                    }
+
+                    const postSnap = arrPostsStack[targetPostIndex];
+                    const postId = postSnap.id;
+                    const postData = postSnap.data();
+
+                    // Load user data
+                    const userRef = doc(db, "users", user.uid);
+                    const userSnap = await getDoc(userRef);
+                    const userData = userSnap.data().ProfileData;
+
+                    // Check if already a member
+                    const alreadyMember = Object.values(postData)
+                        .filter(v => v && typeof v === "object" && v.email)
+                        .some(member => member.email === userData.userEmail);
+
+                    if (alreadyMember) {
+                        console.log("User already in group:", postId);
+                        return;
+                    }
+
+                    // Determine group capacity
+                    const maxSize = parseInt(postData.groupSizeMax, 10) || 1;
+                    const currentMembers = Object.keys(postData).filter(key => key.startsWith("user")).length;
+
+                    if (currentMembers >= maxSize) {
+                        console.log("Group is full:", postId);
+                        return;
+                    }
+
+                    // Find the next available user slot
+                    let slot = null;
+                    for (let i = 1; i <= maxSize; i++) {
+                        const key = "user" + i;
+                        if (!postData[key]) {
+                            slot = key;
+                            break;
+                        }
+                    }
+
+                    if (!slot) {
+                        console.log("No available slot in group:", postId);
+                        return;
+                    }
+
+                    const userPayload = {
+                        firstLastName: userData.firstName + " " + userData.lastName,
+                        enrollStat: userData.enrollmentStatus,
+                        pGrade: userData.grade,
+                        pMajor: userData.major,
+                        pAge: userData.age,
+                        email: userData.userEmail
+                    };
+
+                    await updateDoc(doc(db, "posts", postId), { [slot]: userPayload });
+                    console.log("Joined group:", postId, "as", slot);
+
+                    // Refresh data
+                    const freshSnap = await getDoc(doc(db, "posts", postId));
+                    arrPostsStack[targetPostIndex] = freshSnap;
+                    fillData();
+
+                } catch (error) {
+                    console.error("Error joining group:", error);
+                }
+            });
+        });
+
     });
 });
