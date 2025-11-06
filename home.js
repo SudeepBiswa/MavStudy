@@ -80,13 +80,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         let arrPostsStack = [];
         let arrFirst =[];
-        let currentPostIndex = 1;
-
+        let currentPostIndex = 0;
         const seenIds = new Set();  
 
         const postsRef = collection(db, "posts");
         const snapshot = await getDocs(postsRef);
-        //const posts = snapshot.docs.map(doc =>({id: doc.id,...doc.data()}));
+        
         if(snapshot.empty){
             console.log("no posts found");
         }
@@ -97,180 +96,146 @@ window.addEventListener("DOMContentLoaded", () => {
             const selected = shuffled.slice(0, Math.min(3, docArr.length));
             arrPostsStack = selected;
             selected.forEach(element => seenIds.add(element.id))
-            console.log(seenIds)
+            //console.log(seenIds)
 
             //console.log("Initial Stack: " + arrPostsStack);
         }
-        
-        // const groupsContainer = document.querySelector(".groups");
-        // async function loadPosts(arrPosts) {
-        //     console.log("we got here!")
-        //     const groupsContainer = document.querySelector(".groups");
-        //     groupsContainer.innerHTML = "<h3>Loading posts...</h3>";
 
-        //     // Fetch posts from Firestore
-        //     try {
-        //         //const querySnapshot = await getDocs(collection(db, "posts"));
-        //         //console.log("Fetched posts:", querySnapshot.size);
-
-        //         if (arrPosts.length <= 0) {
-        //             groupsContainer.innerHTML = "<h2>No study groups available right now.</h2>";
-        //             return;
-        //         }
-
-        //         groupsContainer.innerHTML = ""; // clear loading text
-
-        //         // Iterate through posts and display them
-        //         arrPosts.forEach((docSnap) => {
-        //             const data = docSnap.data();
-        //             //console.log("Post data:", data);
-
-        //             const groupDiv = document.createElement("div");
-        //             groupDiv.classList.add("group");
-
-        //             groupDiv.innerHTML = `
-        //                 <div class="groupTitle">
-        //                     <h1>${data.user1?.firstLastName || "Unknown User"}</h1>
-        //                     <h1>${data.groupAgeMin || "?"}-${data.groupAgeMax || "?"}</h1>
-        //                     <h1>${data.groupSizeMin || "?"}/${data.groupSizeMax || "?"}</h1>
-        //                 </div>
-        //                 <div class="groupMembers">
-        //                     <li><a onclick="closeMenu('viewProfile', 'open')">${data.user1?.firstLastName || "Unknown"}</a></li>
-        //                 </div>
-        //                 <div class="groupTags">
-        //                     <h1>${data.groupTags || "No tags"}</h1>
-        //                 </div>
-        //                 <div class="groupDescription">
-        //                     <h1>${data.groupDescription || "No description provided."}</h1>
-        //                 </div>
-        //             `;
-
-        //             groupsContainer.appendChild(groupDiv);
-        //         });
-
-        //     } catch (err) {
-        //         console.error("Error loading posts:", err);
-        //         groupsContainer.innerHTML = "<h2>Error loading posts</h2>";
-        //     }
-        // }
-        // load posts right away
-
-        
-        fillArr();
-        function fillArr(){
-             if(arrPostsStack.length >= 3){
-                arrFirst = [arrPostsStack[currentPostIndex-1], arrPostsStack[currentPostIndex], arrPostsStack[currentPostIndex+1]]
-            }
-            else if(arrPostsStack == 2){
-                arrFirst = [arrPostsStack[currentPostIndex-1], arrPostsStack[currentPostIndex]]
-            }
-            else{
-                arrFirst = arrPostsStack;
-            }
-        }
-        
-
-        //console.log(arrFirst)
+        //console.log(arrPostsStack)
 
         const groupt = document.getElementById("groupTitle")
 
-        
-        //groups[0].querySelector(".groupTitle");
-
-        function fillData(index, data){
+        function fillData(){
+            
             const groups = document.querySelectorAll(".group");
-            const group = groups[index];
+           
+            for(let i = 0; i<3; i++){
+                let data = null;
+                const group = groups[i];
+                if(arrPostsStack.length <= 0){
+                    return;
+                }
+                if((currentPostIndex == 0 && arrPostsStack.length == 1)){
+                    //There is only one post, show only the middle div
+                    if((i == 0 || i == 2)){
+                        group.style.display = "none";
+                        continue;
+                    }else{
+                        data = arrPostsStack[currentPostIndex].data();
+                    }
+                }
+                else if((currentPostIndex == 0 ) ){
+                    //if there is 2 posts and we are on the 0th post, show only the middle and right posts
+                    if(i == 0){
+                        group.style.display = "none";
+                    continue;
+                    }else{
+                        data = arrPostsStack[currentPostIndex+(i-1)].data();
+                    }
+                }
+                else if((currentPostIndex == arrPostsStack.length-1) ){
+                    //if we are on the last post show only the left and middle post
+                    if(i == 2){
+                        group.style.display = "none";
+                        continue;
+                    }
+                    else{
+                        data = arrPostsStack[currentPostIndex+(i-1)].data();
+                    }
+                }else{
+                    //console.log(currentPostIndex)
+                    group.style.display = "flex";
+                    if(i == 0){
+                         data = arrPostsStack[currentPostIndex - 1].data()
+                    }
+                    else if( i == 1){
+                         data = arrPostsStack[currentPostIndex].data()
+                    }
+                    else{
+                         data = arrPostsStack[currentPostIndex + 1].data()
+                    }  
+                }
+                
+                 
+                const groupTitles = group.querySelectorAll(".groupTitle h1");
 
-            const groupTitles = group.querySelectorAll(".groupTitle h1");
+                groupTitles[0].textContent = data.user1?.firstLastName || "Unknown User";
+                groupTitles[1].textContent = ("Age:" + data.groupAgeMin || "Age: N/A")+"-"+ (data.groupAgeMax || "Age: N/A");
+                groupTitles[2].textContent = (data.groupSizeMin || "N/A") + "/" + (data.groupSizeMax || "N/A")
 
-            groupTitles[0].textContent = data.user1?.firstLastName || "Unknown User";
-            groupTitles[1].textContent = ("Age:" + data.groupAgeMin || "Age: N/A")+"-"+ (data.groupAgeMax || "Age: N/A");
-            groupTitles[2].textContent = (data.groupSizeMin || "N/A") + "/" + (data.groupSizeMax || "N/A")
+                const memberLinks = group.querySelectorAll(".groupMembers a");
+                memberLinks[0].textContent = data.user1?.firstLastName || "Unknown";
 
-            const memberLinks = group.querySelectorAll(".groupMembers a");
-            memberLinks[0].textContent = data.user1?.firstLastName || "Unknown";
+                const ltag = group.querySelectorAll(".groupTags h1");
+                ltag[0].textContent = data.groupTags || "N/A";
 
-            const ltag = group.querySelectorAll(".groupTags h1");
-            ltag[0].textContent = data.groupTags;
-
-            const desc = group.querySelectorAll(".groupDescription h1");
-            desc[0].textContent = data.groupDescription;
-        }
-        async function fillPosts(arrPost){
+                const desc = group.querySelectorAll(".groupDescription h1");
+                desc[0].textContent = data.groupDescription || "N/A";
+            }
             
-            const len = arrPost.length;
-            if(arrPost.length >= 3){
-                for(let i = 0; i<=2; i++){
-                    //console.log(arrPost[i].data())
-                    const data = arrPost[i].data();
-                    fillData(i, data);
+        }
+        await fillData();
+
+        // Adds one unique Firestore snapshot (not already in arrPostsStack)
+        async function fetchUniquePost() {
+            const postsRef = collection(db, "posts");
+            const snapshot = await getDocs(postsRef);
+
+            if (snapshot.empty) {
+                //console.log("No posts found in Firestore.");
+                return null;
+            }
+
+            const docs = snapshot.docs;
+            let newSnap = null;
+
+            // Try a few random picks to find an unseen post
+            for (let tries = 0; tries < docs.length * 2; tries++) {
+                const randomIndex = Math.floor(Math.random() * docs.length);
+                const candidateSnap = docs[randomIndex];
+
+                // check by .id since snapshots are new objects each time
+                const alreadyExists = arrPostsStack.some(snap => snap.id === candidateSnap.id);
+                if (!alreadyExists) {
+                arrPostsStack.push(candidateSnap);
+                //console.log("Added new unique post:", candidateSnap.id);
+                newSnap = candidateSnap;
+                break;
                 }
             }
-            else if(arrPost.length == 2){
-                for(let i = 0; i<=1; i++){
-                    //console.log(arrPost[i].data())
-                    const data = arrPost[i].data();
-                    fillData(i, data);
-                }
+
+            if (!newSnap) {
+                //console.log("No unique post found (all already in stack).");
             }
-            else{
-                fillData(1, arrPost[0].data());
-            }
-            
-            
+
+            return newSnap;
         }
 
-        await fillPosts(arrFirst);
+
         const prevbtn = document.getElementById("prevBtn");
         const nextBtn = document.getElementById("nextBtn");
 
         nextBtn.addEventListener("click", async(event) =>{
 
-            const postsCol = collection(db, "posts");
-            const counterRef = doc(db, "metadata", "postCounter");
-
-            const counterSnap = await getDoc(counterRef);
-            const totalPosts = counterSnap.data()?.postNum || 0;
-
-            if (totalPosts === 0) return null;
-            if (seenIds.size >= totalPosts) return null;
+           
+            if (currentPostIndex + 2 === arrPostsStack.length) {
+                await fetchUniquePost();
+             }
 
             
-            let idx = 1 + Math.floor(Math.random() * totalPosts);
-
-            
-            for (let tries = 0; tries < totalPosts; tries++) {
-                const postId = `posts${idx}`;
-
-                if (!seenIds.has(postId)) {
-                const snap = await getDoc(doc(db, "posts", postId));
-                if (snap.exists()) {
-                    seenIds.add(postId);
-                    arrPostsStack.push(snap);
-                    //console.log(arrPostsStack);
-                    currentPostIndex += 1;
-                    fillArr();
-                    fillPosts(arrFirst);
-                    return; 
-                    }
-                }
-                idx = idx === totalPosts ? 1 : idx + 1;
+            if(currentPostIndex + 1 < arrPostsStack.length){
+                currentPostIndex += 1;
+                //console.log(currentPostIndex)
+                fillData();
             }
-            return null;
         })
 
         prevbtn.addEventListener("click", async(event) => {
-            if (currentPostIndex - 1 <= 0){
+            if (currentPostIndex - 1 < 0){
                 return;
             }
-            currentPostIndex -= 1;
-            fillArr();
-            fillPosts(arrFirst);        
+            currentPostIndex -= 1;       
+            fillData();
         })
-        
-        //await loadPosts(arrFirst);
-
-
-        
     });
 });
