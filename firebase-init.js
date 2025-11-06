@@ -2,6 +2,7 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js"
 import {getAuth, setPersistence, browserSessionPersistence} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js"
 import {getFirestore} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
 
 // Your web app's Firebase configuration
@@ -18,3 +19,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 export const db = getFirestore(app);
+export const storage = getStorage(app);

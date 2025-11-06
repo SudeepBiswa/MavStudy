@@ -88,6 +88,7 @@ window.addEventListener("DOMContentLoaded", () => {
         
         if(snapshot.empty){
             console.log("no posts found");
+            document.getElementsByClassName(".groupsContainer").innerHTML = "<p>EMPTY</p>"
         }
         else{
             const docArr = snapshot.docs;
@@ -111,7 +112,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 if(arrPostsStack.length <= 0){
                     return;
                 }
-                if((currentPostIndex == 0 && arrPostsStack.length == 1)){
+                if((arrPostsStack.length == 1)){
                     //There is only one post, show only the middle div
                     if((i == 0 || i == 2)){
                         group.style.display = "none";
@@ -120,35 +121,74 @@ window.addEventListener("DOMContentLoaded", () => {
                         data = arrPostsStack[currentPostIndex].data();
                     }
                 }
-                else if((currentPostIndex == 0 ) ){
+                else if((arrPostsStack.length ==2) ){
                     //if there is 2 posts and we are on the 0th post, show only the middle and right posts
                     if(i == 0){
                         group.style.display = "none";
                     continue;
                     }else{
-                        data = arrPostsStack[currentPostIndex+(i-1)].data();
+                        if(currentPostIndex == 0){
+                            if(i == 1){
+                                group.style.scale = "1";
+                                data = arrPostsStack[currentPostIndex].data();
+                            }else{
+                                group.style.scale = "0.85";
+                                data = arrPostsStack[currentPostIndex+1].data();
+                            }
+                            
+                        }
+                        else{
+                             if(i == 2){
+                                group.style.scale = "1";
+                                data = arrPostsStack[currentPostIndex].data();
+                            }else{
+                                group.style.scale = "0.85";
+                                data = arrPostsStack[currentPostIndex-1].data();
+                            }
+                        }
+                        
                     }
+                }
+                else if(currentPostIndex == 0 && arrPostsStack.length > 2){
+                    if(i == 0){
+                        group.style.scale = "1"
+                        data = arrPostsStack[currentPostIndex].data()
+                    }else{
+                        group.style.scale = "0.85";
+                        data = arrPostsStack[currentPostIndex + i].data()
+                    }
+                    
+                    
                 }
                 else if((currentPostIndex == arrPostsStack.length-1) ){
                     //if we are on the last post show only the left and middle post
                     if(i == 2){
-                        group.style.display = "none";
+                        group.style.scale = "1";
+                        data = arrPostsStack[currentPostIndex].data();
                         continue;
                     }
-                    else{
-                        data = arrPostsStack[currentPostIndex+(i-1)].data();
+                    else if(i == 0){
+                        group.style.scale = "0.85"
+                        data = arrPostsStack[currentPostIndex-2].data();
+                    }
+                    else{   
+                        group.style.scale = "0.85"
+                        data = arrPostsStack[currentPostIndex-1].data();
                     }
                 }else{
                     //console.log(currentPostIndex)
-                    group.style.display = "flex";
+                    
                     if(i == 0){
                          data = arrPostsStack[currentPostIndex - 1].data()
+                         group.style.scale = "0.85";
                     }
                     else if( i == 1){
                          data = arrPostsStack[currentPostIndex].data()
+                         group.style.scale = "1";
                     }
                     else{
                          data = arrPostsStack[currentPostIndex + 1].data()
+                         group.style.scale = "0.85";
                     }  
                 }
                 

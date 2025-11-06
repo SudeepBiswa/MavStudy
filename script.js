@@ -1,12 +1,14 @@
-import { auth, db } from "./firebase-init.js";
+import { auth, db, storage} from "./firebase-init.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 import { doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
 
 window.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("userDetailsForm");
     const messageHandler = document.getElementById("messageHandler");
-    const submitBtn = document.getElementById("saveUserDetailsButton")
+    const submitBtn = document.getElementById("saveUserDetailsBtn")
 
     const convoBtn = document.getElementById("convoBtn");
     const homeBtn =  document.getElementById("homeBtn")
@@ -17,6 +19,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const lGrade = document.getElementById("gradeDropdown");
     const lAge = document.getElementById("ageInput");
     const lEnrollment = document.getElementById("enrollmentStatusDropdown");
+
+    const userPfp = document.getElementById("userProfilePicture");
 
     console.log(auth.currentUser)
 
@@ -38,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
         //console.log(userData.ProfileData.firstName)
 
         if(!userData.ProfileData.InitialAccountCreationComplete){
-            submitBtn.value = "Create Profile"; 
+            submitBtn.textContent = "Create Profile"; 
             convoBtn.style.visibility = "hidden";
             homeBtn.style.visibility = "hidden";
                 
@@ -55,8 +59,38 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         
         //stores user details from form
-        form.addEventListener("submit", async (event) => {
+        submitBtn.addEventListener("click", async (event) => {
         event.preventDefault();
+
+        // const file = userPfp.files[0];
+        // if (!file) {
+        //     alert("Please select a file first.");
+        //     return;
+        // }
+
+        // try {
+        //     // Create a reference: users/<uid>/profile.jpg
+        //     const storageRef = ref(storage, `users/${user.uid}/profile.jpg`);
+
+        //     // Upload the file
+        //     await uploadBytes(storageRef, file);
+        //     console.log("File uploaded successfully");
+
+        //     // Get the download URL
+        //     const downloadURL = await getDownloadURL(storageRef);
+        //     console.log("📸 Profile picture URL:", downloadURL);
+
+        //     // Store the URL in Firestore (e.g., inside your users collection)
+        //     const userDocRef = doc(db, "users", user.uid);
+        //     await setDoc(userDocRef, {
+        //     "ProfileData.profilePicURL": downloadURL
+        //     }, {merge: true});
+
+        //     alert("Profile picture uploaded successfully!");
+        // } catch (error) {
+        //     console.error("Upload failed:", error);
+        //     alert("Error uploading profile picture: " + error.message);
+        // }
 
         
 
