@@ -36,6 +36,13 @@ window.addEventListener("DOMContentLoaded", () =>{
             messageHandler.textContent = "Please use a valid UNO or Nebraska email.";
             return;
         }
+    
+        const passwordErrors = validatePassword(password);
+        if (passwordErrors.length > 0) {
+            messageHandler.style.color = "red";
+            messageHandler.textContent = passwordErrors.join(" ");
+            return;
+        }
 
         await setPersistence(auth, browserSessionPersistence);
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -136,12 +143,30 @@ window.addEventListener("DOMContentLoaded", () =>{
 
     });
 
-    //creates collection for user events with timestamp
-    async function addEvent(user, eventType) {
-        await addDoc(collection(db, "users", user.uid, "Events"), {
-            event: eventType,
-            time: serverTimestamp()
-        });
-    }
-})
+//creates collection for user events with timestamp
+async function addEvent(user, eventType) {
+    await addDoc(collection(db, "users", user.uid, "Events"), {
+        event: eventType,
+        time: serverTimestamp()
+    });
+}
 
+function validatePassword(password) {
+    const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const errorMessages = [];
+    
+    if (password.length < 8) {
+        errorMessages.push("Password must be at least 8 characters long.");
+    }
+    if (!/[A-Z]/.test(password)) {
+        errorMessages.push("Password must contain at least one uppercase letter.");
+    }
+    if (!/[a-z]/.test(password)) {
+        errorMessages.push("Password must contain at least one lowercase letter.");
+    }
+    if (!/\d/.test(password)) {
+        errorMessages.push("Password must contain at least one number.");
+    }
+
+    return errorMessages
+}});
