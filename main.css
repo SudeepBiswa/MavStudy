@@ -186,48 +186,14 @@ li a:hover::before{
 .groupMatcher .groupsContainer{
     position: relative;
     display: flex;
-    width: 75%;
+    width: 100%;
     min-height: 0;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     justify-content: space-between;
     align-items: stretch;
     flex: 1;
     gap: 15px;
-}
-.groupMatcher .groupsControls{
-    position: relative;
-    display: flex;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-}
-.groupMatcher .groupsControls button{
-    display: flex;
-    color: white;
-    background-color: var(--lightGrey);
-    cursor: pointer;
-    width: fit-content;
-    height: 50px;
-    margin: 0;
-    padding: 15px 60px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-}
-.groupMatcher .groupsControls button:hover{
-    background-color: var(--red);
-    /* transform: scale(1.05); */
-}
-.groupMatcher .groupsControls .squareButton{
-    width: 50px;
-    height: 50px;
-    margin: 0;
-    padding: 0;
-    aspect-ratio: 1 / 1;
 }
 .groupMatcher .groupsContainer .groups{
     display: flex;
@@ -250,7 +216,7 @@ li a:hover::before{
     background-color: var(--darkGrey);
     color: white;
     flex-direction: column;
-    gap: 30px;
+    gap: 15px;
 }
 .groupMatcher .groupsContainer .groups .group .groupTitle{
     display: flex;
@@ -280,6 +246,7 @@ li a:hover::before{
     flex-direction: column;
     overflow-y: auto;
     border-radius: 0;
+    flex: 1 1 0;
 }
 .groupMatcher .groupsContainer .groups .group .groupInfo .groupMembers{
     display: flex;
@@ -322,6 +289,40 @@ li a:hover::before{
     width: 100%;
     margin: 0;
     padding: 0;
+}
+.groupMatcher .groupsControls{
+    position: relative;
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.groupMatcher .groupsControls button{
+    display: flex;
+    color: white;
+    background-color: var(--lightGrey);
+    cursor: pointer;
+    width: fit-content;
+    height: 50px;
+    margin: 0;
+    padding: 15px 60px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+.groupMatcher .groupsControls button:hover{
+    background-color: var(--red);
+    /* transform: scale(1.05); */
+}
+.groupMatcher .groupsContainer .groups .squareButton, .groupMatcher .groupsControls .squareButton{
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 0;
+    aspect-ratio: 1 / 1;
 }
 .menu{
     position: absolute;
