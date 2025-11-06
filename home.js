@@ -103,11 +103,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
         //console.log(arrPostsStack)
 
-        const groupt = document.getElementById("groupTitle")
-
+        const groups = document.querySelectorAll(".group");
         function fillData(){
             
-            const groups = document.querySelectorAll(".group");
+            
            
             for(let i = 0; i<3; i++){
                 let data = null;
@@ -229,6 +228,27 @@ window.addEventListener("DOMContentLoaded", () => {
                 fillData();
             }
         })
+
+        groups[2].addEventListener("click", async(e) =>{
+            if (currentPostIndex + 2 === arrPostsStack.length) {
+                await fetchUniquePost();
+             }
+
+            
+            if(currentPostIndex + 1 < arrPostsStack.length){
+                currentPostIndex += 1;
+                //console.log(currentPostIndex)
+                fillData();
+            }
+        })
+        groups[0].addEventListener("click", async(e) =>{
+            if (currentPostIndex - 1 < 0){
+                return;
+            }
+            currentPostIndex -= 1;       
+            fillData();
+        })
+
 
         prevbtn.addEventListener("click", async(event) => {
             if (currentPostIndex - 1 < 0){
