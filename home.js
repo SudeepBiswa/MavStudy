@@ -70,7 +70,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     const postId = "posts" + newPostNumber;
                     //console.log("postId")
                     await setDoc(doc(db, "posts", postId), post);
-                    document.getElementById("createGroup").style.display = "none";
+                    window.location.reload();
                 })
             }
             catch (e){
