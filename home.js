@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
     // if user is NOT authenticated redirect to login page
     onAuthStateChanged(auth, async(user) => {
         
-        console.log(user)
+        //console.log(user)
         if (!user) {
                 window.location.href = "login.html";
             return;
@@ -27,12 +27,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
         createGroupBtn.addEventListener("click", async (event) => {
             event.preventDefault();
-            console.log("testing")
+            //console.log("testing")
 
             if(lgroupLocation.value == "" || lgroupTags.value == "" || lgroupDescription.value == ""){
                 return;
             }
-            console.log("got past it")
+            //console.log("got past it")
             const counterRef = doc(db, "metadata", "postCounter")
             const dataRef = await getDoc(doc(db, "users", user.uid));
             const userData = dataRef.data();
@@ -96,8 +96,10 @@ window.addEventListener("DOMContentLoaded", () => {
             const shuffled = docArr.sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, Math.min(3, docArr.length));
             arrPostsStack = selected;
+            selected.forEach(element => seenIds.add(element.id))
+            console.log(seenIds)
 
-            console.log("Initial Stack: " + arrPostsStack);
+            //console.log("Initial Stack: " + arrPostsStack);
         }
         
         // const groupsContainer = document.querySelector(".groups");
@@ -168,7 +170,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         
 
-        console.log(arrFirst)
+        //console.log(arrFirst)
 
         const groupt = document.getElementById("groupTitle")
 
@@ -245,7 +247,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 if (snap.exists()) {
                     seenIds.add(postId);
                     arrPostsStack.push(snap);
-                    console.log(arrPostsStack);
+                    //console.log(arrPostsStack);
                     currentPostIndex += 1;
                     fillArr();
                     fillPosts(arrFirst);
