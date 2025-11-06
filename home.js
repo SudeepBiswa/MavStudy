@@ -103,9 +103,12 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         //console.log(arrPostsStack)
+        function wait(ms){
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
         const groups = document.querySelectorAll(".group");
-        function fillData(){
+        async function fillData(){
             for(let i = 0; i<3; i++){
                 let data = null;
                 const group = groups[i];
@@ -130,9 +133,11 @@ window.addEventListener("DOMContentLoaded", () => {
                         if(currentPostIndex == 0){
                             if(i == 1){
                                 group.style.scale = "1";
+                                group.style.filter= "";
                                 data = arrPostsStack[currentPostIndex].data();
                             }else{
                                 group.style.scale = "0.85";
+                                group.style.filter= "blur(1.5px) brightness(0.45)";
                                 data = arrPostsStack[currentPostIndex+1].data();
                             }
                             
@@ -140,9 +145,11 @@ window.addEventListener("DOMContentLoaded", () => {
                         else{
                              if(i == 2){
                                 group.style.scale = "1";
+                                group.style.filter= "";
                                 data = arrPostsStack[currentPostIndex].data();
                             }else{
                                 group.style.scale = "0.85";
+                                group.style.filter= "blur(1.5px) brightness(0.45)";
                                 data = arrPostsStack[currentPostIndex-1].data();
                             }
                         }
@@ -152,45 +159,56 @@ window.addEventListener("DOMContentLoaded", () => {
                 else if(currentPostIndex == 0 && arrPostsStack.length > 2){
                     if(i == 0){
                         group.style.scale = "1"
-                        data = arrPostsStack[currentPostIndex].data()
+                        group.style.filter= "";
+                        data = arrPostsStack[currentPostIndex].data();
                     }else{
                         group.style.scale = "0.85";
-                        data = arrPostsStack[currentPostIndex + i].data()
+                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        data = arrPostsStack[currentPostIndex + i].data();
                     }
-                    
-                    
                 }
                 else if((currentPostIndex == arrPostsStack.length-1) ){
                     //if we are on the last post show only the left and middle post
                     if(i == 2){
                         group.style.scale = "1";
+                        group.style.filter= "";
                         data = arrPostsStack[currentPostIndex].data();
                         continue;
                     }
                     else if(i == 0){
-                        group.style.scale = "0.85"
+                        group.style.scale = "0.85";
+                        group.style.filter= "blur(1.5px) brightness(0.45)";
                         data = arrPostsStack[currentPostIndex-2].data();
                     }
                     else{   
-                        group.style.scale = "0.85"
+                        group.style.scale = "0.85";
+                        group.style.filter= "blur(1.5px) brightness(0.45)";
                         data = arrPostsStack[currentPostIndex-1].data();
                     }
-                }else{
+                }else if(!(currentPostIndex == arrPostsStack.length-1)){
                     //console.log(currentPostIndex)
                     
                     if(i == 0){
-                         data = arrPostsStack[currentPostIndex - 1].data()
-                         group.style.scale = "0.85";
+                        data = arrPostsStack[currentPostIndex - 1].data();
+                        group.style.scale = "0.85";
+                        group.style.filter= "blur(1.5px) brightness(0.45)";
                     }
                     else if( i == 1){
-                         data = arrPostsStack[currentPostIndex].data()
-                         group.style.scale = "1";
+                        data = arrPostsStack[currentPostIndex].data();
+                                                
+                        group.style.scale = "0.85";
+                        await wait(120);
+                        
+                        group.style.scale = "1";
+                        group.style.filter= "";
                     }
-                    else{
-                         data = arrPostsStack[currentPostIndex + 1].data()
-                         group.style.scale = "0.85";
+                    else if(i==2){
+                        data = arrPostsStack[currentPostIndex + 1].data();
+                        group.style.scale = "0.85";
+                        group.style.filter= "blur(1.5px) brightness(0.45)";
                     }  
                 }
+                
                 
                  
                 const groupTitles = group.querySelectorAll(".groupTitle h1");
@@ -286,7 +304,6 @@ window.addEventListener("DOMContentLoaded", () => {
             
             if(currentPostIndex + 1 < arrPostsStack.length){
                 currentPostIndex += 1;
-                //console.log(currentPostIndex)
                 fillData();
             }
         })
@@ -294,7 +311,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (currentPostIndex - 1 < 0){
                 return;
             }
-            currentPostIndex -= 1;       
+            currentPostIndex -= 1;  
             fillData();
         })
 
@@ -303,7 +320,7 @@ window.addEventListener("DOMContentLoaded", () => {
             if (currentPostIndex - 1 < 0){
                 return;
             }
-            currentPostIndex -= 1;       
+            currentPostIndex -= 1;     
             fillData();
         })
 
