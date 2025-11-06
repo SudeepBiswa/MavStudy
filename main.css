@@ -219,7 +219,7 @@ li a:hover::before{
     background-color: var(--red);
     /* transform: scale(1.05); */
 }
-.groupMatcher .groupsControls #squareButton{
+.groupMatcher .groupsControls .squareButton{
     width: 50px;
     height: 50px;
     margin: 0;

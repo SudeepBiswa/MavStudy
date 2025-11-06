@@ -87,9 +87,9 @@
                 </div>
             </div>
             <div class="groupsControls">
-                <button id="squareButton" onclick=""><</button>
+                <button class="squareButton" id="prevBtn" onclick=""><</button>
                 <button onclick="">Match</button>
-                <button id="squareButton" onclick="">></button>
+                <button class="squareButton" id="nextBtn" onclick="">></button>
             </div>
         </div>
         <div class="menu" id="groupMatcherPreferences" style="display: none;">
@@ -100,21 +100,21 @@
                 <label id="groupSizeLabel">Group Size</label>
                 <div class="doubleInput">
                     <div>
-                        <input type="text" placeholder="Min (2)" id="groupSizeMin">
+                        <input type="text" placeholder="Min (2)" id="hgroupSizeMin">
                     </div>
                     <div>
-                        <input type="text" placeholder="Max (5)" id="groupSizeMax">
+                        <input type="text" placeholder="Max (5)" id="hgroupSizeMax">
                     </div>
                 </div>
                 <label>Location</label>
-                <input type="text" placeholder="Enter group location" id="groupLocation">
+                <input type="text" placeholder="Enter group location" id="hgroupLocation">
                 <label>Age</label>
                 <div class="doubleInput">
                     <div>
-                        <input type="text" placeholder="Min (18)" id="groupAgeMin">
+                        <input type="text" placeholder="Min (18)" id="hgroupAgeMin">
                     </div>
                     <div>
-                        <input type="text" placeholder="Max" id="groupAgeMax">
+                        <input type="text" placeholder="Max" id="hgroupAgeMax">
                     </div>
                 </div>
                 <label>Tags</label>
@@ -124,7 +124,7 @@
                     <div class="tagpicker-listbox" role="listbox" hidden></div>
                 </div>
                 <div class="tagpicker-chips"></div>
-                <input class="tagpicker-hidden" type="hidden" name="groupTags">
+                <input class="tagpicker-hidden" type="hidden" name="hgroupTags">
                 <div class="sr-only" role="status" aria-live="polite"></div>
                 </div>
             </form>
@@ -190,15 +190,15 @@
                     <div class="tagpicker-listbox" role="listbox" hidden></div>
                 </div>
                 <div class="tagpicker-chips"></div>
-                <input class="tagpicker-hidden" type="hidden" name="groupTags">
+                <input class="tagpicker-hidden" type="hidden" name="sgroupTags" id="taggy">
                 <div class="sr-only" role="status" aria-live="polite"></div>
                 </div>
                 <label>Description</label>
                 <input type="text" placeholder="Enter group description" id="groupDescription" required>
             </form>
             <div class="menuActions">
-                <button id="createGroupButton" onclick="closeMenu('createGroup', 'close');">Create Group</button>
-                <button onclick="closeMenu('createGroup', 'close')">Cancel</button>
+                <button id="createBtn">Create Group</button>
+                <button id ="cancelBtn" onclick="closeMenu('createGroup', 'close')">Cancel</button>
             </div>
         </div>
     </div>
