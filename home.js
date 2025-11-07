@@ -137,7 +137,7 @@ window.addEventListener("DOMContentLoaded", () => {
                                 data = arrPostsStack[currentPostIndex].data();
                             }else{
                                 group.style.scale = "0.85";
-                                group.style.filter= "blur(1.5px) brightness(0.45)";
+                                group.style.filter= "blur(1.2px) brightness(0.45)";
                                 data = arrPostsStack[currentPostIndex+1].data();
                             }
                             
@@ -149,7 +149,7 @@ window.addEventListener("DOMContentLoaded", () => {
                                 data = arrPostsStack[currentPostIndex].data();
                             }else{
                                 group.style.scale = "0.85";
-                                group.style.filter= "blur(1.5px) brightness(0.45)";
+                                group.style.filter= "blur(1.2px) brightness(0.45)";
                                 data = arrPostsStack[currentPostIndex-1].data();
                             }
                         }
@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         data = arrPostsStack[currentPostIndex].data();
                     }else{
                         group.style.scale = "0.85";
-                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        group.style.filter= "blur(1.2px) brightness(0.45)";
                         data = arrPostsStack[currentPostIndex + i].data();
                     }
                 }
@@ -177,12 +177,12 @@ window.addEventListener("DOMContentLoaded", () => {
                     }
                     else if(i == 0){
                         group.style.scale = "0.85";
-                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        group.style.filter= "blur(1.2px) brightness(0.45)";
                         data = arrPostsStack[currentPostIndex-2].data();
                     }
                     else{   
                         group.style.scale = "0.85";
-                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        group.style.filter= "blur(1.2px) brightness(0.45)";
                         data = arrPostsStack[currentPostIndex-1].data();
                     }
                 }else if(!(currentPostIndex == arrPostsStack.length-1)){
@@ -191,7 +191,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     if(i == 0){
                         data = arrPostsStack[currentPostIndex - 1].data();
                         group.style.scale = "0.85";
-                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        group.style.filter= "blur(1.2px) brightness(0.45)";
                     }
                     else if( i == 1){
                         data = arrPostsStack[currentPostIndex].data();
@@ -205,7 +205,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     else if(i==2){
                         data = arrPostsStack[currentPostIndex + 1].data();
                         group.style.scale = "0.85";
-                        group.style.filter= "blur(1.5px) brightness(0.45)";
+                        group.style.filter= "blur(1.2px) brightness(0.45)";
                     }  
                 }
                 
@@ -214,8 +214,9 @@ window.addEventListener("DOMContentLoaded", () => {
                 const groupTitles = group.querySelectorAll(".groupTitle h1");
 
                 groupTitles[0].textContent = data.user1?.firstLastName || "Unknown User";
-                groupTitles[1].textContent = ("Age:" + data.groupAgeMin || "Age: N/A")+"-"+ (data.groupAgeMax || "Age: N/A");
-                groupTitles[2].textContent = (data.groupSizeMin || "N/A") + "/" + (data.groupSizeMax || "N/A")
+                groupTitles[3].textContent = ("Age: " + data.groupAgeMin || "Age: NA")+"-"+ (data.groupAgeMax || "Age: NA");
+                groupTitles[1].textContent = ( "Size: " + data.groupSizeMin || "NA") + "/" + (data.groupSizeMax || "NA");
+                groupTitles[2].textContent = "Location: " + data.groupLocation || "Unkown";
 
                 const memberContainer = group.querySelector(".groupMembers");
                 memberContainer.innerHTML = "";
