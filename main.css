@@ -536,7 +536,7 @@ li a:hover::before{
     background-color: var(--red);
     /* transform: scale(1.05); */
 }
-.conversationsContainer{
+.groupsContainer{
     position: relative;
     display: flex;
     width: 100%;
@@ -548,7 +548,7 @@ li a:hover::before{
     color: white;
     gap: 15px;
 }
-.conversationsContainer .conversationsList{
+.groupsContainer .groupsList{
     display: flex;
     width: 30%;
     margin: 0;
@@ -559,7 +559,7 @@ li a:hover::before{
     border-radius: 15px;
     gap: 15px;
 }
-.conversationsContainer .conversationsList .conversationsListActiveConversation{
+.groupsContainer .groupsList .groupsListActiveGroup{
     width: 100%;
     background-color: var(--red);
     margin: 0;
@@ -569,7 +569,7 @@ li a:hover::before{
     cursor: pointer;
     border-radius: 15px;
 }
-.conversationsContainer .conversationsList .conversationsListConversation{
+.groupsContainer .groupsList .groupsListGroup{
     width: 100%;
     margin: 0;
     padding: 15px;
@@ -578,55 +578,100 @@ li a:hover::before{
     cursor: pointer;
     border-radius: 15px;
 }
-.conversationsContainer .conversationsList .conversationsListConversation:hover{
+.groupsContainer .groupsList .groupsListGroup:hover{
     background-color: var(--lightGrey);
 }
-.conversationsContainer .activeConversation{
+.groupsContainer .activeGroup{
     display: flex;
     width: 100%;
     margin: 0;
     padding: 30px;
     flex-direction: column;
+    gap: 15px;
     background-color: var(--darkGrey);
 }
-.conversationsContainer .activeConversation .messages{
+.groupsContainer .activeGroup .groupHeader{
     display: flex;
-    flex-grow: 1;
-    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex: 0 1 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 15px;
 }
-.conversationsContainer .activeConversation .messages .message{
+.groupsContainer .activeGroup .groupHeader .groupInfo{
     display: flex;
-    width: fit-content;
-    height: fit-content;
-    max-width: 60%;
     margin: 0;
+    padding: 15px;
+    flex: 1 1 0;
+    flex-direction: row;
+    justify-content: start;
+    gap: 15px;
+    background-color: var(--darkGrey);
+}
+.groupsContainer .activeGroup .messages{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+.groupsContainer .activeGroup .messages .message{
+    display: flex;
+    flex: 0 1 0;
+    min-width: 30%;
+    max-width: 60%;
+    margin: 0 auto 0 0;
     padding: 0;
     flex-direction: column;
 }
-.conversationsContainer .activeConversation .messages .message .messageSenderInfo{
+.groupsContainer .activeGroup .messages .messageSenderInfo{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    flex-direction: column;
+    justify-content: end;
+}
+.groupsContainer .activeGroup .messages .message .messageContent{
     display: flex;
     width: 100%;
     margin: 0;
     padding: 15px;
+    flex-direction: column;
+    gap: 15px;
+    background-color: var(--lightGrey);
+}
+.groupsContainer .activeGroup .messages .userMessage{
+    display: flex;
+    flex: 0 1 0;
+    min-width: 30%;
+    max-width: 60%;
+    margin: 0 0 0 auto;
+    padding: 0;
     flex-direction: column;
 }
-.conversationsContainer .activeConversation .messages .message .messageContent{
+.groupsContainer .activeGroup .messages .userMessage .messageContent{
     display: flex;
     width: 100%;
     margin: 0;
     padding: 15px;
     flex-direction: column;
+    gap: 15px;
     background-color: var(--red);
 }
-
-.conversationsContainer .activeConversation .messages .message .messageContent .messageInfo{
+.groupsContainer .activeGroup .messages .messageContent .messageInfo{
     display: flex;
     width: 100%;
     flex-direction: row;
     justify-content: end;
 }
-.conversationsContainer .activeConversation .messageBar{
+.groupsContainer .activeGroup .messageBar{
     display: flex;
     width: 100%;
     margin: 0;
@@ -634,7 +679,7 @@ li a:hover::before{
     gap: 15px;
     flex-direction: row;
 }
-.conversationsContainer .activeConversation .messageBar input{
+.groupsContainer .activeGroup .messageBar input{
     width: 100%;
     margin: 0;
     padding: 15px;
@@ -642,7 +687,7 @@ li a:hover::before{
     border: 0;
     outline: none;
 }
-.conversationsContainer .activeConversation .messageBar button{
+.groupsContainer .activeGroup .messageBar button{
     display: flex;
     color: white;
     background-color: var(--lightGrey);
@@ -655,7 +700,7 @@ li a:hover::before{
     align-items: center;
     border: none;
 }
-.conversationsContainer .activeConversation .messageBar button:hover{
+.groupsContainer .activeGroup .messageBar button:hover{
     background-color: var(--red);
 }
 #messageHandler{
@@ -663,7 +708,7 @@ li a:hover::before{
     margin: 0;
     padding: 15px;
     text-align: center;
-    color: var(--lightGrey);
+    color: var(--veryLightGrey);
 }
 footer{
     display: flex;
