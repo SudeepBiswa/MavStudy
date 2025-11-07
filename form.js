@@ -119,6 +119,17 @@ window.addEventListener("DOMContentLoaded", () =>{
                 }, 1000);
 
                 window.location.href = "profile.html";
+                return;
+            }
+
+            if(!docSnap.data().ProfileData.InitialAccountCreationComplete){
+                messageHandler.textContent = "PROFILE NOT CREATED. SENDING USER TO PROFILE CREATION!!";
+                messageHandler.style.color = "yellow";
+
+                setTimeout(() =>{
+                    window.location.href = "profile.html";
+                }, 1000);
+                return;
             }
 
 

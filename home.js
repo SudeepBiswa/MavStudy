@@ -215,24 +215,31 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 groupTitles[0].textContent = data.user1?.firstLastName || "Unknown User";
                 groupTitles[3].textContent = ("Age: " + data.groupAgeMin || "Age: NA")+"-"+ (data.groupAgeMax || "Age: NA");
-                groupTitles[1].textContent = ( "Size: " + data.groupSizeMin || "NA") + "/" + (data.groupSizeMax || "NA");
                 groupTitles[2].textContent = "Location: " + data.groupLocation || "Unkown";
 
                 const memberContainer = group.querySelector(".groupMembers");
                 memberContainer.innerHTML = "";
 
                 const maxMembers = parseInt(data.groupSizeMax) || 1;
+                let currentMemSize = 0;
                 for (let m = 1; m <= maxMembers; m++) {
                     const userKey = "user" + m;
                     const member = data[userKey];
 
                     if (member && member.firstLastName) {
                         const link = document.createElement("a");
-                        link.textContent = member.firstLastName;
+                        if(member.firstLastName == " " || member.firstLastName == ""){
+                            link.textContent = "Unkown User";
+                        }
+                        else{
+                            link.textContent = member.firstLastName;
+                        }
                         memberContainer.appendChild(link);
+                        currentMemSize += 1;
                     }
                 }
-                
+                console.log("size: " + currentMemSize)
+                groupTitles[1].textContent = ( "Size: " + currentMemSize || "NA") + "/" + (data.groupSizeMax || "NA");
                 const ltag = group.querySelectorAll(".groupTags h1");
                 ltag[0].textContent = data.groupTags || "N/A";
 

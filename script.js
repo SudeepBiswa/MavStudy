@@ -8,10 +8,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const form = document.getElementById("userDetailsForm");
     const messageHandler = document.getElementById("messageHandler");
-    const submitBtn = document.getElementById("saveUserDetailsBtn")
+    const submitBtn = document.getElementById("saveUserDetailsBtn");
 
     const convoBtn = document.getElementById("convoBtn");
-    const homeBtn =  document.getElementById("homeBtn")
+    const homeBtn =  document.getElementById("homeBtn");
+    const imgHomeBtn = document.getElementById("profileHomeBtn");
 
     const lFirstName = document.getElementById("userFirstName");
     const lLastName = document.getElementById("userLastName");
@@ -22,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const userPfp = document.getElementById("userProfilePicture");
 
-    console.log(auth.currentUser)
+    //console.log(auth.currentUser)
 
     
 
@@ -45,6 +46,7 @@ window.addEventListener("DOMContentLoaded", () => {
             submitBtn.textContent = "Create Profile"; 
             convoBtn.style.visibility = "hidden";
             homeBtn.style.visibility = "hidden";
+            imgHomeBtn.href = "";
                 
         }
         else{
