@@ -80,13 +80,14 @@ window.addEventListener("DOMContentLoaded", () => {
                     transaction.set(chatCounterRef, {chatNum: newChatNumber});
 
                     const chatId = "chats" + newChatNumber;
-                    await updateDoc(doc(db, "chats", chatId), {members: {user1: userData.ProfileData.firstName}, chatName: userData.ProfileData.firstName + "' Chat", messageCounter: 1,});
+                    const chatIDName = "chatName" + newChatNumber;
+                    await setDoc(doc(db, "chats", chatId), {members: {user1: userData.ProfileData.firstName}, chatName: userData.ProfileData.firstName + "' Chat", messageCounter: 1,});
                     const messagesRef = collection(db, "chats", chatId, "messages");
                     await addDoc(messagesRef, {creationDate: serverTimestamp(), 
                         sender: userData.ProfileData.firstName + " " + userData.ProfileData.lastName,
                         senderEmail: userData.ProfileData.userEmail,
                         message: "Welcome Everyone!!"})
-                    await updateDoc(doc(db, "users", user.uid), {userChats: {chatId}})
+                    await setDoc(doc(db, "users", user.uid), {userChats: {[chatId]: chatId}}, {merge: true})
                     
                 })
             }
@@ -460,8 +461,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
                         await updateDoc(doc(db, "posts", postId), { [slot]: userPayload });
                         await updateDoc(doc(db, "chats", chatID), {[`members.${slot}`]: `${userData.firstName} ${userData.lastName}`});
-                        await updateDoc(doc(db, "users", user.uid), {userChats: {chatID}});
-                        console.log("Joined group:", postId, "as", slot);
+                        await setDoc(doc(db, "users", user.uid), {userChats: {[chatID]: chatID}}, {merge: true});
+                        //console.log("Joined group:", postId, "as", slot);
 
                         // Refresh data
                         const freshSnap = await getDoc(doc(db, "posts", postId));

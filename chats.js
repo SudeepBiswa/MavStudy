@@ -1,101 +1,211 @@
 import { auth, db } from "./firebase-init.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection, serverTimestamp, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import {
+  doc, getDoc, collection, serverTimestamp, query, orderBy, onSnapshot, addDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-window.addEventListener("DOMContentLoaded", () =>{
-    // if user is NOT authenticated redirect to login page
-    const groupNameTemplate = document.getElementById("groupNameTemp")
-    const recieveMsgTemp = document.getElementById("recievedMsgTemp");
-    const sentMsgTemp = document.getElementById("sentMsgTemp");
-    const gList = document.getElementById("gList");
-    const mList = document.getElementById("mList");
-    const msgPlaceholder = document.getElementById("messageBar");
-    onAuthStateChanged(auth, async(user) => {
-        
-        //console.log(user)
-        if (!user) {
-                window.location.href = "login.html";
-            return;
-        }
+window.addEventListener("DOMContentLoaded", () => {
+  const groupNameTemplate = document.getElementById("groupNameTemp");
+  const recieveMsgTemp = document.getElementById("recievedMsgTemp");
+  const sentMsgTemp = document.getElementById("sentMsgTemp");
+  const gList = document.getElementById("gList");
+  const mList = document.getElementById("mList");
+  //const activeList = document.getElementById("activeG");
+  const msgInput = document.getElementById("messageBar");
+  const sendBtn = document.getElementById("sendMsg");
 
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-        const userData = userSnap.data().ProfileData;
-        const chats = userSnap.data().userChats;
+  let currentUnsub = null;
+  let selectedChat = null;
+  let userData = null;
+  const rowById = new Map();
 
-        //let listOfChats = [];
+  // helper to show "Chat not selected" message
+  function showNoChatSelected() {
+    const headers = document.querySelectorAll(".groupInfo");
+    const headersActions = document.querySelectorAll(".groupActions");
+    headers[0].style.display = "none";
+    headersActions[0].style.display = "none";
+    mList.innerHTML = `
+      <div id="noChatSelected"
+           style="display:flex;
+                  align-items:center;
+                  justify-content:center;
+                  height:100%;
+                  font-size:1.3rem;
+                  color:#777;">
+        Chat not selected
+      </div>`;
+  }
 
-        //console.log(chats)
+  onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
 
-        const entries = Object.entries(chats);
+    // start with "Chat not selected"
+    showNoChatSelected();
 
-        for (const [key, chat] of entries) {
-            const chatRef = doc(db, "chats", chat);
-            const chatSnap = await getDoc(chatRef);
-            if (!chatSnap.exists()) continue;
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+    const userDoc = userSnap.data() || {};
+    userData = userDoc.ProfileData || {};
+    const userChats = userDoc.userChats || {};
 
-            const chatData = chatSnap.data();
-            const clone = groupNameTemplate.content.cloneNode(true);
-            clone.querySelector(".groupsListActiveGroup").id = chat;
-            clone.querySelector(".groupsListActiveGroup h1").textContent = chatData?.chatName ?? "Unnamed Chat";
+    // render chats
+    const entries = Object.entries(userChats);
+    if (entries.length) {
+      const frag = document.createDocumentFragment();
+      const chatRefs = entries.map(([, chatId]) => doc(db, "chats", chatId));
+      const snaps = await Promise.all(chatRefs.map((r) => getDoc(r)));
 
-            gList.appendChild(clone);
-        }
+      snaps.forEach((snap, i) => {
+        if (!snap.exists()) return;
+        const chatId = entries[i][1];
+        const chatData = snap.data();
+        const clone = groupNameTemplate.content.cloneNode(true);
+        const root = clone.querySelector(".groupsListActiveGroup");
+        root.id = chatId;
+        const h1 = root.querySelector("h1");
+        if (h1) h1.textContent = chatData?.chatName ?? "Unnamed Chat";
+        frag.appendChild(clone);
+      });
 
-        const chatDivs = gList.querySelectorAll(".groupsListActiveGroup");
-        console.log(chatDivs);
+      gList.textContent = "";
+      gList.appendChild(frag);
+    }
 
-        let selectedChat = null;
+    // event delegation
+    gList.addEventListener("click", (e) => {
+      const item = e.target.closest(".groupsListActiveGroup");
+      if (!item || !gList.contains(item)) return;
 
-        chatDivs.forEach(el =>{
-            el.addEventListener("click", () =>{
-                //console.log("test: " + el.id)
-                selectedChat = el.id;
-                fillChat();
-            })
-        })
+      if (item.id === selectedChat) {
+        // Deselect if the same chat clicked again
+        selectedChat = null;
+        if (currentUnsub) currentUnsub();
+        currentUnsub = null;
+        rowById.clear();
+        showNoChatSelected();
+        return;
+      }
 
-        async function fillChat(){
-            if (!selectedChat) return;
-                const chatRef = doc(db, "chats", selectedChat);
-                const chatSnap = await getDoc(chatRef);
-
-            if (!chatSnap.exists()) {
-                console.warn("Chat not found:", selectedChat);
-                return;
-            }
-
-            
-
-            const chatData = chatSnap.data()
-            const messagesCollection = collection(db, "chats", selectedChat, "messages");
-            console.log("Loaded chat:", messagesCollection);
-
-            const q = query(messagesCollection, orderBy("creationDate", "asc"));
-            const snap = await getDocs(q);
-            const messages = snap.docs.map(d=>({id: d.id,...d.data()}));
-
-            console.log(messages);
-            messages.forEach(msg => {
-                if(userData.userEmail == msg.senderEmail){
-                    const clone = sentMsgTemp.content.cloneNode(true);
-                    const headers =  clone.querySelectorAll(".messageContent h1");
-                    headers[0].textContent = msg.sender;
-                    headers[1].textContent = msg.message;
-                    headers[2].textContent = msg.creationDate.toDate().toLocaleString();
-                    mList.appendChild(clone);
-                }else{
-                    const clone = recieveMsgTemp.content.cloneNode(true);
-                    const headers =  clone.querySelectorAll(".messageContent h1");
-                    headers[0].textContent = msg.sender;
-                    headers[1].textContent = msg.message;
-                    //headers[2].textContent = msg.creationDate.toDate()
-                    mList.appendChild(clone);
-                }
-            })
-
-        }
-
-
+      openChat(item.id);
     });
+
+    sendBtn.addEventListener("click", async () => {
+      if (!selectedChat) return;
+      const val = msgInput.value.trim();
+      if (!val) return;
+
+      sendBtn.disabled = true;
+      try {
+        const messagesCol = collection(db, "chats", selectedChat, "messages");
+        await addDoc(messagesCol, {
+          creationDate: serverTimestamp(),
+          sender: `${userData.firstName ?? ""} ${userData.lastName ?? ""}`.trim(),
+          senderEmail: userData.userEmail,
+          message: val
+        });
+        msgInput.value = "";
+      } finally {
+        sendBtn.disabled = false;
+      }
+    });
+  });
+
+  async function openChat(chatId) {
+    // Tear down old listener
+    if (currentUnsub) {
+      currentUnsub();
+      currentUnsub = null;
+    }
+
+    selectedChat = chatId;
+    mList.textContent = "";
+    rowById.clear();
+
+    const chatRef = doc(db, "chats", chatId);
+    const chatSnap = await getDoc(chatRef);
+    if (!chatSnap.exists()) {
+      showNoChatSelected();
+      console.warn("Chat not found:", chatId);
+      return;
+    }
+
+    const messagesCol = collection(db, "chats", chatId, "messages");
+    const q = query(messagesCol, orderBy("creationDate", "asc"));
+
+    const headers = document.querySelectorAll(".groupInfo");
+    const headersActions = document.querySelectorAll(".groupActions");
+    headers[0].style.display = "flex";
+    headersActions[0].style.display = "flex";
+    const postID = "posts" + chatId.charAt(chatId.length - 1);
+    const postRef = await getDoc(doc(db, "posts", postID));
+    const postData = postRef.data();
+    console.log(postRef.data())
+    const infoHeader = document.querySelectorAll(".groupInfo h1");
+    infoHeader[0].textContent = postData.user1?.firstLastName || "Unkown";
+    infoHeader[2].textContent = postData?.groupLocation;
+
+    currentUnsub = onSnapshot(q, (snapshot) => {
+      const addsFrag = document.createDocumentFragment();
+
+      snapshot.docChanges().forEach((change) => {
+        const id = change.doc.id;
+        const msg = change.doc.data();
+
+        if (change.type === "added") {
+          if (rowById.has(id)) return;
+
+          const clone = (userData?.userEmail === msg.senderEmail)
+            ? sentMsgTemp.content.cloneNode(true)
+            : recieveMsgTemp.content.cloneNode(true);
+
+          const root = clone.firstElementChild || clone;
+          const headers = root.querySelectorAll(".messageContent h1");
+          if (headers[0]) headers[0].textContent = msg.sender ?? "";
+          if (headers[1]) headers[1].textContent = msg.message ?? "";
+          if (headers[2]) {
+            const ts = msg.creationDate;
+            headers[2].textContent =
+              ts && typeof ts.toDate === "function"
+                ? ts.toDate().toLocaleString()
+                : "";
+          }
+
+          root.dataset.id = id;
+          rowById.set(id, root);
+          addsFrag.appendChild(root);
+
+        } else if (change.type === "modified") {
+          const node = rowById.get(id);
+          if (!node) return;
+          const headers = node.querySelectorAll(".messageContent h1");
+          if (headers[0]) headers[0].textContent = msg.sender ?? "";
+          if (headers[1]) headers[1].textContent = msg.message ?? "";
+          if (headers[2]) {
+            const ts = msg.creationDate;
+            if (ts && typeof ts.toDate === "function") {
+              headers[2].textContent = ts.toDate().toLocaleString();
+            }
+          }
+
+        } else if (change.type === "removed") {
+          const node = rowById.get(id);
+          if (node) {
+            node.remove();
+            rowById.delete(id);
+          }
+        }
+      });
+
+      if (addsFrag.childNodes.length) {
+        mList.appendChild(addsFrag);
+        requestAnimationFrame(() => {
+          mList.scrollTop = mList.scrollHeight;
+        });
+      }
+    });
+  }
 });
