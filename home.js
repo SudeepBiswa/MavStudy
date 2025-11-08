@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase-init.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -38,6 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }
             //console.log("got past it")
             const counterRef = doc(db, "metadata", "postCounter")
+            const chatCounterRef = doc(db, "metadata", "chatsCounter");
             const dataRef = await getDoc(doc(db, "users", user.uid));
             const userData = dataRef.data();
 
@@ -58,6 +59,40 @@ window.addEventListener("DOMContentLoaded", () => {
                     email: userData.ProfileData.userEmail
                 }
             };
+            const message1 = {
+                creationDate: serverTimestamp(), 
+                sender: userData.ProfileData.firstName + " " + userData.ProfileData.lastName,
+                senderEmail: userData.ProfileData.userEmail,
+                message: "Welcome Everyone!!"
+            }
+
+            try{
+                await runTransaction(db, async(transaction)=>{
+                    
+                    const ccounterSnap = await transaction.get(chatCounterRef);
+                    let newChatNumber = 1;
+
+                    if(ccounterSnap.exists()){
+                        const currentChatCount = ccounterSnap.data().chatNum || 0;
+                        newChatNumber = currentChatCount + 1;
+                    }
+
+                    transaction.set(chatCounterRef, {chatNum: newChatNumber});
+
+                    const chatId = "chats" + newChatNumber;
+                    await updateDoc(doc(db, "chats", chatId), {members: {user1: userData.ProfileData.firstName}, chatName: userData.ProfileData.firstName + "' Chat", messageCounter: 1,});
+                    const messagesRef = collection(db, "chats", chatId, "messages");
+                    await addDoc(messagesRef, {creationDate: serverTimestamp(), 
+                        sender: userData.ProfileData.firstName + " " + userData.ProfileData.lastName,
+                        senderEmail: userData.ProfileData.userEmail,
+                        message: "Welcome Everyone!!"})
+                    await updateDoc(doc(db, "users", user.uid), {userChats: {chatId}})
+                    
+                })
+            }
+            catch (e){
+                console.error("chat transaction failed.\n" + e)
+            }
 
             try{
                 await runTransaction(db, async(transaction)=>{
@@ -78,12 +113,12 @@ window.addEventListener("DOMContentLoaded", () => {
                 })
             }
             catch (e){
-                console.error("transaction failed.")
+                console.error("post transaction failed.")
             }
         })
 
         let arrPostsStack = [];
-        let arrFirst =[];
+        //let arrFirst =[];
         let currentPostIndex = 0;
         const seenIds = new Set();  
 
@@ -369,6 +404,11 @@ window.addEventListener("DOMContentLoaded", () => {
                         const postId = postSnap.id;
                         const postData = postSnap.data();
 
+                        const chatID = "chats"+postId.charAt(postId.length-1);
+                        const chatRef = doc(db, "chats", chatID);
+                        const chatSnap = await getDoc(chatRef);
+                        const chatData = chatSnap.data();
+
                         // Load user data
                         const userRef = doc(db, "users", user.uid);
                         const userSnap = await getDoc(userRef);
@@ -416,8 +456,11 @@ window.addEventListener("DOMContentLoaded", () => {
                             pAge: userData.age,
                             email: userData.userEmail
                         };
+                        
 
                         await updateDoc(doc(db, "posts", postId), { [slot]: userPayload });
+                        await updateDoc(doc(db, "chats", chatID), {[`members.${slot}`]: `${userData.firstName} ${userData.lastName}`});
+                        await updateDoc(doc(db, "users", user.uid), {userChats: {chatID}});
                         console.log("Joined group:", postId, "as", slot);
 
                         // Refresh data
