@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase-init.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { onAuthStateChanged, getAuth } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
@@ -478,4 +478,75 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
     });
+});
+
+
+document.getElementById("savePreferencesButton").addEventListener("click", async (event) => {
+    event.preventDefault();
+
+    // graab values from the form
+    const groupSizeMin = document.getElementById("hgroupSizeMin").value || null;
+    const groupSizeMax = document.getElementById("hgroupSizeMax").value || null;
+    const groupLocation = document.getElementById("hgroupLocation").value || "";
+    const groupAgeMin = document.getElementById("hgroupAgeMin").value || null;
+    const groupAgeMax = document.getElementById("hgroupAgeMax").value || null;
+    const groupTags = document.querySelector("#groupMatcherPreferencesTags .tagpicker-hidden").value.split(",").map(tag => tag.trim()).filter(Boolean);
+
+
+    if (groupSizeMin !== null && (groupSizeMin < 2 || groupSizeMin > 5)) {
+        alert("minimum group size must be between 2 and 5.");
+        return;
+    }
+
+    if (groupSizeMax !== null && (groupSizeMax < 2 || groupSizeMax > 5)) {
+        alert("maximum group size must be between 2 and 5.");
+        return;
+    }
+
+    if (groupSizeMin !== null && groupSizeMax !== null && groupSizeMin > groupSizeMax) {
+        alert("minimum group size must not be bigger than maximum group size");
+        return;
+    }
+
+    if (groupAgeMin !== null && groupAgeMin < 18) {
+        alert("minimum age for study group must be 18 or older");
+        return;
+    }
+
+    if (groupAgeMax !== null && groupAgeMax < 18) {
+        alert("maximum age for study group must be 18 or older");
+        return;
+    }
+
+    if (!groupLocation) {
+        alert("enter a group location");
+        return;
+    }
+
+    // ensure user is logged in before saving any preferences (although unlikely may as well)
+    const user = auth.currentUser;
+    if (!user) {
+        alert("You must be logged in to save preferences!");
+        return;
+    }
+
+    // update the user in firebase
+    try {
+        const userRef = doc(db, "users", user.uid);
+        await updateDoc(userRef, {
+            preferences: {
+                groupSizeMin,
+                groupSizeMax,
+                groupLocation,
+                groupAgeMin,
+                groupAgeMax,
+                groupTags
+            }
+        });
+        alert("prefences saved");
+        closeMenu('groupMatcherPreferences', 'close');
+    } catch (error) {
+        console.error("error saving preferences", error);
+        alert("there was an error saving preferences, try again");
+    }
 });
