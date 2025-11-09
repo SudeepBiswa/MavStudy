@@ -1,5 +1,8 @@
 1. Change the .group .groupTitle rows to display location and age, currently displays age and age from template.
 2. Fix the bug when scrolling through groups, multiple groups will grow large and unblur when scrolling quickly (hard to replicate).
+3. BUG: Age still displays "-" even if only one age value.
+4. Update/refresh screen when joining or leaving group.
+5. Do not show groups user owns or is currently in.
 
 Suggestion Guide:
     If anyone has any suggestions please leave them below and give a brief explanation of where it would be implemented and what frontend should look like.
