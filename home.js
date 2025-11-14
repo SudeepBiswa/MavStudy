@@ -224,7 +224,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         group.style.scale = "1";
                         group.style.filter= "";
                         data = arrPostsStack[currentPostIndex].data();
-                        continue;
+                        
                     }
                     else if(i == 0){
                         group.style.scale = "0.85";
@@ -392,9 +392,36 @@ window.addEventListener("DOMContentLoaded", () => {
             joinButtons.forEach((btn, index) => {
                 btn.addEventListener("click", async () => {
                     try {
-                        let targetPostIndex = currentPostIndex;
-                        if (index === 0) targetPostIndex = currentPostIndex - 1; // left
-                        if (index === 2) targetPostIndex = currentPostIndex + 1; // right
+                        let targetPostIndex;
+                        
+                        if (arrPostsStack.length === 1) {
+                            if (index !== 1) return;
+                            targetPostIndex = currentPostIndex;
+                        } 
+                        else if (arrPostsStack.length === 2) {
+                            if (currentPostIndex === 0) {
+                                if (index === 0) return;
+                                if (index === 1) targetPostIndex = 0;
+                                if (index === 2) targetPostIndex = 1;
+                            } else {
+                                if (index === 2) return;
+                                if (index === 0) targetPostIndex = 0;
+                                if (index === 1) targetPostIndex = 1;
+                            }
+                        } 
+                        else if (currentPostIndex === 0 && arrPostsStack.length > 2) {
+                            targetPostIndex = index;
+                        } 
+                        else if (currentPostIndex === arrPostsStack.length - 1) {
+                            if (index === 0) targetPostIndex = currentPostIndex - 2;
+                            else if (index === 1) targetPostIndex = currentPostIndex - 1;
+                            else targetPostIndex = currentPostIndex;
+                        } 
+                        else {
+                            if (index === 0) targetPostIndex = currentPostIndex - 1;
+                            else if (index === 1) targetPostIndex = currentPostIndex;
+                            else targetPostIndex = currentPostIndex + 1;
+                        }
 
                         if (targetPostIndex < 0 || targetPostIndex >= arrPostsStack.length) {
                             console.warn("Invalid join click — no post in that direction.");
@@ -405,7 +432,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         const postId = postSnap.id;
                         const postData = postSnap.data();
 
-                        const chatID = "chats"+postId.charAt(postId.length-1);
+                        const chatID = "chats" + postId.charAt(postId.length - 1);
                         const chatRef = doc(db, "chats", chatID);
                         const chatSnap = await getDoc(chatRef);
                         const chatData = chatSnap.data();
@@ -457,12 +484,13 @@ window.addEventListener("DOMContentLoaded", () => {
                             pAge: userData.age,
                             email: userData.userEmail
                         };
-                        
+
+                        const memberKey = "members." + slot;
+                        const memberValue = userData.firstName + " " + userData.lastName;
 
                         await updateDoc(doc(db, "posts", postId), { [slot]: userPayload });
-                        await updateDoc(doc(db, "chats", chatID), {[`members.${slot}`]: `${userData.firstName} ${userData.lastName}`});
+                        await updateDoc(doc(db, "chats", chatID), {[memberKey]: memberValue});
                         await setDoc(doc(db, "users", user.uid), {userChats: {[chatID]: chatID}}, {merge: true});
-                        //console.log("Joined group:", postId, "as", slot);
 
                         // Refresh data
                         const freshSnap = await getDoc(doc(db, "posts", postId));
@@ -474,7 +502,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     }
                 });
             });
-
         }
 
     });

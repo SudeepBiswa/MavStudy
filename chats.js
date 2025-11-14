@@ -117,7 +117,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     const leaveBtn = document.getElementById("leaveBtn");
-  leaveBtn.addEventListener("click", async () => {
+    leaveBtn.addEventListener("click", async () => {
     if (!selectedChat) return;
 
     // Remove chat from user's userChats
@@ -128,8 +128,9 @@ window.addEventListener("DOMContentLoaded", () => {
     const chatKey = Object.keys(userChats).find(key => userChats[key] === selectedChat);
 
     if (chatKey) {
-      delete userChats[chatKey];
-      await setDoc(userRef, { userChats }, { merge: true });
+        await updateDoc(userRef, {
+            ["userChats." + chatKey]: deleteField()
+        });
     }
 
     // Remove user from post document
@@ -141,42 +142,48 @@ window.addEventListener("DOMContentLoaded", () => {
 
     let fieldToDelete = null;
     for (const [key, value] of Object.entries(postData)) {
-      if (key.startsWith("user") && value.email === userEmail) {
-        fieldToDelete = key;
-        break;
-      }
+        if (key.startsWith("user") && value.email === userEmail) {
+            fieldToDelete = key;
+            break;
+        }
     }
     if (fieldToDelete) {
-      await updateDoc(postRef, {
-        [fieldToDelete]: deleteField()
-      });
+        await updateDoc(postRef, {
+            [fieldToDelete]: deleteField()
+        });
     }
 
-      // Remove user from chat members
-      const chatRef = doc(db, "chats", selectedChat);
-      const chatSnap = await getDoc(chatRef);
-      const chatData = chatSnap.data();
-      const members = chatData.members || {};
-      const currentName = userData.firstName + " " + userData.lastName;
+    // Remove user from chat members
+    const chatRef = doc(db, "chats", selectedChat);
+    const chatSnap = await getDoc(chatRef);
+    const chatData = chatSnap.data();
+    const members = chatData.members || {};
+    const currentName = userData.firstName + " " + userData.lastName;
 
-      for (const key in members) {
+    for (const key in members) {
         if (members[key] === currentName) {
-          await updateDoc(chatRef, {
-            ["members." + key]: deleteField()
-          });
-          break; // stop after removing current user
+            await updateDoc(chatRef, {
+                ["members." + key]: deleteField()
+            });
+            break;
         }
-      }
-    
-    if (currentUnsub) {
-      currentUnsub();        // stop the messages snapshot listener
-      currentUnsub = null;
-    } 
-    selectedChat = null;
-    rowById.clear(); 
-    showNoChatSelected();
-  })
+    }
 
+    // Remove the chat from the sidebar UI
+    const chatElement = document.getElementById(selectedChat);
+    if (chatElement) {
+        chatElement.remove();
+    }
+
+    // Clean up listeners and state
+    if (currentUnsub) {
+        currentUnsub();
+        currentUnsub = null;
+    }
+    selectedChat = null;
+    rowById.clear();
+    showNoChatSelected();
+});
   async function openChat(chatId) {
     // Tear down old listener
     if (currentUnsub) {
