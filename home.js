@@ -266,7 +266,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
                 groupTitles[0].textContent = data.user1?.firstLastName || "Unknown User";
                 groupTitles[3].textContent = ("Age: " + data.groupAgeMin || "Age: NA")+"-"+ (data.groupAgeMax || "Age: NA");
-                groupTitles[2].textContent = "Location: " + data.groupLocation || "Unkown";
+                groupTitles[2].textContent = "Location: " + data.groupLocation || "Unknown";
 
                 const memberContainer = group.querySelector(".groupMembers");
                 memberContainer.innerHTML = "";
@@ -280,7 +280,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     if (member && member.firstLastName) {
                         const link = document.createElement("a");
                         if(member.firstLastName == " " || member.firstLastName == ""){
-                            link.textContent = "Unkown User";
+                            link.textContent = "Unknown User";
                         }
                         else{
                             link.textContent = member.firstLastName;
