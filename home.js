@@ -272,6 +272,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 memberContainer.innerHTML = "";
 
                 const maxMembers = parseInt(data.groupSizeMax) || 1;
+
+                //SUDEEP did a unit test for currentMemSize 
                 let currentMemSize = 0;
                 for (let m = 1; m <= maxMembers; m++) {
                     const userKey = "user" + m;
@@ -432,7 +434,9 @@ window.addEventListener("DOMContentLoaded", () => {
                         const postId = postSnap.id;
                         const postData = postSnap.data();
 
+                        //SUDEEP did a unit test for getting chatId
                         const chatID = "chats" + postId.charAt(postId.length - 1);
+
                         const chatRef = doc(db, "chats", chatID);
                         const chatSnap = await getDoc(chatRef);
                         const chatData = chatSnap.data();
@@ -452,6 +456,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             return;
                         }
 
+                    //--> SUDEEP did a unit test for the following until the backwards arrow
                         // Determine group capacity
                         const maxSize = parseInt(postData.groupSizeMax, 10) || 1;
                         const currentMembers = Object.keys(postData).filter(key => key.startsWith("user")).length;
@@ -460,6 +465,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             console.log("Group is full:", postId);
                             return;
                         }
+                    //<--
 
                         // Find the next available user slot
                         let slot = null;
@@ -476,6 +482,7 @@ window.addEventListener("DOMContentLoaded", () => {
                             return;
                         }
 
+                        //SUDEEP did a unit test for userPayLoad
                         const userPayload = {
                             firstLastName: userData.firstName + " " + userData.lastName,
                             enrollStat: userData.enrollmentStatus,
