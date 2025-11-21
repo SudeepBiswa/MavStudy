@@ -31,6 +31,7 @@ window.addEventListener("DOMContentLoaded", () =>{
         };
 
         try {
+        ////Already Jest tested by Talon
         if (!(email.endsWith("@unomaha.edu") || email.endsWith("@nebraska.edu"))) {
             messageHandler.style.color = "red";
             messageHandler.textContent = "Please use a valid UNO or Nebraska email.";
@@ -162,6 +163,7 @@ async function addEvent(user, eventType) {
     });
 }
 
+//Already Jest tested by Talon
 function validatePassword(password) {
     const REGEX_PASSWORD = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
     const errorMessages = [];
