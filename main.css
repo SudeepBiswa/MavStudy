@@ -169,6 +169,8 @@ li a:hover::before{
 
     filter: blur(2px);
     z-index: 0;
+    /* Allow clicks to pass through decorative overlay */
+    pointer-events: none;
 }
 .groupMatcher{
     position: relative;
@@ -847,4 +849,206 @@ input[type=number]{
     overflow: hidden;
     clip: rect(0,0,0,0);
     border: 0;
+}
+/* Resources Page Styles */
+.resourcesPage{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 30px;
+}
+.resourcesHeader{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    background-color: var(--darkGrey);
+    color: white;
+    border-left: 5px solid var(--red);
+}
+.resourcesHeader h1{
+    font-size: 200%;
+    margin: 0;
+    padding: 0;
+}
+.resourcesHeader p{
+    font-size: 100%;
+    color: var(--veryLightGrey);
+    margin: 0;
+    padding: 0;
+}
+.resourcesGrid{
+    display: grid;
+    /* Use wider columns for landscape appearance */
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1300px; /* keeps the grid from stretching edge-to-edge */
+    margin: 0 auto; /* center grid block */
+    justify-content: center; /* center columns when there's extra space */
+}
+.resourceCard{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: var(--darkGrey);
+    color: white;
+    border-radius: 15px;
+    border-left: 4px solid var(--red);
+    transition: all 0.3s ease;
+    max-height: 280px;
+    overflow-y: auto;
+}
+.resourceCard:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 27, 30, 0.3);
+    border-left-width: 6px;
+}
+.resourceCardHeader{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
+.resourceCardHeader h2{
+    flex: 1;
+    margin: 0;
+    padding: 0;
+    font-size: 120%;
+}
+.resourceCategory{
+    display: inline-block;
+    padding: 5px 12px;
+    background-color: var(--red);
+    color: white;
+    font-size: 80%;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.resourceDescription{
+    margin: 0;
+    padding: 0;
+    font-size: 95%;
+    color: var(--veryLightGrey);
+    line-height: 1.6;
+}
+.resourceLink{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    color: var(--red);
+    font-weight: bold;
+    border-bottom: 2px solid var(--red);
+    margin-top: auto;
+    width: fit-content;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.resourceLink:hover{
+    gap: 15px;
+    color: white;
+    border-bottom-color: white;
+}
+.resourceLink .material-icons-round{
+    font-size: 100%;
+    display: flex;
+    align-items: center;
+}
+.resourcesFooterNote{
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(212, 27, 30, 0.1);
+    border-left: 4px solid var(--red);
+    color: var(--veryLightGrey);
+    border-radius: 10px;
+    font-size: 95%;
+}
+.resourcesFooterNote p{
+    margin: 0;
+    padding: 0;
+}
+
+/* Resource links list */
+.resourceLinksList{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+.resourceItem{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.resourceItem a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--gold);
+    text-decoration: none;
+    width: 100%;
+    justify-content: space-between;
+}
+.resourceItem a{
+    padding: 8px 10px;
+    border-radius: 8px;
+}
+.resourceItem a:hover{
+    background: rgba(212,27,30,0.06);
+    color: white;
+}
+.resourceItem a:focus{
+    outline: 2px dashed var(--red);
+    outline-offset: 3px;
+}
+.resourceItem a:hover{
+    color: white;
+}
+.linkLabel{
+    font-weight: bold;
+    color: var(--gold);
+}
+.linkNote{
+    color: var(--veryLightGrey);
+    font-weight: normal;
+}
+.moreToggle{
+    margin-top: 10px;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--lightGrey);
+    color: var(--veryLightGrey);
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.moreToggle[aria-expanded="true"]{
+    border-color: var(--red);
+    color: white;
+}
+/* Responsive Design for Resources */
+@media screen and (max-width: 1200px){
+    .resourcesGrid{
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+@media screen and (max-width: 768px){
+    .resourcesGrid{
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    .resourcesHeader{
+        padding: 20px;
+    }
+    .resourceCard{
+        padding: 20px;
+    }
+    .resourceCardHeader h2{
+        font-size: 110%;
+    }
 }
