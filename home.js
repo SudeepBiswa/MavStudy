@@ -125,29 +125,56 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const postsRef = collection(db, "posts");
         const snapshot = await getDocs(postsRef);
-        
-        if(snapshot.empty){
-            console.log("no posts found");
-            groupsContainer.innerHTML = '<p>NO AVAILABLE POSTS</p>'
-            const p = groupsContainer.querySelector("p");
+
+        const userPrefSnap = await getDoc(doc(db, "users", user.uid));
+        const prefs = userPrefSnap.data()?.preferences || null;
+
+        let docArr = snapshot.docs;
+
+        if (prefs) {
+            docArr = docArr.filter(docSnap => {
+                const d = docSnap.data();
+
+                if (prefs.groupSizeMin && parseInt(d.groupSizeMin) < prefs.groupSizeMin) return false;
+                if (prefs.groupSizeMax && parseInt(d.groupSizeMax) > prefs.groupSizeMax) return false;
+                if (prefs.groupAgeMin && parseInt(d.groupAgeMin) < prefs.groupAgeMin) return false;
+                if (prefs.groupAgeMax && parseInt(d.groupAgeMax) > prefs.groupAgeMax) return false;
+
+                if (prefs.groupLocation &&
+                    !d.groupLocation?.toLowerCase().includes(prefs.groupLocation.toLowerCase())) {
+                    return false;
+                }
+
+                if (prefs.groupTags && prefs.groupTags.length > 0) {
+                    const tags = (d.groupTags || "").toLowerCase();
+                    const ok = prefs.groupTags.some(t =>
+                        tags.includes(t.toLowerCase())
+                    );
+                    if (!ok) return false;
+                }
+
+                return true;
+            });
+        }
+
+        if (docArr.length === 0) {
+            alert("No posts match your preferences!");
+            groupsContainer.innerHTML = '<p>No matching posts found</p>';
             groupsContainer.style.display = "flex";
             groupsContainer.style.justifyContent = "center";
             groupsContainer.style.alignItems = "center";
-            p.style.fontSize = "2rem";     
-            p.style.color = "grey";        
+
+            const p = groupsContainer.querySelector("p");
+            p.style.fontSize = "2rem";
+            p.style.color = "grey";
             p.style.fontWeight = "bold";
+            return; 
         }
-        else{
-            const docArr = snapshot.docs;
 
-            const shuffled = docArr.sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, Math.min(3, docArr.length));
-            arrPostsStack = selected;
-            selected.forEach(element => seenIds.add(element.id))
-            //console.log(seenIds)
-
-            //console.log("Initial Stack: " + arrPostsStack);
-        }
+        const shuffled = docArr.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, Math.min(3, docArr.length));
+        arrPostsStack = selected;
+        selected.forEach(element => seenIds.add(element.id))
 
         //console.log(arrPostsStack)
         function wait(ms){
@@ -321,13 +348,36 @@ window.addEventListener("DOMContentLoaded", () => {
                 const randomIndex = Math.floor(Math.random() * docs.length);
                 const candidateSnap = docs[randomIndex];
 
+                // if prefs exist, make sure this candidate matches them
+                if (prefs) {
+                    const d = candidateSnap.data();
+
+                    if (prefs.groupSizeMin && parseInt(d.groupSizeMin) < prefs.groupSizeMin) continue;
+                    if (prefs.groupSizeMax && parseInt(d.groupSizeMax) > prefs.groupSizeMax) continue;
+                    if (prefs.groupAgeMin && parseInt(d.groupAgeMin) < prefs.groupAgeMin) continue;
+                    if (prefs.groupAgeMax && parseInt(d.groupAgeMax) > prefs.groupAgeMax) continue;
+
+                    if (prefs.groupLocation &&
+                        !d.groupLocation?.toLowerCase().includes(prefs.groupLocation.toLowerCase())) {
+                        continue;
+                    }
+
+                    if (prefs.groupTags && prefs.groupTags.length > 0) {
+                        const tags = (d.groupTags || "").toLowerCase();
+                        const ok = prefs.groupTags.some(t =>
+                            tags.includes(t.toLowerCase())
+                        );
+                        if (!ok) continue;
+                    }
+                }
+
                 // check by .id since snapshots are new objects each time
                 const alreadyExists = arrPostsStack.some(snap => snap.id === candidateSnap.id);
                 if (!alreadyExists) {
-                arrPostsStack.push(candidateSnap);
-                //console.log("Added new unique post:", candidateSnap.id);
-                newSnap = candidateSnap;
-                break;
+                    arrPostsStack.push(candidateSnap);
+                    //console.log("Added new unique post:", candidateSnap.id);
+                    newSnap = candidateSnap;
+                    break;
                 }
             }
 
@@ -426,7 +476,7 @@ window.addEventListener("DOMContentLoaded", () => {
                         }
 
                         if (targetPostIndex < 0 || targetPostIndex >= arrPostsStack.length) {
-                            console.warn("Invalid join click — no post in that direction.");
+                            console.warn("Invalid join click â€” no post in that direction.");
                             return;
                         }
 
@@ -578,6 +628,7 @@ document.getElementById("savePreferencesButton").addEventListener("click", async
             }
         });
         alert("prefences saved");
+        window.location.reload();
         closeMenu('groupMatcherPreferences', 'close');
     } catch (error) {
         console.error("error saving preferences", error);
