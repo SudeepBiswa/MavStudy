@@ -854,105 +854,87 @@ input[type=number]{
 .resourcesPage{
     display: flex;
     width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 30px;
     flex-direction: column;
     gap: 30px;
+    background-color: var(--darkGrey);
 }
 .resourcesHeader{
     display: flex;
     width: 100%;
+    margin: 0;
+    padding: 30px;
     flex-direction: column;
     gap: 15px;
-    padding: 30px;
-    background-color: var(--darkGrey);
     color: white;
-    border-left: 5px solid var(--red);
+    background-color: var(--red);
 }
 .resourcesHeader h1{
     font-size: 200%;
-    margin: 0;
-    padding: 0;
 }
 .resourcesHeader p{
     font-size: 100%;
-    color: var(--veryLightGrey);
-    margin: 0;
-    padding: 0;
 }
 .resourcesGrid{
     display: grid;
-    /* Use wider columns for landscape appearance */
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 20px;
+    grid-template-columns: auto auto auto;
     width: 100%;
-    max-width: 1300px; /* keeps the grid from stretching edge-to-edge */
-    margin: 0 auto; /* center grid block */
-    justify-content: center; /* center columns when there's extra space */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 15px;
+    color: white;
+    overflow-y: auto;
 }
 .resourceCard{
     display: flex;
+    width: 100%;
+    height: 100%;
     flex-direction: column;
     gap: 15px;
     padding: 20px;
-    background-color: var(--darkGrey);
+    background-color: var(--lightGrey);
     color: white;
-    border-radius: 15px;
-    border-left: 4px solid var(--red);
-    transition: all 0.3s ease;
-    max-height: 280px;
-    overflow-y: auto;
-}
-.resourceCard:hover{
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(212, 27, 30, 0.3);
-    border-left-width: 6px;
 }
 .resourceCardHeader{
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 15px;
 }
 .resourceCardHeader h2{
-    flex: 1;
-    margin: 0;
-    padding: 0;
     font-size: 120%;
 }
 .resourceCategory{
-    display: inline-block;
-    padding: 5px 12px;
+    padding: 15px;
     background-color: var(--red);
     color: white;
     font-size: 80%;
-    border-radius: 10px;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 .resourceDescription{
-    margin: 0;
-    padding: 0;
-    font-size: 95%;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: start;
+    gap: 15px;
     color: var(--veryLightGrey);
-    line-height: 1.6;
 }
 .resourceLink{
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 0;
-    color: var(--red);
-    font-weight: bold;
-    border-bottom: 2px solid var(--red);
-    margin-top: auto;
+    padding: 15px;
+    color: white;
+    background-color: var(--veryLightGrey);
     width: fit-content;
     text-decoration: none;
-    transition: all 0.3s ease;
 }
 .resourceLink:hover{
-    gap: 15px;
-    color: white;
-    border-bottom-color: white;
+    background-color: var(--red);
 }
 .resourceLink .material-icons-round{
     font-size: 100%;
@@ -962,12 +944,12 @@ input[type=number]{
 .resourcesFooterNote{
     display: flex;
     width: 100%;
-    padding: 20px;
-    background-color: rgba(212, 27, 30, 0.1);
-    border-left: 4px solid var(--red);
-    color: var(--veryLightGrey);
-    border-radius: 10px;
-    font-size: 95%;
+    margin: 0;
+    padding: 30px;
+    flex-direction: column;
+    gap: 15px;
+    color: white;
+    background-color: var(--lightGrey);
 }
 .resourcesFooterNote p{
     margin: 0;
