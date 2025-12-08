@@ -104,43 +104,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
             const links = resource.links || [];
 
-            // show first two links inline, rest hidden behind toggle
-            const visibleCount = 2;
-
-            links.forEach((lnk, i) => {
+            links.forEach((lnk) => {
                 const item = document.createElement('div');
                 item.className = 'resourceItem';
                 item.innerHTML = `<a href="${lnk.url}" target="_blank" rel="noopener noreferrer"><span class="linkLabel">${lnk.label}</span>${lnk.note?` <small class="linkNote"> - ${lnk.note}</small>`:''}<span class="material-icons-round">open_in_new</span></a>`;
-                if(i >= visibleCount){
-                    item.classList.add('extraLink');
-                    item.style.display = 'none';
-                }
                 linksWrap.appendChild(item);
             });
 
             card.appendChild(linksWrap);
-
-            // If there are more links than visibleCount, add toggle
-            if(links.length > visibleCount){
-                const moreBtn = document.createElement('button');
-                moreBtn.className = 'moreToggle';
-                moreBtn.type = 'button';
-                const hiddenCount = links.length - visibleCount;
-                moreBtn.textContent = `+ ${hiddenCount} more`;
-                moreBtn.setAttribute('aria-expanded', 'false');
-
-                moreBtn.addEventListener('click', () => {
-                    const extra = card.querySelectorAll('.extraLink');
-                    const expanded = moreBtn.getAttribute('aria-expanded') === 'true';
-                    extra.forEach(el => {
-                        el.style.display = expanded ? 'none' : 'flex';
-                    });
-                    moreBtn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-                    moreBtn.textContent = expanded ? `+ ${hiddenCount} more` : `− ${hiddenCount} less`;
-                });
-
-                card.appendChild(moreBtn);
-            }
 
             container.appendChild(card);
         });

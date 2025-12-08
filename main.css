@@ -330,7 +330,7 @@ li a:hover::before{
     position: absolute;
     display: flex;
     width: 40%;
-    max-height: 90%;
+    height: 100%;
     margin: 0;
     padding: 30px;
     top: 50%;
@@ -347,6 +347,7 @@ li a:hover::before{
 .menu .menuTitle{
     width: 100%;
     text-align: center;
+    font-size: 120%;
 }
 .menu form{
     display: flex;
@@ -423,7 +424,6 @@ li a:hover::before{
 }
 .menu input[type="submit"]:hover, .menu button:hover, button:hover{
     background-color: var(--red);
-    /* transform: scale(1.05); */
 }
 .menu form hr{
     width: 85%;
@@ -865,17 +865,17 @@ input[type=number]{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 30px;
+    padding: 15px;
     flex-direction: column;
     gap: 15px;
     color: white;
     background-color: var(--red);
 }
 .resourcesHeader h1{
-    font-size: 200%;
+    font-size: 120%;
 }
 .resourcesHeader p{
-    font-size: 100%;
+    font-size: 90%;
 }
 .resourcesGrid{
     display: grid;
@@ -918,7 +918,7 @@ input[type=number]{
 .resourceDescription{
     display: flex;
     width: 100%;
-    height: 100%;
+    height: fit-content;
     justify-content: space-between;
     align-items: start;
     gap: 15px;
@@ -945,56 +945,46 @@ input[type=number]{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 30px;
+    padding: 15px;
     flex-direction: column;
     gap: 15px;
     color: white;
     background-color: var(--lightGrey);
 }
 .resourcesFooterNote p{
-    margin: 0;
-    padding: 0;
+    font-size: 90%;
 }
-
 /* Resource links list */
 .resourceLinksList{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin-top: 8px;
 }
 .resourceItem{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
 }
 .resourceItem a{
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--gold);
+    color: white;
+    background-color: var(--veryLightGrey);
     text-decoration: none;
     width: 100%;
     justify-content: space-between;
 }
 .resourceItem a{
-    padding: 8px 10px;
-    border-radius: 8px;
+    padding: 15px;
 }
 .resourceItem a:hover{
-    background: rgba(212,27,30,0.06);
-    color: white;
-}
-.resourceItem a:focus{
-    outline: 2px dashed var(--red);
-    outline-offset: 3px;
-}
-.resourceItem a:hover{
+    background: var(--red);
     color: white;
 }
 .linkLabel{
     font-weight: bold;
-    color: var(--gold);
+    color: white;
 }
 .linkNote{
     color: var(--veryLightGrey);
