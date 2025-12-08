@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
             category: "Academic",
             description: "Access library resources and research databases.",
             links: [
-                { label: "Criss Library (home) / Databases", url: "https://www.unomaha.edu/criss-library/index.php" },
+                { label: "Criss Library & Databases", url: "https://www.unomaha.edu/criss-library/index.php" },
                 { label: "Library Services", url: "https://www.unomaha.edu/criss-library/library-services/index.php" }
             ]
         },
@@ -107,7 +107,7 @@ window.addEventListener("DOMContentLoaded", () => {
             links.forEach((lnk) => {
                 const item = document.createElement('div');
                 item.className = 'resourceItem';
-                item.innerHTML = `<a href="${lnk.url}" target="_blank" rel="noopener noreferrer"><span class="linkLabel">${lnk.label}</span>${lnk.note?` <small class="linkNote"> - ${lnk.note}</small>`:''}<span class="material-icons-round">open_in_new</span></a>`;
+                item.innerHTML = `<a href="${lnk.url}" target="_blank" rel="noopener noreferrer"><span class="linkLabel">${lnk.label}</span>${lnk.note?` <small class="linkNote"> - ${lnk.note}</small>`:''}</a>`;
                 linksWrap.appendChild(item);
             });
 

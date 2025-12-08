@@ -860,6 +860,7 @@ input[type=number]{
     flex-direction: column;
     gap: 30px;
     background-color: var(--darkGrey);
+    font-size: 85%;
 }
 .resourcesHeader{
     display: flex;
@@ -970,17 +971,16 @@ input[type=number]{
     align-items: center;
     gap: 10px;
     color: white;
-    background-color: var(--veryLightGrey);
     text-decoration: none;
     width: 100%;
     justify-content: space-between;
+    background-color: var(--veryLightGrey);
 }
 .resourceItem a{
     padding: 15px;
 }
 .resourceItem a:hover{
-    background: var(--red);
-    color: white;
+    background-color: var(--red);
 }
 .linkLabel{
     font-weight: bold;
