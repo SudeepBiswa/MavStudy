@@ -1,7 +1,6 @@
 import { auth, db } from "./firebase-init.js";
 import { onAuthStateChanged, getAuth } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection, serverTimestamp, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
+import { doc, setDoc, updateDoc, getDoc, runTransaction, getDocs, collection, serverTimestamp, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -309,7 +308,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     if (member && member.firstLastName) {
                         const link = document.createElement("li");
                         const userNameText = document.createElement("a");
-                        link.onclick = () => closeMenu('viewProfile', 'open');
+                        link.onclick = () => viewUserProfile(member.email);
                         if(member.firstLastName == " " || member.firstLastName == ""){
                             userNameText.textContent = "Unknown User";
                         }
@@ -391,13 +390,10 @@ window.addEventListener("DOMContentLoaded", () => {
             return newSnap;
         }
 
-
-        
         if(document.querySelector(".group")){
             
             nextBtn.addEventListener("click", async(event) =>{
 
-            
                 if (currentPostIndex + 2 === arrPostsStack.length) {
                     await fetchUniquePost();
                 }
@@ -415,7 +411,6 @@ window.addEventListener("DOMContentLoaded", () => {
                     await fetchUniquePost();
                 }
 
-                
                 if(currentPostIndex + 1 < arrPostsStack.length){
                     currentPostIndex += 1;
                     fillData();
@@ -428,8 +423,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 currentPostIndex -= 1;  
                 fillData();
             })
-
-
+            
             prevbtn.addEventListener("click", async(event) => {
                 if (currentPostIndex - 1 < 0){
                     return;
@@ -567,6 +561,85 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+// Function to fetch and display user profile data
+window.viewUserProfile = async function(userEmail) {
+    if (!userEmail) {
+        console.error("No email provided");
+        return;
+    }
+
+    try {
+        // Query users collection to find user by email
+        const usersRef = collection(db, "users");
+        const usersSnapshot = await getDocs(usersRef);
+        
+        let userProfileData = null;
+        
+        // Find user with matching email
+        usersSnapshot.docs.forEach(doc => {
+            const data = doc.data();
+            if (data.ProfileData && data.ProfileData.userEmail === userEmail) {
+                userProfileData = data.ProfileData;
+            }
+        });
+
+        if (!userProfileData) {
+            console.error("User not found with email:", userEmail);
+            // Show default/error state
+            updateViewProfile({
+                firstName: "Unknown",
+                lastName: "User",
+                age: "N/A",
+                major: "N/A",
+                enrollmentStatus: "N/A",
+                userEmail: userEmail || "N/A",
+                profilePicURL: "https://i.redd.it/v0caqchbtn741.jpg"
+            });
+            closeMenu('viewProfile', 'open');
+            return;
+        }
+
+        // Update the viewProfile with fetched data
+        updateViewProfile(userProfileData);
+        closeMenu('viewProfile', 'open');
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        alert("Error loading user profile. Please try again.");
+    }
+}
+
+// Function to update viewProfile elements with user data
+function updateViewProfile(profileData) {
+    const fullName = (profileData.firstName || "") + " " + (profileData.lastName || "");
+    const age = profileData.age || "N/A";
+    const major = profileData.major || "N/A";
+    let enrollment = profileData.enrollmentStatus || "N/A";
+    if (enrollment === "fullTime") {
+        enrollment = "Full Time";
+    } else if (enrollment === "partTime") {
+        enrollment = "Part Time";
+    }
+    const email = profileData.userEmail || "N/A";
+    const profilePic = profileData.profilePicURL || "https://i.redd.it/v0caqchbtn741.jpg";
+
+    // Update all viewProfile elements
+    const nameElement = document.getElementById("viewProfileName");
+    const ageElement = document.getElementById("viewProfileAge");
+    const majorElement = document.getElementById("viewProfileMajor");
+    const enrollmentElement = document.getElementById("viewProfileEnrollment");
+    const emailElement = document.getElementById("viewProfileEmail");
+    const imageElement = document.getElementById("viewProfileImage");
+
+    if (nameElement) nameElement.textContent = fullName.trim() || "Unknown User";
+    if (ageElement) ageElement.textContent = age;
+    if (majorElement) majorElement.textContent = major;
+    if (enrollmentElement) enrollmentElement.textContent = enrollment;
+    if (emailElement) {
+        emailElement.textContent = email;
+        emailElement.href = "mailto:" + email;
+    }
+    if (imageElement) imageElement.src = profilePic;
+}
 
 document.getElementById("savePreferencesButton").addEventListener("click", async (event) => {
     event.preventDefault();
