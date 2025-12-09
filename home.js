@@ -307,13 +307,16 @@ window.addEventListener("DOMContentLoaded", () => {
                     const member = data[userKey];
 
                     if (member && member.firstLastName) {
-                        const link = document.createElement("a");
+                        const link = document.createElement("li");
+                        const userNameText = document.createElement("a");
+                        link.onclick = () => closeMenu('viewProfile', 'open');
                         if(member.firstLastName == " " || member.firstLastName == ""){
-                            link.textContent = "Unknown User";
+                            userNameText.textContent = "Unknown User";
                         }
                         else{
-                            link.textContent = member.firstLastName;
+                            userNameText.textContent = member.firstLastName;
                         }
+                        link.appendChild(userNameText);
                         memberContainer.appendChild(link);
                         currentMemSize += 1;
                     }

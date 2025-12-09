@@ -330,7 +330,7 @@ li a:hover::before{
     position: absolute;
     display: flex;
     width: 40%;
-    height: 100%;
+    max-height: 100%;
     margin: 0;
     padding: 30px;
     top: 50%;
@@ -347,7 +347,6 @@ li a:hover::before{
 .menu .menuTitle{
     width: 100%;
     text-align: center;
-    font-size: 120%;
 }
 .menu form{
     display: flex;
@@ -424,6 +423,7 @@ li a:hover::before{
 }
 .menu input[type="submit"]:hover, .menu button:hover, button:hover{
     background-color: var(--red);
+    /* transform: scale(1.05); */
 }
 .menu form hr{
     width: 85%;
@@ -860,23 +860,22 @@ input[type=number]{
     flex-direction: column;
     gap: 30px;
     background-color: var(--darkGrey);
-    font-size: 85%;
 }
 .resourcesHeader{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 15px;
+    padding: 30px;
     flex-direction: column;
     gap: 15px;
     color: white;
     background-color: var(--red);
 }
 .resourcesHeader h1{
-    font-size: 120%;
+    font-size: 200%;
 }
 .resourcesHeader p{
-    font-size: 90%;
+    font-size: 100%;
 }
 .resourcesGrid{
     display: grid;
@@ -919,7 +918,7 @@ input[type=number]{
 .resourceDescription{
     display: flex;
     width: 100%;
-    height: fit-content;
+    height: 100%;
     justify-content: space-between;
     align-items: start;
     gap: 15px;
@@ -946,45 +945,56 @@ input[type=number]{
     display: flex;
     width: 100%;
     margin: 0;
-    padding: 15px;
+    padding: 30px;
     flex-direction: column;
     gap: 15px;
     color: white;
     background-color: var(--lightGrey);
 }
 .resourcesFooterNote p{
-    font-size: 90%;
+    margin: 0;
+    padding: 0;
 }
+
 /* Resource links list */
 .resourceLinksList{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-top: 8px;
 }
 .resourceItem{
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 .resourceItem a{
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: var(--gold);
     text-decoration: none;
     width: 100%;
     justify-content: space-between;
-    background-color: var(--veryLightGrey);
 }
 .resourceItem a{
-    padding: 15px;
+    padding: 8px 10px;
+    border-radius: 8px;
 }
 .resourceItem a:hover{
-    background-color: var(--red);
+    background: rgba(212,27,30,0.06);
+    color: white;
+}
+.resourceItem a:focus{
+    outline: 2px dashed var(--red);
+    outline-offset: 3px;
+}
+.resourceItem a:hover{
+    color: white;
 }
 .linkLabel{
     font-weight: bold;
-    color: white;
+    color: var(--gold);
 }
 .linkNote{
     color: var(--veryLightGrey);
