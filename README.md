@@ -1,3 +1,4 @@
+&ensp; Access the page at https://mavstudy-ab1ae.web.app/index.html
 **IDE: Visual Studio Code (VS Code) **  
 **Extension: Live Server**  
 &ensp;- After installing Live Server, you will see "Port: {num}" or "Go Live" at the bottom right of VS Code. Clicking on this will start/stop the live server.  
@@ -13,3 +14,4 @@ Installing Live Server Extension:
 &ensp;- Click on the option with the 3 squares and one angled square  
 &ensp;- This is the marketplace, search for "Live Server"  
 &ensp;- Download the one by Ritwick Dey (should be the first one)
+
