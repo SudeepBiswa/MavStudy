@@ -1,4 +1,4 @@
-Access the page at https://mavstudy-ab1ae.web.app/index.html
+Access the page at https://mavstudy-ab1ae.web.app
 
 Requires a firebase-init.js file with API keys
 
