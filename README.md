@@ -1,5 +1,7 @@
 Access the page at https://mavstudy-ab1ae.web.app/index.html
 
+Requires a firebase-init.js file with API keys
+
 **IDE: Visual Studio Code (VS Code) **  
 
 **Extension: Live Server**  
