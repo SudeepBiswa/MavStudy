@@ -1,6 +1,6 @@
 &ensp; Access the page at https://mavstudy-ab1ae.web.app/index.html
-**IDE: Visual Studio Code (VS Code) **  
-**Extension: Live Server**  
+&ensp;**IDE: Visual Studio Code (VS Code) **  
+&ensp;**Extension: Live Server**  
 &ensp;- After installing Live Server, you will see "Port: {num}" or "Go Live" at the bottom right of VS Code. Clicking on this will start/stop the live server.  
 &ensp;- To open the Live server on a webpage, right-click the HTML file and click "Open with Live Server."
 
